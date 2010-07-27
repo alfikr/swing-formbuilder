@@ -1,32 +1,39 @@
 /**
- * 
+ *
  */
 package org.formbuilder.main.impl;
 
-import javax.swing.JComponent;
-
 import org.formbuilder.main.BeanMapper;
 import org.formbuilder.main.Form;
+
+import javax.swing.*;
 
 /**
  * @author aeremenok 2010
  * @param <B>
  */
 public class FormImpl<B>
-    implements
-    Form<B>
+        implements Form<B>
 {
-    private final JComponent panel;
-    private B                value;
+    private JComponent panel;
+    private B value;
+    private final Class<B> beanClass;
+    private final BeanMapper<B> beanMapper;
 
-    public FormImpl( final Class<B> beanClass, final BeanMapper<B> beanMapper )
+    public FormImpl( final Class<B> beanClass,
+                     final BeanMapper<B> beanMapper )
     {
-        panel = beanMapper.map( beanClass );
+        this.beanClass = beanClass;
+        this.beanMapper = beanMapper;
     }
 
     @Override
     public JComponent asComponent()
     {
+        if ( panel == null )
+        {
+            panel = beanMapper.map( beanClass );
+        }
         return panel;
     }
 

@@ -1,29 +1,25 @@
 /**
- * 
+ *
  */
 package org.formbuilder.main;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
-
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
-import java.util.concurrent.Callable;
-
-import javax.swing.Box;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
+import org.fest.swing.edt.GuiActionRunner;
+import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.JPanelFixture;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import test.env.ComponentEnvironment;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.concurrent.Callable;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
+
 /**
- * @author aeremenok 2010
+ * ` * @author aeremenok 2010
  */
 public class BuilderTest
 {
@@ -32,20 +28,21 @@ public class BuilderTest
     @Test( dependsOnMethods = "setAndGetValue" )
     public void customizedLayout()
     {
+        assert !SwingUtilities.isEventDispatchThread();
         final Form<Person> form = Builder.from( Person.class ).mapBeanWith( new SampleBeanMapper<Person>()
         {
             @Override
             public JComponent map( final Person beanTemplate )
             {
-                //                final JPanel panel = new JPanel( new BorderLayout() );
-                final Box panel = Box.createHorizontalBox();
+                assert SwingUtilities.isEventDispatchThread();
+                final JPanel panel = new JPanel( new BorderLayout() );
                 panel.add( component( beanTemplate.getName() ) );
                 panel.add( component( beanTemplate.getAge() ) );
                 return panel;
             }
         } ).buildForm();
 
-        final JComponent component = form.asComponent();
+        final JComponent component = buildComponentInEDT( form );
         verifyLayout( component, JPanel.class, BorderLayout.class );
         addToWindow( component );
 
@@ -56,7 +53,7 @@ public class BuilderTest
             wrapperPanel.spinner( "age" );
             fail();
         }
-        catch( final Exception e )
+        catch ( final Exception ignored )
         {}
     }
 
@@ -65,7 +62,7 @@ public class BuilderTest
     {
         final Form<Person> form = Builder.from( Person.class ).buildForm();
 
-        final JComponent component = form.asComponent();
+        final JComponent component = buildComponentInEDT( form );
         verifyLayout( component, JPanel.class, GridBagLayout.class );
         addToWindow( component );
 
@@ -83,17 +80,29 @@ public class BuilderTest
         wrapperPanel.spinner( "age" ).requireValue( 24 );
     }
 
+    private JComponent buildComponentInEDT( final Form<Person> form )
+    {
+        return GuiActionRunner.execute( new GuiQuery<JComponent>()
+        {
+            @Override
+            protected JComponent executeInEDT()
+            {
+                return form.asComponent();
+            }
+        } );
+    }
+
     @BeforeClass
     public void setUp()
-        throws Exception
+            throws
+            Exception
     {
         this.env = ComponentEnvironment.fromQuery( new Callable<JPanel>()
         {
             @Override
             public JPanel call()
             {
-                final JPanel containerPanel = new JPanel( new BorderLayout() );
-                return containerPanel;
+                return new JPanel( new BorderLayout() );
             }
         } );
         this.env.setUp( this );
@@ -101,7 +110,8 @@ public class BuilderTest
 
     @AfterClass
     public void tearDown()
-        throws Exception
+            throws
+            Exception
     {
         this.env.tearDown( this );
     }
@@ -112,8 +122,9 @@ public class BuilderTest
         env.getFrameFixture().component().pack();
     }
 
-    private void verifyLayout( final JComponent component, final Class<? extends JComponent> superClass,
-        final Class<? extends LayoutManager> layoutClass )
+    private void verifyLayout( final JComponent component,
+                               final Class<? extends JComponent> superClass,
+                               final Class<? extends LayoutManager> layoutClass )
     {
         assert superClass.isAssignableFrom( component.getClass() ) : component;
         assert layoutClass.isAssignableFrom( component.getLayout().getClass() ) : component.getLayout();
