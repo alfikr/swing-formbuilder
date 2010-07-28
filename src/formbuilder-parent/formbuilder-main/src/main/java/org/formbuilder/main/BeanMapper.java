@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.formbuilder.main;
 
@@ -11,5 +11,6 @@ import javax.swing.JComponent;
  */
 public interface BeanMapper<B>
 {
-    JComponent map( Class<B> beanClass );
+    JComponent map( Class<B> beanClass,
+                    final TypeMappers typeMappers );
 }

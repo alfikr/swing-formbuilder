@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.formbuilder.main;
 
@@ -13,7 +13,8 @@ import org.formbuilder.main.impl.GridBagMapper;
 public class Builder<B>
 {
     private final Class<B> beanClass;
-    private BeanMapper<B>  beanMapper = new GridBagMapper<B>();
+    private BeanMapper<B> beanMapper = new GridBagMapper<B>();
+    private TypeMappers typeMappers = new TypeMappers();
 
     private Builder( final Class<B> beanClass )
     {
@@ -27,7 +28,7 @@ public class Builder<B>
 
     public Form<B> buildForm()
     {
-        return new FormImpl<B>( beanClass, beanMapper );
+        return new FormImpl<B>( beanClass, beanMapper , typeMappers);
     }
 
     public Builder<B> mapBeanWith( final BeanMapper<B> beanMapper )
@@ -36,16 +37,16 @@ public class Builder<B>
         return this;
     }
 
-    public Builder<B> mapTypeWith( final Class<?> type, final TypeMapper typeMapper )
+    public Builder<B> use( final TypeMapper typeMapper )
+    {
+        typeMappers.addMapper( typeMapper );
+        return this;
+    }
+
+    public Builder<B> mapPropertyWith( final String propertyName,
+                                       final PropertyMapper propertyMapper )
     {
         // todo
         return this;
     }
-
-    public Builder<B> mapPropertyWith( final String propertyName, final PropertyMapper propertyMapper )
-    {
-        // todo
-        return this;
-    }
-
 }
