@@ -42,6 +42,15 @@ public class Mapping
         this.panel = panel;
     }
 
+    public Mapping()
+    {
+    }
+
+    public void setPanel( final JComponent panel )
+    {
+        this.panel = panel;
+    }
+
     public JComponent getPanel()
     {
         return panel;
