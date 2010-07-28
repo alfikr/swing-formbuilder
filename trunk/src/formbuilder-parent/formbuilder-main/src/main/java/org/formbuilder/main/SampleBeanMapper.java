@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.formbuilder.main;
 
@@ -30,7 +30,8 @@ public abstract class SampleBeanMapper<B>
     }
 
     @Override
-    public JComponent map( final Class<B> beanClass )
+    public JComponent map( final Class<B> beanClass,
+                           final TypeMappers typeMappers )
     {
         return map( Proxies.createProxy( beanClass, this ) );
     }

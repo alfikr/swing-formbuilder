@@ -19,7 +19,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 /**
- * ` * @author aeremenok 2010
+ * @author aeremenok 2010
  */
 public class BuilderTest
 {
@@ -29,7 +29,7 @@ public class BuilderTest
     public void customizedLayout()
     {
         assert !SwingUtilities.isEventDispatchThread();
-        final Form<Person> form = Builder.from( Person.class ).mapBeanWith( new SampleBeanMapper<Person>()
+        final Form<Person> form = buildFormInEDT( Builder.from( Person.class ).mapBeanWith( new SampleBeanMapper<Person>()
         {
             @Override
             public JComponent map( final Person beanTemplate )
@@ -40,9 +40,9 @@ public class BuilderTest
                 panel.add( component( beanTemplate.getAge() ) );
                 return panel;
             }
-        } ).buildForm();
+        } ) );
 
-        final JComponent component = buildComponentInEDT( form );
+        final JComponent component = form.asComponent();
         verifyLayout( component, JPanel.class, BorderLayout.class );
         addToWindow( component );
 
@@ -60,9 +60,9 @@ public class BuilderTest
     @Test
     public void setAndGetValue()
     {
-        final Form<Person> form = Builder.from( Person.class ).buildForm();
+        final Form<Person> form = buildFormInEDT( Builder.from( Person.class ) );
 
-        final JComponent component = buildComponentInEDT( form );
+        final JComponent component = form.asComponent();
         verifyLayout( component, JPanel.class, GridBagLayout.class );
         addToWindow( component );
 
@@ -77,17 +77,18 @@ public class BuilderTest
         wrapperPanel.label( "birthDate" ).requireText( "Date of birth" );
 
         wrapperPanel.textBox( "name" ).requireText( eav.getName() );
-        wrapperPanel.spinner( "age" ).requireValue( 24 );
+        wrapperPanel.spinner( "age" ).requireValue( eav.getAge() );
+        wrapperPanel.spinner( "birthDate" ).requireValue( eav.getBirthDate() );
     }
 
-    private JComponent buildComponentInEDT( final Form<Person> form )
+    private <B> Form<B> buildFormInEDT( final Builder<B> builder )
     {
-        return GuiActionRunner.execute( new GuiQuery<JComponent>()
+        return GuiActionRunner.execute( new GuiQuery<Form<B>>()
         {
             @Override
-            protected JComponent executeInEDT()
+            protected Form<B> executeInEDT()
             {
-                return form.asComponent();
+                return builder.buildForm();
             }
         } );
     }

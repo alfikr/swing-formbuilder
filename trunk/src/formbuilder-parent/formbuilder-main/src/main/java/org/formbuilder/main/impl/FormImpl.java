@@ -5,6 +5,7 @@ package org.formbuilder.main.impl;
 
 import org.formbuilder.main.BeanMapper;
 import org.formbuilder.main.Form;
+import org.formbuilder.main.TypeMappers;
 
 import javax.swing.*;
 
@@ -15,25 +16,19 @@ import javax.swing.*;
 public class FormImpl<B>
         implements Form<B>
 {
-    private JComponent panel;
     private B value;
-    private final Class<B> beanClass;
-    private final BeanMapper<B> beanMapper;
+    private final JComponent panel;
 
     public FormImpl( final Class<B> beanClass,
-                     final BeanMapper<B> beanMapper )
+                     final BeanMapper<B> beanMapper,
+                     final TypeMappers typeMappers )
     {
-        this.beanClass = beanClass;
-        this.beanMapper = beanMapper;
+        this.panel = beanMapper.map( beanClass, typeMappers );
     }
 
     @Override
     public JComponent asComponent()
     {
-        if ( panel == null )
-        {
-            panel = beanMapper.map( beanClass );
-        }
         return panel;
     }
 
