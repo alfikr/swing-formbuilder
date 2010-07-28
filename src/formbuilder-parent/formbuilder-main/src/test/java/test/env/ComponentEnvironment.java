@@ -1,19 +1,18 @@
 /**
- * 
+ *
  */
 package test.env;
 
-import java.util.concurrent.Callable;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
+import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.fixture.GenericComponentFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.main.util.WrapperPanel;
+
+import javax.swing.*;
+import java.util.concurrent.Callable;
 
 /**
  * @author eav 2010
@@ -80,6 +79,7 @@ public class ComponentEnvironment<C extends JComponent>
             protected JFrame executeInEDT()
                 throws Throwable
             {
+                UIManager.setLookAndFeel( new NimbusLookAndFeel() );
                 final JFrame frame = new JFrame( "test" );
                 component = guiQuery.call();
                 final WrapperPanel contentPane = new WrapperPanel( component, scroll );

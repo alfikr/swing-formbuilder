@@ -28,6 +28,8 @@ public class BuilderTest
 
     @Test( dependsOnMethods = "setAndGetValue" )
     public void customizedLayout()
+            throws
+            InterruptedException
     {
         assert !SwingUtilities.isEventDispatchThread();
         final Form<Person> form = buildFormInEDT( Builder.from( Person.class ).mapBeanWith( new SampleBeanMapper<Person>()
@@ -35,10 +37,8 @@ public class BuilderTest
             @Override
             public JComponent map( final Person beanTemplate )
             {
-                assert SwingUtilities.isEventDispatchThread();
                 final JPanel panel = new JPanel( new BorderLayout() );
                 panel.add( component( beanTemplate.getName() ) );
-                panel.add( component( beanTemplate.getAge() ) );
                 return panel;
             }
         } ) );
@@ -49,9 +49,10 @@ public class BuilderTest
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
         wrapperPanel.textBox( "name" );
+
         try
         {
-            wrapperPanel.spinner( "age" );
+            assert wrapperPanel.spinner( "age" ) == null;
             fail();
         }
         catch ( final Exception ignored )
@@ -124,7 +125,9 @@ public class BuilderTest
 
     private void addToWindow( final JComponent component )
     {
-        env.getComponent().add( component );
+        final JPanel panel = env.getComponent();
+        panel.removeAll();
+        panel.add( component );
         env.getFrameFixture().component().pack();
     }
 
