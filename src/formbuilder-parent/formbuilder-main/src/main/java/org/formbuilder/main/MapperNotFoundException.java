@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
  *         Time: 12:31:28
  */
 public class MapperNotFoundException
-        extends Exception
+        extends RuntimeException
 {
     private final Method readMethod;
 

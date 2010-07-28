@@ -24,13 +24,6 @@ public abstract class AbstractBeanMapper<B>
 {
     private static final Logger log = Logger.getLogger( AbstractBeanMapper.class );
 
-    protected JComponent getComponent( final String propertyName )
-    {
-        final JTextField jTextField = new JTextField();
-        jTextField.setName( propertyName );
-        return jTextField;
-    }
-
     protected BeanInfo getBeanInfo( final Class<?> beanClass )
     {
         try
