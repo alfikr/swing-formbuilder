@@ -13,6 +13,7 @@ import test.env.ComponentEnvironment;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import static org.testng.Assert.assertEquals;
@@ -67,6 +68,10 @@ public class BuilderTest
         addToWindow( component );
 
         final Person eav = new Person();
+        eav.setName( "eav" );
+        eav.setAge( 24 );
+        eav.setBirthDate( new Date( 1 ) );
+
         form.setValue( eav );
         assertEquals( form.getValue(), eav );
 
