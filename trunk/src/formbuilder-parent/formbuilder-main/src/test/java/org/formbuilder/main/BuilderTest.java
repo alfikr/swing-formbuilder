@@ -5,7 +5,9 @@ package org.formbuilder.main;
 
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
+import org.fest.swing.edt.GuiTask;
 import org.fest.swing.fixture.JPanelFixture;
+import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.main.map.bean.SampleBeanMapper;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -18,6 +20,7 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotSame;
 import static org.testng.Assert.fail;
 
 /**
@@ -29,8 +32,6 @@ public class BuilderTest
 
     @Test( dependsOnMethods = "setAndGetValue" )
     public void customizedLayout()
-            throws
-            InterruptedException
     {
         assert !SwingUtilities.isEventDispatchThread();
         final Form<Person> form = buildFormInEDT( Builder.from( Person.class ).mapBeanWith( new SampleBeanMapper<Person>()
@@ -70,7 +71,7 @@ public class BuilderTest
         addToWindow( component );
 
         final Person oldValue = createPerson();
-        form.setValue( oldValue );
+        setValueInEDT( form, oldValue );
         requireNewBeanCreated( form, oldValue );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
@@ -82,6 +83,25 @@ public class BuilderTest
         wrapperPanel.textBox( "name" ).requireText( oldValue.getName() );
         wrapperPanel.spinner( "age" ).requireValue( oldValue.getAge() );
         wrapperPanel.spinner( "birthDate" ).requireValue( oldValue.getBirthDate() );
+    }
+
+    @Test( dependsOnMethods = "customizedLayout" )
+    public void testValidation()
+            throws
+            InterruptedException
+    {
+        final Form<Person> form = buildFormInEDT( Builder.from( Person.class ) );
+        addToWindow( form.asComponent() );
+
+        final Person oldValue = createPerson();
+        setValueInEDT( form, oldValue );
+
+        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
+        JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
+
+        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        nameTextBox.setText( "ee" );
+        assertEquals( nameTextBox.target.getBackground(), Color.PINK );
     }
 
     private void requireNewBeanCreated( final Form<Person> form,
@@ -109,6 +129,21 @@ public class BuilderTest
             protected Form<B> executeInEDT()
             {
                 return builder.buildForm();
+            }
+        } );
+    }
+
+    private <B> void setValueInEDT( final Form<B> form,
+                                    final B value )
+    {
+        GuiActionRunner.execute( new GuiTask()
+        {
+            @Override
+            protected void executeInEDT()
+                    throws
+                    Throwable
+            {
+                form.setValue( value );
             }
         } );
     }

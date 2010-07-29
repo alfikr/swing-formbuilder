@@ -1,6 +1,8 @@
 package org.formbuilder.main.map.type;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * @author aeremenok
@@ -35,5 +37,37 @@ public enum StringMapper
     public JTextField createComponent()
     {
         return new JTextField();
+    }
+
+    @Override
+    public void bindChangeListener( final JTextField component,
+                                    final ValueChangeListener<String> stringChangeListener )
+    {
+        component.getDocument().addDocumentListener( new DocumentListener()
+        {
+            @Override
+            public void insertUpdate( final DocumentEvent e )
+            {
+                stringChangeListener.onChange();
+            }
+
+            @Override
+            public void removeUpdate( final DocumentEvent e )
+            {
+                stringChangeListener.onChange();
+            }
+
+            @Override
+            public void changedUpdate( final DocumentEvent e )
+            {
+                stringChangeListener.onChange();
+            }
+        } );
+    }
+
+    @Override
+    public ValidationHighlighter getValidationHighlighter()
+    {
+        return BackgroundHighlighter.INSTANCE;
     }
 }

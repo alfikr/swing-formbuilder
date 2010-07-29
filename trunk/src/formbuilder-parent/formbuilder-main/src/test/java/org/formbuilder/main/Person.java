@@ -5,6 +5,7 @@ package org.formbuilder.main;
 
 import org.formbuilder.main.annotations.UIField;
 
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,6 +35,7 @@ public class Person
         return this.birthDate;
     }
 
+    @Size( min = 3 )
     @UIField( title = "Person's first name" )
     public String getName()
     {
@@ -97,5 +99,11 @@ public class Person
         result = 31 * result + age;
         result = 31 * result + ( birthDate != null ? birthDate.hashCode() : 0 );
         return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Person{" + "name='" + name + '\'' + ", age=" + age + ", birthDate=" + birthDate + '}';
     }
 }

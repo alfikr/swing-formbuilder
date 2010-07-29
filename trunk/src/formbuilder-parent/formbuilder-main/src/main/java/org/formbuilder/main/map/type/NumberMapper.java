@@ -1,6 +1,7 @@
 package org.formbuilder.main.map.type;
 
 import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  * @author aeremenok
@@ -35,5 +36,25 @@ public enum NumberMapper
     public JSpinner createComponent()
     {
         return new JSpinner( new SpinnerNumberModel() );
+    }
+
+    @Override
+    public void bindChangeListener( final JSpinner component,
+                                    final ValueChangeListener<Number> numberChangeListener )
+    {
+        component.addChangeListener( new ChangeListener()
+        {
+            @Override
+            public void stateChanged( final ChangeEvent e )
+            {
+                numberChangeListener.onChange();
+            }
+        } );
+    }
+
+    @Override
+    public ValidationHighlighter getValidationHighlighter()
+    {
+        return BackgroundHighlighter.INSTANCE;
     }
 }
