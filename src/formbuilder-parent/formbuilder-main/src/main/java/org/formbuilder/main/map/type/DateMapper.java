@@ -1,6 +1,8 @@
 package org.formbuilder.main.map.type;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.util.Date;
 
 /**
@@ -36,5 +38,25 @@ public enum DateMapper
     public JSpinner createComponent()
     {
         return new JSpinner( new SpinnerDateModel() );
+    }
+
+    @Override
+    public void bindChangeListener( final JSpinner component,
+                                    final ValueChangeListener<Date> dateValueChangeListener )
+    {
+        component.addChangeListener( new ChangeListener()
+        {
+            @Override
+            public void stateChanged( final ChangeEvent e )
+            {
+                dateValueChangeListener.onChange();
+            }
+        } );
+    }
+
+    @Override
+    public ValidationHighlighter getValidationHighlighter()
+    {
+        return BackgroundHighlighter.INSTANCE;
     }
 }

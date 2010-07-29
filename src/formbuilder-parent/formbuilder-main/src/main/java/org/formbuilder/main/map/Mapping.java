@@ -99,6 +99,7 @@ public class Mapping
 
     public void setComponentValues( final Object bean )
     {
+        assert SwingUtilities.isEventDispatchThread();
         for ( Map.Entry<PropertyDescriptor, PropertyMapping> entry : propertyMappings.entrySet() )
         {
             final PropertyMapping propertyMapping = entry.getValue();

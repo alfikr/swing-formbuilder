@@ -18,4 +18,13 @@ public interface TypeMapper<C extends JComponent, V>
                    V value );
 
     C createComponent();
+
+    void bindChangeListener( C component,
+                             ValueChangeListener<V> changeListener );
+
+
+
+
+
+    ValidationHighlighter getValidationHighlighter();
 }

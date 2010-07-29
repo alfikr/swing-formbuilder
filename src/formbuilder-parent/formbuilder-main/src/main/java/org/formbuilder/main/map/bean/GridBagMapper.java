@@ -36,11 +36,10 @@ public class GridBagMapper<B>
             final PropertyDescriptor descriptor = propertyDescriptors[i];
             if ( isSupported( descriptor ) )
             {
-                gridBagPanel.add( createLabel( mapping, descriptor ), i, 0 );
-
                 try
                 {
                     gridBagPanel.add( createEditor( typeMappers, descriptor, mapping ), i, 1 );
+                    gridBagPanel.add( createLabel( mapping, descriptor ), i, 0 );
                 }
                 catch ( MapperNotFoundException e )
                 {

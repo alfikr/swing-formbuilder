@@ -38,13 +38,14 @@ public class FormImpl<B>
     public B getValue()
     {
         B newBean = Reflection.newInstance( beanClass );
-        mapping.setBeanValues(newBean);
+        mapping.setBeanValues( newBean );
         return newBean;
     }
 
     @Override
     public void setValue( final B bean )
     {
+        assert SwingUtilities.isEventDispatchThread();
         mapping.setComponentValues( bean );
     }
 }
