@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.formbuilder.main.proxy;
+package org.formbuilder.main.util;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.InvocationHandler;
@@ -15,9 +15,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author aeremenok 2010
  */
-public class Proxies
+public class Reflection
 {
     private static Map<Class, Object> emptyValues = new HashMap<Class, Object>();
+    private static Map<Class, Class> primitiveToBox = new HashMap<Class, Class>();
 
     static
     {
@@ -27,6 +28,23 @@ public class Proxies
         emptyValues.put( Character.TYPE, Character.MIN_VALUE );
         emptyValues.put( Double.TYPE, Double.MIN_VALUE );
         emptyValues.put( Float.TYPE, Float.MIN_VALUE );
+    }
+
+    static
+    {
+        Reflection.primitiveToBox.put( Integer.TYPE, Integer.class );
+        Reflection.primitiveToBox.put( Long.TYPE, Long.class );
+
+        Reflection.primitiveToBox.put( Double.TYPE, Double.class );
+        Reflection.primitiveToBox.put( Float.TYPE, Float.class );
+
+        Reflection.primitiveToBox.put( Boolean.TYPE, Boolean.class );
+
+        Reflection.primitiveToBox.put( Character.TYPE, Character.class );
+        Reflection.primitiveToBox.put( Short.TYPE, Short.class );
+
+        // todo will ever be used?
+//        primitiveToBox.put( Void.TYPE, Void.class );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -48,5 +66,27 @@ public class Proxies
             return null;
         }
         return checkNotNull( emptyValues.get( returnType ), "No default return value for method " + method );
+    }
+
+    public static <T> T newInstance( Class<T> aClass )
+    {
+        try
+        {
+            return aClass.newInstance();
+        }
+        catch ( Exception e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
+
+    public static Class<?> box( final Class<?> mayBePrimitive )
+    {
+        if ( mayBePrimitive.isPrimitive() )
+        {
+            final Class boxed = primitiveToBox.get( mayBePrimitive );
+            return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
+        }
+        return mayBePrimitive;
     }
 }

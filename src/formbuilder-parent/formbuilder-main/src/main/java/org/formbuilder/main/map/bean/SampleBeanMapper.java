@@ -1,10 +1,13 @@
 /**
  *
  */
-package org.formbuilder.main;
+package org.formbuilder.main.map.bean;
 
 import net.sf.cglib.proxy.InvocationHandler;
-import org.formbuilder.main.proxy.Proxies;
+import org.formbuilder.main.map.MapperNotFoundException;
+import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.util.Reflection;
 
 import javax.swing.*;
 import java.beans.BeanInfo;
@@ -37,7 +40,7 @@ public abstract class SampleBeanMapper<B>
         assert SwingUtilities.isEventDispatchThread();
 
         lastCalledMethod = method;
-        return Proxies.emptyValue( method );
+        return Reflection.emptyValue( method );
     }
 
     @Override
@@ -46,7 +49,7 @@ public abstract class SampleBeanMapper<B>
     {
         this.currentTypeMappers = typeMappers;
         this.currentMapping = new Mapping();
-        this.currentMapping.setPanel( map( Proxies.createProxy( beanClass, this ) ) );
+        this.currentMapping.setPanel( map( Reflection.createProxy( beanClass, this ) ) );
         return this.currentMapping;
     }
 

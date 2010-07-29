@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
-package org.formbuilder.main;
+package org.formbuilder.main.map;
 
+import javax.swing.*;
 import java.beans.PropertyDescriptor;
-
-import javax.swing.JComponent;
 
 /**
  * @author aeremenok 2010

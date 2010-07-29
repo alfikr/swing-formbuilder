@@ -1,10 +1,14 @@
 /**
  *
  */
-package org.formbuilder.main;
+package org.formbuilder.main.map.bean;
 
 import org.apache.log4j.Logger;
+import org.formbuilder.main.map.MapperNotFoundException;
+import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.TypeMappers;
 import org.formbuilder.main.annotations.UIField;
+import org.formbuilder.main.map.type.TypeMapper;
 
 import javax.swing.*;
 import java.beans.BeanInfo;

@@ -3,8 +3,11 @@
  */
 package org.formbuilder.main;
 
-import org.formbuilder.main.impl.FormImpl;
-import org.formbuilder.main.impl.GridBagMapper;
+import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.bean.GridBagMapper;
+import org.formbuilder.main.map.bean.BeanMapper;
+import org.formbuilder.main.map.PropertyMapper;
+import org.formbuilder.main.map.type.TypeMapper;
 
 /**
  * @author aeremenok 2010
