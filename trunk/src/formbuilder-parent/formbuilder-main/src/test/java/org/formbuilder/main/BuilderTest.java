@@ -6,6 +6,7 @@ package org.formbuilder.main;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.JPanelFixture;
+import org.formbuilder.main.map.bean.SampleBeanMapper;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -68,13 +69,9 @@ public class BuilderTest
         verifyLayout( component, JPanel.class, GridBagLayout.class );
         addToWindow( component );
 
-        final Person eav = new Person();
-        eav.setName( "eav" );
-        eav.setAge( 24 );
-        eav.setBirthDate( new Date( 1 ) );
-
-        form.setValue( eav );
-        assertEquals( form.getValue(), eav );
+        final Person oldValue = createPerson();
+        form.setValue( oldValue );
+        requireNewBeanCreated( form, oldValue );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
 
@@ -82,9 +79,26 @@ public class BuilderTest
         wrapperPanel.label( "age" ).requireText( "Age" );
         wrapperPanel.label( "birthDate" ).requireText( "Date of birth" );
 
-        wrapperPanel.textBox( "name" ).requireText( eav.getName() );
-        wrapperPanel.spinner( "age" ).requireValue( eav.getAge() );
-        wrapperPanel.spinner( "birthDate" ).requireValue( eav.getBirthDate() );
+        wrapperPanel.textBox( "name" ).requireText( oldValue.getName() );
+        wrapperPanel.spinner( "age" ).requireValue( oldValue.getAge() );
+        wrapperPanel.spinner( "birthDate" ).requireValue( oldValue.getBirthDate() );
+    }
+
+    private void requireNewBeanCreated( final Form<Person> form,
+                                        final Person oldValue )
+    {
+        final Person newValue = form.getValue();
+        assertEquals( newValue, oldValue );
+        assert form.getValue() != oldValue;
+    }
+
+    private Person createPerson()
+    {
+        final Person oldValue = new Person();
+        oldValue.setName( "oldValue" );
+        oldValue.setAge( 24 );
+        oldValue.setBirthDate( new Date( 1 ) );
+        return oldValue;
     }
 
     private <B> Form<B> buildFormInEDT( final Builder<B> builder )

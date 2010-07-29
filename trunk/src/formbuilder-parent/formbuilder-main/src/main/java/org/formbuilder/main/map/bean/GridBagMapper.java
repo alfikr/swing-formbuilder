@@ -1,13 +1,12 @@
 /**
  *
  */
-package org.formbuilder.main.impl;
+package org.formbuilder.main.map.bean;
 
 import org.apache.log4j.Logger;
-import org.formbuilder.main.AbstractBeanMapper;
-import org.formbuilder.main.MapperNotFoundException;
-import org.formbuilder.main.Mapping;
-import org.formbuilder.main.TypeMappers;
+import org.formbuilder.main.map.MapperNotFoundException;
+import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.TypeMappers;
 import org.formbuilder.main.util.GridBagPanel;
 
 import javax.swing.*;

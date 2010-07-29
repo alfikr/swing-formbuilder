@@ -1,7 +1,10 @@
 /**
  *
  */
-package org.formbuilder.main;
+package org.formbuilder.main.map.bean;
+
+import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.TypeMappers;
 
 /**
  * @author aeremenok 2010

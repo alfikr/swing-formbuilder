@@ -1,6 +1,6 @@
-package org.formbuilder.main;
+package org.formbuilder.main.map;
 
-import org.apache.log4j.Logger;
+import org.formbuilder.main.map.type.TypeMapper;
 
 import javax.swing.*;
 import java.beans.PropertyDescriptor;
@@ -14,10 +14,34 @@ import java.util.Map;
  */
 public class Mapping
 {
-    private static final Logger log = Logger.getLogger( Mapping.class );
+    private final Map<PropertyDescriptor, PropertyMapping> propertyMappings = new HashMap<PropertyDescriptor, PropertyMapping>();
     private JComponent panel;
-    private Map<PropertyDescriptor, JLabel> labels = new HashMap<PropertyDescriptor, JLabel>();
-    private Map<PropertyDescriptor, PropertyMapping> propertyMappings = new HashMap<PropertyDescriptor, PropertyMapping>();
+
+    public void setBeanValues( final Object bean )
+    {
+        for ( Map.Entry<PropertyDescriptor, PropertyMapping> entry : propertyMappings.entrySet() )
+        {
+            final PropertyMapping propertyMapping = entry.getValue();
+            final PropertyDescriptor propertyDescriptor = entry.getKey();
+
+            final Object propertyValue = propertyMapping.getValue();
+            setValue( bean, propertyValue, propertyDescriptor );
+        }
+    }
+
+    private void setValue( final Object bean,
+                           final Object propertyValue,
+                           final PropertyDescriptor propertyDescriptor )
+    {
+        try
+        {
+            propertyDescriptor.getWriteMethod().invoke( bean, propertyValue );
+        }
+        catch ( Exception e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
 
     private class PropertyMapping
     {
@@ -31,10 +55,13 @@ public class Mapping
             this.mapper = mapper;
         }
 
+        @SuppressWarnings( {"unchecked"} )
         public void setValue( Object value )
-        {
-            mapper.setValue( component, value );
-        }
+        { mapper.setValue( component, value ); }
+
+        @SuppressWarnings( {"unchecked"} )
+        public Object getValue()
+        {return mapper.getValue( component );}
     }
 
     public Mapping( final JComponent panel )
@@ -66,7 +93,8 @@ public class Mapping
     public void addLabel( PropertyDescriptor descriptor,
                           JLabel label )
     {
-        labels.put( descriptor, label );
+        // todo
+//        labels.put( descriptor, label );
     }
 
     public void setComponentValues( final Object bean )
@@ -90,7 +118,6 @@ public class Mapping
         }
         catch ( Exception e )
         {
-            log.error( e, e );
             throw new RuntimeException( e );
         }
     }

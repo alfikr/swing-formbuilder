@@ -1,4 +1,4 @@
-package org.formbuilder.main;
+package org.formbuilder.main.map.type;
 
 import javax.swing.*;
 import java.util.Date;

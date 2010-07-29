@@ -1,10 +1,14 @@
-package org.formbuilder.main;
+package org.formbuilder.main.map;
+
+import org.formbuilder.main.map.type.DateMapper;
+import org.formbuilder.main.map.type.NumberMapper;
+import org.formbuilder.main.map.type.StringMapper;
+import org.formbuilder.main.map.type.TypeMapper;
+import org.formbuilder.main.util.Reflection;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author aeremenok
@@ -13,25 +17,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class TypeMappers
 {
-    private static Map<Class, Class> primitiveToBox = new HashMap<Class, Class>();
-
-    static
-    {
-        primitiveToBox.put( Integer.TYPE, Integer.class );
-        primitiveToBox.put( Long.TYPE, Long.class );
-
-        primitiveToBox.put( Double.TYPE, Double.class );
-        primitiveToBox.put( Float.TYPE, Float.class );
-
-        primitiveToBox.put( Boolean.TYPE, Boolean.class );
-
-        primitiveToBox.put( Character.TYPE, Character.class );
-        primitiveToBox.put( Short.TYPE, Short.class );
-
-        // todo will ever be used?
-//        primitiveToBox.put( Void.TYPE, Void.class );
-    }
-
     private Map<Class, TypeMapper> mappers = new HashMap<Class, TypeMapper>();
 
     public TypeMappers()
@@ -56,7 +41,7 @@ public class TypeMappers
             throws
             MapperNotFoundException
     {
-        final Class<?> boxed = box( readMethod.getReturnType() );
+        final Class<?> boxed = Reflection.box( readMethod.getReturnType() );
 
         final TypeMapper mapper = mappers.get( boxed );
         if ( mapper != null )
@@ -83,15 +68,5 @@ public class TypeMappers
             }
         }
         return null;
-    }
-
-    private Class<?> box( final Class<?> mayBePrimitive )
-    {
-        if ( mayBePrimitive.isPrimitive() )
-        {
-            final Class boxed = primitiveToBox.get( mayBePrimitive );
-            return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
-        }
-        return mayBePrimitive;
     }
 }

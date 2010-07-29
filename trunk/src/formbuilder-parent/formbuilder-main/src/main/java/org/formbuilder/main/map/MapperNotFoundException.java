@@ -1,4 +1,4 @@
-package org.formbuilder.main;
+package org.formbuilder.main.map;
 
 import java.lang.reflect.Method;
 

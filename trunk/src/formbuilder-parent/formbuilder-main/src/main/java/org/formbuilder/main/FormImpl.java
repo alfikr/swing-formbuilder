@@ -1,12 +1,12 @@
 /**
  *
  */
-package org.formbuilder.main.impl;
+package org.formbuilder.main;
 
-import org.formbuilder.main.BeanMapper;
-import org.formbuilder.main.Form;
-import org.formbuilder.main.Mapping;
-import org.formbuilder.main.TypeMappers;
+import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.bean.BeanMapper;
+import org.formbuilder.main.util.Reflection;
 
 import javax.swing.*;
 
@@ -17,13 +17,14 @@ import javax.swing.*;
 public class FormImpl<B>
         implements Form<B>
 {
-    private B value;
     private Mapping mapping;
+    private Class<B> beanClass;
 
     public FormImpl( final Class<B> beanClass,
                      final BeanMapper<B> beanMapper,
                      final TypeMappers typeMappers )
     {
+        this.beanClass = beanClass;
         this.mapping = beanMapper.map( beanClass, typeMappers );
     }
 
@@ -36,13 +37,14 @@ public class FormImpl<B>
     @Override
     public B getValue()
     {
-        return value;
+        B newBean = Reflection.newInstance( beanClass );
+        mapping.setBeanValues(newBean);
+        return newBean;
     }
 
     @Override
     public void setValue( final B bean )
     {
-        this.value = bean;
         mapping.setComponentValues( bean );
     }
 }
