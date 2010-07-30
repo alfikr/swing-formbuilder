@@ -4,10 +4,11 @@
 package org.formbuilder.main.map.bean;
 
 import org.apache.log4j.Logger;
-import org.formbuilder.main.annotations.UIField;
-import org.formbuilder.main.map.MapperNotFoundException;
+import org.formbuilder.main.annotations.UITitle;
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.MappingException;
+import org.formbuilder.main.map.MappingRules;
+import org.formbuilder.main.map.UnmappedTypeException;
 import org.formbuilder.main.map.ValueChangeListener;
 import org.formbuilder.main.map.type.TypeMapper;
 
@@ -66,10 +67,10 @@ public abstract class AbstractBeanMapper<B>
     {
         final Method readMethod = descriptor.getReadMethod();
 
-        UIField uiField = readMethod.getAnnotation( UIField.class );
-        if ( uiField != null )
+        UITitle uiTitle = readMethod.getAnnotation( UITitle.class );
+        if ( uiTitle != null )
         {
-            return uiField.title();
+            return uiTitle.value();
         }
 
         String className = readMethod.getDeclaringClass().getSimpleName();
@@ -90,46 +91,71 @@ public abstract class AbstractBeanMapper<B>
     }
 
     @SuppressWarnings( {"unchecked"} )
-    protected JComponent createEditor( final TypeMappers typeMappers,
-                                       final PropertyDescriptor descriptor,
+    protected JComponent createEditor( final PropertyDescriptor descriptor,
+                                       final MappingRules mappingRules,
                                        final Mapping mapping )
             throws
-            MapperNotFoundException
+            MappingException
     {
-        final TypeMapper mapper = typeMappers.getMapper( descriptor.getReadMethod() );
+        final TypeMapper mapper = mappingRules.getMapper( descriptor );
         final JComponent editor = mapper.createComponent();
+        editor.setEnabled( isEditable( descriptor ) );
         editor.setName( descriptor.getName() );
-        mapper.bindChangeListener( editor, new ValueChangeListener()
-        {
-            @Override
-            public void onChange()
-            {
-                final Object newValue = mapper.getValue( editor );
-                final Set<ConstraintViolation> violations = doValidation( descriptor, newValue );
-                mapper.getValidationHighlighter().highlightViolations( editor, violations );
-            }
-        } );
+        mapper.bindChangeListener( editor, new ValidateChangedValue( mapper, editor, descriptor ) );
+
         mapping.addEditor( descriptor, editor, mapper );
+
         return editor;
     }
 
     @SuppressWarnings( {"unchecked"} )
     protected Set<ConstraintViolation> doValidation( final PropertyDescriptor descriptor,
-                                                        final Object newValue )
+                                                     final Object newValue )
     {
         final Class beanType = descriptor.getReadMethod().getDeclaringClass();
         final String propertyName = descriptor.getName();
         return validator.validateValue( beanType, propertyName, newValue );
     }
 
-    protected void handleNotFoundMapper( final MapperNotFoundException e )
+    protected void handleMappingException( final MappingException e )
     {
         // todo implement different strategies
-        log.warn( "Cannot find mapper for method " + e.getReadMethod() );
+        log.warn( "Cannot find mapper for method " + e.getDescriptor() );
     }
 
     protected boolean isSupported( final PropertyDescriptor descriptor )
     {
         return descriptor.getReadMethod() != null && !"class".equals( descriptor.getName() );
+    }
+
+    protected boolean isEditable( final PropertyDescriptor descriptor )
+    {
+        return descriptor.getWriteMethod() != null;
+    }
+
+    private class ValidateChangedValue
+            implements ValueChangeListener
+    {
+        private final TypeMapper mapper;
+        private final JComponent editor;
+        private final PropertyDescriptor descriptor;
+
+        public ValidateChangedValue( final TypeMapper mapper,
+                                     final JComponent editor,
+                                     final PropertyDescriptor descriptor )
+        {
+            this.mapper = mapper;
+            this.editor = editor;
+            this.descriptor = descriptor;
+        }
+
+        @SuppressWarnings( {"unchecked"} )
+        @Override
+        public void onChange()
+        {
+            final Object newValue = mapper.getValue( editor );
+            final Set<ConstraintViolation> violations = doValidation( descriptor, newValue );
+            mapper.getValidationHighlighter().highlightViolations( editor, violations );
+        }
     }
 }

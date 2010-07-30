@@ -82,11 +82,12 @@ public class Reflection
 
     public static Class<?> box( final Class<?> mayBePrimitive )
     {
-        if ( mayBePrimitive.isPrimitive() )
+        if ( !mayBePrimitive.isPrimitive() )
         {
-            final Class boxed = primitiveToBox.get( mayBePrimitive );
-            return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
+            return mayBePrimitive;
         }
-        return mayBePrimitive;
+
+        final Class boxed = primitiveToBox.get( mayBePrimitive );
+        return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
     }
 }

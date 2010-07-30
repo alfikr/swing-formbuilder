@@ -13,9 +13,7 @@ import java.lang.annotation.Target;
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface UIField
+public @interface UITitle
 {
-    String title();
-
-    int number() default -1;
+    String value();
 }

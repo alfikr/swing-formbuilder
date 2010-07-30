@@ -3,7 +3,7 @@
  */
 package domain;
 
-import org.formbuilder.main.annotations.UIField;
+import org.formbuilder.main.annotations.UITitle;
 
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -15,11 +15,22 @@ import java.util.Set;
 public class Person
 {
     private String name;
+    private String description;
     private int age;
     private Date birthDate;
     private Set<Account> goodAccounts;
     private Set<Account> badAccounts;
     private Role role;
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription( final String description )
+    {
+        this.description = description;
+    }
 
     public Set<Account> getBadAccounts()
     {
@@ -51,14 +62,14 @@ public class Person
         return this.age;
     }
 
-    @UIField( title = "Date of birth" )
+    @UITitle( "Date of birth" )
     public Date getBirthDate()
     {
         return this.birthDate;
     }
 
     @Size( min = 3 )
-    @UIField( title = "Person's first name" )
+    @UITitle( "Person's first name" )
     public String getName()
     {
         return this.name;

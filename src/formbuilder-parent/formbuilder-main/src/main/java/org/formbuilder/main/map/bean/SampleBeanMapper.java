@@ -4,9 +4,9 @@
 package org.formbuilder.main.map.bean;
 
 import net.sf.cglib.proxy.InvocationHandler;
-import org.formbuilder.main.map.MapperNotFoundException;
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.MappingException;
+import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.util.Reflection;
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ public abstract class SampleBeanMapper<B>
         implements InvocationHandler
 {
     private Method lastCalledMethod;
-    private TypeMappers currentTypeMappers;
+    private MappingRules currentMappingRules;
     private Mapping currentMapping;
 
     @Override
@@ -45,9 +45,9 @@ public abstract class SampleBeanMapper<B>
 
     @Override
     public Mapping map( final Class<B> beanClass,
-                        final TypeMappers typeMappers )
+                        final MappingRules mappingRules )
     {
-        this.currentTypeMappers = typeMappers;
+        this.currentMappingRules = mappingRules;
         this.currentMapping = new Mapping();
         this.currentMapping.setPanel( map( Reflection.createProxy( beanClass, this ) ) );
         return this.currentMapping;
@@ -55,13 +55,13 @@ public abstract class SampleBeanMapper<B>
 
     protected JComponent component( @SuppressWarnings( "unused" ) final Object propertyValue )
             throws
-            MapperNotFoundException
+            MappingException
     {
         // todo error messages
-        final TypeMappers mappers = checkNotNull( currentTypeMappers );
+        final MappingRules mappers = checkNotNull( currentMappingRules );
         final Method readMethod = checkNotNull( lastCalledMethod );
         final Mapping mapping = checkNotNull( currentMapping );
-        return createEditor( mappers, getDescriptor( readMethod ), mapping );
+        return createEditor( getDescriptor( readMethod ), mappers, mapping );
     }
 
     protected PropertyDescriptor getDescriptor( final Method readMethod )
