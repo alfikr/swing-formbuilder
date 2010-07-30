@@ -7,8 +7,8 @@ import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
 import org.formbuilder.main.map.ValueChangeListener;
 import org.formbuilder.main.map.type.TypeMapper;
-import org.formbuilder.main.validation.BackgroundHighlighter;
-import org.formbuilder.main.validation.ValidationHighlighter;
+import org.formbuilder.main.validation.BackgroundMarker;
+import org.formbuilder.main.validation.ValidationMarker;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -72,7 +72,7 @@ public class PropertyMappingTest
         INSTANCE;
 
         @Override
-        public Class<String> valueClass()
+        public Class<String> getValueClass()
         {
             return String.class;
         }
@@ -123,9 +123,9 @@ public class PropertyMappingTest
         }
 
         @Override
-        public ValidationHighlighter getValidationHighlighter()
+        public ValidationMarker getValidationHighlighter()
         {
-            return BackgroundHighlighter.INSTANCE;
+            return BackgroundMarker.INSTANCE;
         }
     }
 }

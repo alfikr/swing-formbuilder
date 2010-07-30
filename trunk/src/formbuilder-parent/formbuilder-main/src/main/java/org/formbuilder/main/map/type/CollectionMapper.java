@@ -1,8 +1,8 @@
 package org.formbuilder.main.map.type;
 
 import org.formbuilder.main.map.ValueChangeListener;
-import org.formbuilder.main.validation.NothingHighlighter;
-import org.formbuilder.main.validation.ValidationHighlighter;
+import org.formbuilder.main.validation.DoNothingMarker;
+import org.formbuilder.main.validation.ValidationMarker;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -84,9 +84,9 @@ public abstract class CollectionMapper<R, CT extends Collection>
     }
 
     @Override
-    public ValidationHighlighter getValidationHighlighter()
+    public ValidationMarker getValidationHighlighter()
     {
-        return NothingHighlighter.INSTANCE;
+        return DoNothingMarker.INSTANCE;
     }
 
     public static class ImmutableListModel<R>

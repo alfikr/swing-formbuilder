@@ -15,14 +15,14 @@ import static com.google.common.collect.Iterables.transform;
  *         Date: 29.07.2010
  *         Time: 17:42:02
  */
-public enum BackgroundHighlighter
-        implements ValidationHighlighter
+public enum BackgroundMarker
+        implements ValidationMarker
 {
     INSTANCE;
 
     @Override
-    public void highlightViolations( final JComponent editor,
-                                     final Set<ConstraintViolation> violations )
+    public void markViolations( final JComponent editor,
+                                final Set<ConstraintViolation> violations )
     {
         assert SwingUtilities.isEventDispatchThread();
 
@@ -34,7 +34,12 @@ public enum BackgroundHighlighter
         }
 
         editor.setBackground( Color.PINK );
-        editor.setToolTipText( Joiner.on( ";\n" ).join( transform( violations, TO_MESSAGE ) ) );
+        editor.setToolTipText( digest( violations ) );
+    }
+
+    protected String digest( final Set<ConstraintViolation> violations )
+    {
+        return Joiner.on( ";\n" ).join( transform( violations, TO_MESSAGE ) );
     }
 
     Function<ConstraintViolation, String> TO_MESSAGE = new Function<ConstraintViolation, String>()

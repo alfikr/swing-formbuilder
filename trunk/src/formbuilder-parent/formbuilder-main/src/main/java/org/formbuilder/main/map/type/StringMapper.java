@@ -1,8 +1,8 @@
 package org.formbuilder.main.map.type;
 
 import org.formbuilder.main.map.ValueChangeListener;
-import org.formbuilder.main.validation.BackgroundHighlighter;
-import org.formbuilder.main.validation.ValidationHighlighter;
+import org.formbuilder.main.validation.BackgroundMarker;
+import org.formbuilder.main.validation.ValidationMarker;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -19,7 +19,7 @@ public enum StringMapper
     INSTANCE;
 
     @Override
-    public Class<String> valueClass()
+    public Class<String> getValueClass()
     {
         return String.class;
     }
@@ -70,8 +70,8 @@ public enum StringMapper
     }
 
     @Override
-    public ValidationHighlighter getValidationHighlighter()
+    public ValidationMarker getValidationHighlighter()
     {
-        return BackgroundHighlighter.INSTANCE;
+        return BackgroundMarker.INSTANCE;
     }
 }

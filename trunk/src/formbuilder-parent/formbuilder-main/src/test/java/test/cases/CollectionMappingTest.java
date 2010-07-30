@@ -81,7 +81,7 @@ public class CollectionMappingTest
         }
 
         @Override
-        public Class<Set> valueClass()
+        public Class<Set> getValueClass()
         {
             return Set.class;
         }

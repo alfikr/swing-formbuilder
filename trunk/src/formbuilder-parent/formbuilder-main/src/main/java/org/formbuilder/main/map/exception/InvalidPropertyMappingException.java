@@ -1,4 +1,4 @@
-package org.formbuilder.main.map;
+package org.formbuilder.main.map.exception;
 
 import java.beans.PropertyDescriptor;
 

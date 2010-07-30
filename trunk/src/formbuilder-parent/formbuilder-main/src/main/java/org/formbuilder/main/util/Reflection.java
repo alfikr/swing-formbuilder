@@ -6,6 +6,9 @@ package org.formbuilder.main.util;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.InvocationHandler;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,5 +92,17 @@ public class Reflection
 
         final Class boxed = primitiveToBox.get( mayBePrimitive );
         return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
+    }
+
+    public static BeanInfo getBeanInfo( final Class<?> beanClass )
+    {
+        try
+        {
+            return Introspector.getBeanInfo( beanClass );
+        }
+        catch ( final IntrospectionException e )
+        {
+            throw new RuntimeException( e );
+        }
     }
 }

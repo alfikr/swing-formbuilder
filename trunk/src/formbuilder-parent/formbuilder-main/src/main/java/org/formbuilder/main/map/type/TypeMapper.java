@@ -4,7 +4,7 @@
 package org.formbuilder.main.map.type;
 
 import org.formbuilder.main.map.ValueChangeListener;
-import org.formbuilder.main.validation.ValidationHighlighter;
+import org.formbuilder.main.validation.ValidationMarker;
 
 import javax.swing.*;
 
@@ -13,7 +13,7 @@ import javax.swing.*;
  */
 public interface TypeMapper<C extends JComponent, V>
 {
-    Class<V> valueClass();
+    Class<V> getValueClass();
 
     V getValue( C component );
 
@@ -25,9 +25,5 @@ public interface TypeMapper<C extends JComponent, V>
     void bindChangeListener( C component,
                              ValueChangeListener<V> changeListener );
 
-
-
-
-
-    ValidationHighlighter getValidationHighlighter();
+    ValidationMarker getValidationHighlighter();
 }
