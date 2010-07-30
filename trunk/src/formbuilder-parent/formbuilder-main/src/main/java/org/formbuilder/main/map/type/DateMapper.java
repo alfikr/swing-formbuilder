@@ -33,8 +33,12 @@ public enum DateMapper
 
     @Override
     public void setValue( final JSpinner component,
-                          final Date value )
+                          Date value )
     {
+        if ( value == null )
+        {
+            value = new Date( 0 );
+        }
         component.setValue( value );
     }
 

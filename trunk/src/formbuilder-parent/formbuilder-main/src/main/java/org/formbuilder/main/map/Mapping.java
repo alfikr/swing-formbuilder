@@ -1,6 +1,7 @@
 package org.formbuilder.main.map;
 
 import org.formbuilder.main.map.type.TypeMapper;
+import org.formbuilder.main.util.Reflection;
 
 import javax.swing.*;
 import java.beans.PropertyDescriptor;
@@ -113,6 +114,11 @@ public class Mapping
     private Object getValue( final PropertyDescriptor descriptor,
                              final Object bean )
     {
+        if ( bean == null )
+        {
+            return Reflection.emptyValue( descriptor.getReadMethod() );
+        }
+        
         try
         {
             return descriptor.getReadMethod().invoke( bean );
