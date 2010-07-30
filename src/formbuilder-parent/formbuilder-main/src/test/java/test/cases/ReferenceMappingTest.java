@@ -69,7 +69,7 @@ public class ReferenceMappingTest
             extends ReferenceMapper<Role>
     {
         @Override
-        public Class<Role> valueClass()
+        public Class<Role> getValueClass()
         {
             return Role.class;
         }

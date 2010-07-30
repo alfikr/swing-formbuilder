@@ -1,5 +1,8 @@
 package org.formbuilder.main.map;
 
+import org.formbuilder.main.map.exception.InvalidPropertyMappingException;
+import org.formbuilder.main.map.exception.MappingException;
+import org.formbuilder.main.map.exception.UnmappedTypeException;
 import org.formbuilder.main.map.type.BooleanMapper;
 import org.formbuilder.main.map.type.DateMapper;
 import org.formbuilder.main.map.type.NumberMapper;
@@ -37,7 +40,7 @@ public class MappingRules
 
     public void addMapper( TypeMapper mapper )
     {
-        typeToMapper.put( mapper.valueClass(), mapper );
+        typeToMapper.put( mapper.getValueClass(), mapper );
     }
 
     public void addMapper( String propertyName,
@@ -79,9 +82,9 @@ public class MappingRules
             InvalidPropertyMappingException
     {
         final Class<?> boxed = Reflection.box( descriptor.getPropertyType() );
-        if ( !boxed.isAssignableFrom( mapper.valueClass() ) )
+        if ( !boxed.isAssignableFrom( mapper.getValueClass() ) )
         {
-            throw new InvalidPropertyMappingException( descriptor, boxed, mapper.valueClass() );
+            throw new InvalidPropertyMappingException( descriptor, boxed, mapper.getValueClass() );
         }
         return mapper;
     }

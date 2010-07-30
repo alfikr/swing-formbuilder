@@ -6,7 +6,6 @@ package org.formbuilder.main;
 import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.bean.GridBagMapper;
 import org.formbuilder.main.map.bean.BeanMapper;
-import org.formbuilder.main.map.PropertyMapper;
 import org.formbuilder.main.map.type.TypeMapper;
 
 /**

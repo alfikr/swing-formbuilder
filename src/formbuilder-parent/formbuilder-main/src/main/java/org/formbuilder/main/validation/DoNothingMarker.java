@@ -9,14 +9,14 @@ import java.util.Set;
  *         Date: 30.07.2010
  *         Time: 14:04:23
  */
-public enum NothingHighlighter
-        implements ValidationHighlighter
+public enum DoNothingMarker
+        implements ValidationMarker
 {
     INSTANCE;
 
     @Override
-    public void highlightViolations( final JComponent editor,
-                                     final Set<ConstraintViolation> violations )
+    public void markViolations( final JComponent editor,
+                                final Set<ConstraintViolation> violations )
     {
     }
 }

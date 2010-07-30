@@ -9,8 +9,8 @@ import java.util.Set;
  *         Date: 29.07.2010
  *         Time: 17:40:48
  */
-public interface ValidationHighlighter
+public interface ValidationMarker
 {
-    void highlightViolations( final JComponent editor,
-                              Set<ConstraintViolation> violations );
+    void markViolations( final JComponent editor,
+                         Set<ConstraintViolation> violations );
 }

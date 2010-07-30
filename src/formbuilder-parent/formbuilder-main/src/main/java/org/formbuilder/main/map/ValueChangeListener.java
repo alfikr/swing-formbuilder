@@ -5,7 +5,7 @@ package org.formbuilder.main.map;
  *         Date: 29.07.2010
  *         Time: 17:18:45
  */
-public interface ValueChangeListener<V>
+public interface ValueChangeListener
 {
     void onChange();
 }

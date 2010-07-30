@@ -5,7 +5,7 @@ package org.formbuilder.main.map.bean;
 
 import net.sf.cglib.proxy.InvocationHandler;
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.MappingException;
+import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.util.Reflection;
 
@@ -66,7 +66,7 @@ public abstract class SampleBeanMapper<B>
 
     protected PropertyDescriptor getDescriptor( final Method readMethod )
     {
-        BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
+        BeanInfo info = Reflection.getBeanInfo( readMethod.getDeclaringClass() );
         for ( PropertyDescriptor descriptor : info.getPropertyDescriptors() )
         {
             if ( readMethod.equals( descriptor.getReadMethod() ) )
