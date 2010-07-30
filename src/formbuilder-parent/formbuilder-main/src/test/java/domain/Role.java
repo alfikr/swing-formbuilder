@@ -1,4 +1,4 @@
-package org.formbuilder.main;
+package domain;
 
 /**
  * @author aeremenok
