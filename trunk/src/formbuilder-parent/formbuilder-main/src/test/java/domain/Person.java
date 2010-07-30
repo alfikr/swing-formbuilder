@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.formbuilder.main;
+package domain;
 
 import org.formbuilder.main.annotations.UIField;
 
