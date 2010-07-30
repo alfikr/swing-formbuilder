@@ -13,5 +13,5 @@ import org.formbuilder.main.map.MappingRules;
 public interface BeanMapper<B>
 {
     Mapping map( Class<B> beanClass,
-                    final MappingRules mappingRules );
+                 final MappingRules mappingRules );
 }

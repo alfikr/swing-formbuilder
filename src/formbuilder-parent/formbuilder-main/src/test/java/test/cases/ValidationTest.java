@@ -47,7 +47,7 @@ public class ValidationTest
             throws
             InterruptedException
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.from( Person.class ) );
+        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ) );
         env.addToWindow( form.asComponent() );
 
         final Person oldValue = env.createPerson();

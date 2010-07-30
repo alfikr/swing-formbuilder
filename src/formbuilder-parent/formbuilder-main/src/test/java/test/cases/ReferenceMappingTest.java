@@ -48,7 +48,7 @@ public class ReferenceMappingTest
             throws
             InterruptedException
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.from( Person.class ).use( new RoleMapper() ) );
+        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).use( new RoleMapper() ) );
         env.addToWindow( form );
 
         final Person oldValue = env.createPerson();

@@ -96,7 +96,14 @@ public abstract class CollectionMapper<R, CT extends Collection>
 
         public ImmutableListModel( Collection<R> data )
         {
-            this.data = new ArrayList<R>( data );
+            if ( data instanceof List )
+            {
+                this.data = (List<R>) data;
+            }
+            else
+            {
+                this.data = new ArrayList<R>( data );
+            }
         }
 
         @Override

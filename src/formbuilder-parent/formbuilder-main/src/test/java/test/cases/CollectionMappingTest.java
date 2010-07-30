@@ -51,7 +51,7 @@ public class CollectionMappingTest
             throws
             InterruptedException
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.from( Person.class ).use( new AccountSetMapper() ) );
+        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).use( new AccountSetMapper() ) );
         env.addToWindow( form );
 
         final Person oldValue = env.createPerson();

@@ -5,6 +5,7 @@ import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
+import org.formbuilder.main.map.GetterMapper;
 import org.formbuilder.main.map.ValueChangeListener;
 import org.formbuilder.main.map.type.TypeMapper;
 import org.formbuilder.main.validation.BackgroundMarker;
@@ -45,11 +46,35 @@ public class PropertyMappingTest
     }
 
     @Test
-    public void testProperty()
-            throws
-            InterruptedException
+    public void mapByName()
     {
-        final Builder<Person> builder = Builder.from( Person.class )
+        final Builder<Person> builder = Builder.map( Person.class ).useForGetters( new GetterMapper<Person>()
+        {
+            @Override
+            public void mapGetters( final Person beanSample )
+            {
+                mapGetter( beanSample.getDescription(), TextAreaMapper.INSTANCE );
+            }
+        } );
+        final Form<Person> form = env.buildFormInEDT( builder );
+        env.addToWindow( form.asComponent() );
+
+        final Person oldValue = env.createPerson();
+        env.setValueInEDT( form, oldValue );
+
+        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
+
+        JTextComponentFixture nameComponent = wrapperPanel.textBox( "name" );
+        assert nameComponent.target instanceof JTextField;
+
+        JTextComponentFixture descComponent = wrapperPanel.textBox( "description" );
+        assert descComponent.target instanceof JTextArea;
+    }
+
+    @Test( dependsOnMethods = "mapByName" )
+    public void mapByMethod()
+    {
+        final Builder<Person> builder = Builder.map( Person.class )
                 .useForProperty( "description", TextAreaMapper.INSTANCE );
         final Form<Person> form = env.buildFormInEDT( builder );
         env.addToWindow( form.asComponent() );

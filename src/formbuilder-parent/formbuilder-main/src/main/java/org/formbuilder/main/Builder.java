@@ -4,9 +4,11 @@
 package org.formbuilder.main;
 
 import org.formbuilder.main.map.MappingRules;
+import org.formbuilder.main.map.GetterMapper;
 import org.formbuilder.main.map.bean.GridBagMapper;
 import org.formbuilder.main.map.bean.BeanMapper;
 import org.formbuilder.main.map.type.TypeMapper;
+import org.formbuilder.main.util.Reflection;
 
 /**
  * @author aeremenok 2010
@@ -23,7 +25,7 @@ public class Builder<B>
         this.beanClass = beanClass;
     }
 
-    public static <T> Builder<T> from( final Class<T> beanClass )
+    public static <T> Builder<T> map( final Class<T> beanClass )
     {
         return new Builder<T>( beanClass );
     }
@@ -33,7 +35,7 @@ public class Builder<B>
         return new FormImpl<B>( beanClass, beanMapper, mappingRules );
     }
 
-    public Builder<B> mapBeanWith( final BeanMapper<B> beanMapper )
+    public Builder<B> with( final BeanMapper<B> beanMapper )
     {
         this.beanMapper = beanMapper;
         return this;
@@ -49,6 +51,12 @@ public class Builder<B>
                                       final TypeMapper propertyMapper )
     {
         this.mappingRules.addMapper( propertyName, propertyMapper );
+        return this;
+    }
+
+    public Builder<B> useForGetters( final GetterMapper<B> getterMapper )
+    {
+        getterMapper.mapGettersToRules( beanClass, mappingRules );
         return this;
     }
 }
