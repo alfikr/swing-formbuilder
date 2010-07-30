@@ -4,9 +4,9 @@
 package org.formbuilder.main.map.bean;
 
 import org.apache.log4j.Logger;
-import org.formbuilder.main.map.MapperNotFoundException;
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.MappingException;
+import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.util.GridBagPanel;
 
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class GridBagMapper<B>
 
     @Override
     public Mapping map( final Class<B> beanClass,
-                        final TypeMappers typeMappers )
+                        final MappingRules mappingRules )
     {
         assert SwingUtilities.isEventDispatchThread();
 
@@ -38,12 +38,12 @@ public class GridBagMapper<B>
             {
                 try
                 {
-                    gridBagPanel.add( createEditor( typeMappers, descriptor, mapping ), i, 1 );
+                    gridBagPanel.add( createEditor( descriptor, mappingRules, mapping ), i, 1 );
                     gridBagPanel.add( createLabel( mapping, descriptor ), i, 0 );
                 }
-                catch ( MapperNotFoundException e )
+                catch ( MappingException e )
                 {
-                    handleNotFoundMapper( e );
+                    handleMappingException( e );
                 }
             }
         }

@@ -4,7 +4,7 @@
 package org.formbuilder.main.map.bean;
 
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.MappingRules;
 
 /**
  * @author aeremenok 2010
@@ -13,5 +13,5 @@ import org.formbuilder.main.map.TypeMappers;
 public interface BeanMapper<B>
 {
     Mapping map( Class<B> beanClass,
-                    final TypeMappers typeMappers );
+                    final MappingRules mappingRules );
 }

@@ -4,7 +4,7 @@
 package org.formbuilder.main;
 
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.TypeMappers;
+import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.bean.BeanMapper;
 import org.formbuilder.main.util.Reflection;
 
@@ -22,10 +22,10 @@ public class FormImpl<B>
 
     public FormImpl( final Class<B> beanClass,
                      final BeanMapper<B> beanMapper,
-                     final TypeMappers typeMappers )
+                     final MappingRules mappingRules )
     {
         this.beanClass = beanClass;
-        this.mapping = beanMapper.map( beanClass, typeMappers );
+        this.mapping = beanMapper.map( beanClass, mappingRules );
     }
 
     @Override
