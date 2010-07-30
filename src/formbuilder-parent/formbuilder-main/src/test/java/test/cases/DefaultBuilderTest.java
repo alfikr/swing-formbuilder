@@ -33,6 +33,9 @@ public class DefaultBuilderTest
         env.verifyLayout( component, JPanel.class, GridBagLayout.class );
         env.addToWindow( form );
 
+        env.setValueInEDT( form, null );
+        assert form.getValue() != null;
+        
         final Person oldValue = env.createPerson();
         env.setValueInEDT( form, oldValue );
         requireNewBeanCreated( form, oldValue );

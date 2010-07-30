@@ -31,7 +31,7 @@ public class Builder<B>
 
     public Form<B> buildForm()
     {
-        return new FormImpl<B>( beanClass, beanMapper , typeMappers);
+        return new FormImpl<B>( beanClass, beanMapper, typeMappers );
     }
 
     public Builder<B> mapBeanWith( final BeanMapper<B> beanMapper )
