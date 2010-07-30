@@ -7,53 +7,52 @@ import org.formbuilder.main.validation.ValidationHighlighter;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.util.Date;
 
 /**
  * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 11:57:47
+ *         Date: 30.07.2010
+ *         Time: 13:38:16
  */
-public enum DateMapper
-        implements TypeMapper<JSpinner, Date>
+public enum BooleanMapper
+        implements TypeMapper<JCheckBox, Boolean>
 {
     INSTANCE;
 
     @Override
-    public Class<Date> valueClass()
+    public Class<Boolean> valueClass()
     {
-        return Date.class;
+        return Boolean.class;
     }
 
     @Override
-    public Date getValue( final JSpinner component )
+    public Boolean getValue( final JCheckBox component )
     {
-        return (Date) component.getValue();
+        return component.isSelected();
     }
 
     @Override
-    public void setValue( final JSpinner component,
-                          final Date value )
+    public void setValue( final JCheckBox component,
+                          final Boolean value )
     {
-        component.setValue( value );
+        component.setSelected( Boolean.TRUE.equals( value ) );
     }
 
     @Override
-    public JSpinner createComponent()
+    public JCheckBox createComponent()
     {
-        return new JSpinner( new SpinnerDateModel() );
+        return new JCheckBox();
     }
 
     @Override
-    public void bindChangeListener( final JSpinner component,
-                                    final ValueChangeListener<Date> dateValueChangeListener )
+    public void bindChangeListener( final JCheckBox component,
+                                    final ValueChangeListener<Boolean> booleanValueChangeListener )
     {
         component.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                dateValueChangeListener.onChange();
+                booleanValueChangeListener.onChange();
             }
         } );
     }

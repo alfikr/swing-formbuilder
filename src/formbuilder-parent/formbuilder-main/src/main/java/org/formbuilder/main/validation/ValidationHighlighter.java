@@ -1,4 +1,4 @@
-package org.formbuilder.main.map.type;
+package org.formbuilder.main.validation;
 
 import javax.swing.*;
 import javax.validation.ConstraintViolation;

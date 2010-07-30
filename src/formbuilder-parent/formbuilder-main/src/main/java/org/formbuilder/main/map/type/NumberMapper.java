@@ -1,5 +1,9 @@
 package org.formbuilder.main.map.type;
 
+import org.formbuilder.main.map.ValueChangeListener;
+import org.formbuilder.main.validation.BackgroundHighlighter;
+import org.formbuilder.main.validation.ValidationHighlighter;
+
 import javax.swing.*;
 import javax.swing.event.*;
 

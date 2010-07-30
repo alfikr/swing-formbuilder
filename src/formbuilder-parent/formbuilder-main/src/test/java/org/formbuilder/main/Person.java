@@ -17,11 +17,33 @@ public class Person
     private String name;
     private int age;
     private Date birthDate;
-    private Set<Account> accounts;
+    private Set<Account> goodAccounts;
+    private Set<Account> badAccounts;
+    private Role role;
 
-    public Set<Account> getAccounts()
+    public Set<Account> getBadAccounts()
     {
-        return this.accounts;
+        return badAccounts;
+    }
+
+    public void setBadAccounts( final Set<Account> badAccounts )
+    {
+        this.badAccounts = badAccounts;
+    }
+
+    public Role getRole()
+    {
+        return role;
+    }
+
+    public void setRole( final Role role )
+    {
+        this.role = role;
+    }
+
+    public Set<Account> getGoodAccounts()
+    {
+        return this.goodAccounts;
     }
 
     public int getAge()
@@ -42,9 +64,9 @@ public class Person
         return this.name;
     }
 
-    public void setAccounts( final Set<Account> accounts )
+    public void setGoodAccounts( final Set<Account> goodAccounts )
     {
-        this.accounts = accounts;
+        this.goodAccounts = goodAccounts;
     }
 
     public void setAge( final int age )
