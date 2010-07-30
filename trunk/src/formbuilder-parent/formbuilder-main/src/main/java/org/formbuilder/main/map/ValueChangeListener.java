@@ -1,4 +1,4 @@
-package org.formbuilder.main.map.type;
+package org.formbuilder.main.map;
 
 /**
  * @author aeremenok

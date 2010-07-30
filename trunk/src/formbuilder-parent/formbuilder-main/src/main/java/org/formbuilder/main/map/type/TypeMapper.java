@@ -3,6 +3,9 @@
  */
 package org.formbuilder.main.map.type;
 
+import org.formbuilder.main.map.ValueChangeListener;
+import org.formbuilder.main.validation.ValidationHighlighter;
+
 import javax.swing.*;
 
 /**

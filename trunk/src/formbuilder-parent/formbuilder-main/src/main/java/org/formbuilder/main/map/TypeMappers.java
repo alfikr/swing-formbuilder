@@ -1,5 +1,6 @@
 package org.formbuilder.main.map;
 
+import org.formbuilder.main.map.type.BooleanMapper;
 import org.formbuilder.main.map.type.DateMapper;
 import org.formbuilder.main.map.type.NumberMapper;
 import org.formbuilder.main.map.type.StringMapper;
@@ -29,6 +30,7 @@ public class TypeMappers
     {
         addMapper( StringMapper.INSTANCE );
         addMapper( NumberMapper.INSTANCE );
+        addMapper( BooleanMapper.INSTANCE );
         addMapper( DateMapper.INSTANCE );
     }
 

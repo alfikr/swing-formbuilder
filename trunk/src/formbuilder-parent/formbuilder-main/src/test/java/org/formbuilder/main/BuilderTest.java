@@ -6,9 +6,13 @@ package org.formbuilder.main;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.edt.GuiTask;
+import org.fest.swing.fixture.JComboBoxFixture;
+import org.fest.swing.fixture.JListFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.main.map.bean.SampleBeanMapper;
+import org.formbuilder.main.map.type.CollectionMapper;
+import org.formbuilder.main.map.type.ReferenceMapper;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,11 +20,18 @@ import test.env.ComponentEnvironment;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
+import static com.google.common.collect.Iterables.elementsEqual;
+import static java.util.Arrays.asList;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.fail;
 
 /**
@@ -100,8 +111,51 @@ public class BuilderTest
         JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
 
         assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        assertNull( nameTextBox.target.getToolTipText() );
         nameTextBox.setText( "ee" );
         assertEquals( nameTextBox.target.getBackground(), Color.PINK );
+        nameTextBox.requireToolTip( "size must be between 3 and 2147483647" );
+    }
+
+    @Test( dependsOnMethods = "testValidation" )
+    public void testReferenceEditor()
+            throws
+            InterruptedException
+    {
+        final Form<Person> form = buildFormInEDT( Builder.from( Person.class ).use( new RoleMapper() ) );
+        addToWindow( form.asComponent() );
+
+        final Person oldValue = createPerson();
+        setValueInEDT( form, oldValue );
+
+        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
+        final JComboBoxFixture roleCombo = wrapperPanel.comboBox( "role" );
+        roleCombo.requireItemCount( 2 );
+
+        roleCombo.selectItem( 0 ).requireSelection( "admin" );
+        assertEquals( form.getValue().getRole(), new Role( "admin" ) );
+
+        roleCombo.selectItem( 1 ).requireSelection( "user" );
+        assertEquals( form.getValue().getRole(), new Role( "user" ) );
+    }
+
+    @Test( dependsOnMethods = "testReferenceEditor" )
+    public void testCollectionEditor()
+            throws
+            InterruptedException
+    {
+        final Form<Person> form = buildFormInEDT( Builder.from( Person.class ).use( new AccountSetMapper() ) );
+        addToWindow( form.asComponent() );
+
+        final Person oldValue = createPerson();
+        setValueInEDT( form, oldValue );
+
+        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
+        JListFixture accsList = wrapperPanel.list( "goodAccounts" );
+        accsList.requireItemCount( 2 );
+
+        accsList.selectItem( "acc1" ).requireSelection( "acc1" );
+        assert elementsEqual( form.getValue().getGoodAccounts(), asList( new Account( "acc1" ) ) );
     }
 
     private void requireNewBeanCreated( final Form<Person> form,
@@ -186,5 +240,43 @@ public class BuilderTest
     {
         assert superClass.isAssignableFrom( component.getClass() ) : component;
         assert layoutClass.isAssignableFrom( component.getLayout().getClass() ) : component.getLayout();
+    }
+
+    private static class RoleMapper
+            extends ReferenceMapper<Role>
+    {
+        @Override
+        public Class<Role> valueClass()
+        {
+            return Role.class;
+        }
+
+        @Override
+        protected List<Role> getSuitableData()
+        {
+            return asList( new Role( "admin" ), new Role( "user" ) );
+        }
+    }
+
+    private static class AccountSetMapper
+            extends CollectionMapper<Account, Set>
+    {
+        @Override
+        protected Collection<Account> getSuitableData()
+        {
+            return asList( new Account( "acc1" ), new Account( "acc2" ) );
+        }
+
+        @Override
+        protected Set<Account> refine( final List<Account> selectedValues )
+        {
+            return new HashSet<Account>( selectedValues );
+        }
+
+        @Override
+        public Class<Set> valueClass()
+        {
+            return Set.class;
+        }
     }
 }
