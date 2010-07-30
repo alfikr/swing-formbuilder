@@ -45,10 +45,10 @@ public class LayoutTest
     public void customizedLayout()
     {
         assert !SwingUtilities.isEventDispatchThread();
-        final Form<Person> form = env.buildFormInEDT( Builder.from( Person.class ).mapBeanWith( new SampleBeanMapper<Person>()
+        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            public JComponent map( final Person beanTemplate )
+            public JComponent mapBean( final Person beanTemplate )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
                 panel.add( component( beanTemplate.getName() ) );

@@ -4,11 +4,12 @@
 package org.formbuilder.main.util;
 
 import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.InvocationHandler;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +58,18 @@ public class Reflection
         final Enhancer e = new Enhancer();
         e.setSuperclass( beanClass );
         e.setUseFactory( false );
-        e.setCallback( handler );
+        e.setCallback( new net.sf.cglib.proxy.InvocationHandler()
+        {
+            @Override
+            public Object invoke( final Object proxy,
+                                  final Method method,
+                                  final Object[] args )
+                    throws
+                    Throwable
+            {
+                return handler.invoke( proxy, method, args );
+            }
+        } );
         return (T) e.create();
     }
 
@@ -104,5 +116,18 @@ public class Reflection
         {
             throw new RuntimeException( e );
         }
+    }
+
+    public static PropertyDescriptor getDescriptor( final Method readMethod )
+    {
+        BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
+        for ( PropertyDescriptor descriptor : info.getPropertyDescriptors() )
+        {
+            if ( readMethod.equals( descriptor.getReadMethod() ) )
+            {
+                return descriptor;
+            }
+        }
+        throw new RuntimeException( readMethod + " is not a getter method for a bean" );
     }
 }

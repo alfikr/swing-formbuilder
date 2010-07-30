@@ -3,15 +3,13 @@
  */
 package org.formbuilder.main.map.bean;
 
-import net.sf.cglib.proxy.InvocationHandler;
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.map.MappingRules;
+import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.util.Reflection;
 
 import javax.swing.*;
-import java.beans.BeanInfo;
-import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -49,11 +47,11 @@ public abstract class SampleBeanMapper<B>
     {
         this.currentMappingRules = mappingRules;
         this.currentMapping = new Mapping();
-        this.currentMapping.setPanel( map( Reflection.createProxy( beanClass, this ) ) );
+        this.currentMapping.setPanel( mapBean( Reflection.createProxy( beanClass, this ) ) );
         return this.currentMapping;
     }
 
-    protected JComponent component( @SuppressWarnings( "unused" ) final Object propertyValue )
+    protected JComponent component( @SuppressWarnings( "unused" ) final Object whatProxyGetterReturned )
             throws
             MappingException
     {
@@ -61,21 +59,8 @@ public abstract class SampleBeanMapper<B>
         final MappingRules mappers = checkNotNull( currentMappingRules );
         final Method readMethod = checkNotNull( lastCalledMethod );
         final Mapping mapping = checkNotNull( currentMapping );
-        return createEditor( getDescriptor( readMethod ), mappers, mapping );
+        return createEditor( Reflection.getDescriptor( readMethod ), mappers, mapping );
     }
 
-    protected PropertyDescriptor getDescriptor( final Method readMethod )
-    {
-        BeanInfo info = Reflection.getBeanInfo( readMethod.getDeclaringClass() );
-        for ( PropertyDescriptor descriptor : info.getPropertyDescriptors() )
-        {
-            if ( readMethod.equals( descriptor.getReadMethod() ) )
-            {
-                return descriptor;
-            }
-        }
-        throw new RuntimeException( readMethod + " is not a getter method for a bean" );
-    }
-
-    protected abstract JComponent map( B beanSample );
+    protected abstract JComponent mapBean( B beanSample );
 }

@@ -27,7 +27,7 @@ public class DefaultBuilderTest
     @Test
     public void setAndGetValue()
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.from( Person.class ) );
+        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ) );
 
         final JComponent component = form.asComponent();
         env.verifyLayout( component, JPanel.class, GridBagLayout.class );
@@ -35,7 +35,7 @@ public class DefaultBuilderTest
 
         env.setValueInEDT( form, null );
         assert form.getValue() != null;
-        
+
         final Person oldValue = env.createPerson();
         env.setValueInEDT( form, oldValue );
         requireNewBeanCreated( form, oldValue );
