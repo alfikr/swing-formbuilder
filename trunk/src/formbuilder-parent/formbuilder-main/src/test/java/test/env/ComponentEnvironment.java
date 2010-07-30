@@ -19,18 +19,16 @@ import java.util.concurrent.Callable;
  * @param <C>
  */
 public class ComponentEnvironment<C extends JComponent>
-    extends Environment
+        extends Environment
 {
     private static final String WRAPPER_PANEL = "wrapper panel";
+    private final boolean scroll;
+    private final Callable<C> guiQuery;
+    private FrameFixture frameFixture;
+    private C component;
 
-    private final boolean       scroll;
-    private final Callable<C>   guiQuery;
-
-    private FrameFixture        frameFixture;
-
-    private C                   component;
-
-    public ComponentEnvironment( final Callable<C> guiQuery, final boolean scroll )
+    public ComponentEnvironment( final Callable<C> guiQuery,
+                                 final boolean scroll )
     {
         this.guiQuery = guiQuery;
         this.scroll = scroll;
@@ -42,7 +40,7 @@ public class ComponentEnvironment<C extends JComponent>
     }
 
     public static <C extends JComponent> ComponentEnvironment<C> fromQuery( final Callable<C> guiQuery,
-        final boolean scroll )
+                                                                            final boolean scroll )
     {
         return new ComponentEnvironment<C>( guiQuery, scroll );
     }
@@ -50,7 +48,8 @@ public class ComponentEnvironment<C extends JComponent>
     public <W extends JComponent> GenericComponentFixture<W> derive( final W c )
     {
         return new GenericComponentFixture<W>( getWrapperPanelFixture().robot, c )
-        {};
+        {
+        };
     }
 
     public C getComponent()
@@ -70,14 +69,16 @@ public class ComponentEnvironment<C extends JComponent>
 
     @Override
     public void setUp( final Object test )
-        throws Exception
+            throws
+            Exception
     {
         super.setUp( test );
         final JFrame frame = GuiActionRunner.execute( new GuiQuery<JFrame>()
         {
             @Override
             protected JFrame executeInEDT()
-                throws Throwable
+                    throws
+                    Throwable
             {
                 UIManager.setLookAndFeel( new NimbusLookAndFeel() );
                 final JFrame frame = new JFrame( "test" );
@@ -98,7 +99,8 @@ public class ComponentEnvironment<C extends JComponent>
 
     @Override
     public void tearDown( final Object test )
-        throws Exception
+            throws
+            Exception
     {
         frameFixture.cleanUp();
         super.tearDown( test );
