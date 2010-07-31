@@ -5,10 +5,7 @@ import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import test.env.FormEnvironment;
 
 import java.awt.*;
 
@@ -22,26 +19,8 @@ import static org.testng.Assert.assertNull;
  *         Time: 16:21:04
  */
 public class ValidationTest
+        extends FormTest
 {
-    private FormEnvironment env;
-
-    @BeforeClass
-    public void setUp()
-            throws
-            Exception
-    {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
-    }
-
-    @AfterClass
-    public void tearDown()
-            throws
-            Exception
-    {
-        this.env.tearDown( this );
-    }
-
     @Test
     public void testValidation()
             throws

@@ -7,10 +7,7 @@ import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import test.env.FormEnvironment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +18,8 @@ import static org.testng.Assert.assertEquals;
  * @author aeremenok 2010
  */
 public class DefaultBuilderTest
+        extends FormTest
 {
-    private FormEnvironment env;
-
     @Test
     public void setAndGetValue()
     {
@@ -57,22 +53,5 @@ public class DefaultBuilderTest
         final Person newValue = form.getValue();
         assertEquals( newValue, oldValue );
         assert form.getValue() != oldValue;
-    }
-
-    @BeforeClass
-    public void setUp()
-            throws
-            Exception
-    {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
-    }
-
-    @AfterClass
-    public void tearDown()
-            throws
-            Exception
-    {
-        this.env.tearDown( this );
     }
 }

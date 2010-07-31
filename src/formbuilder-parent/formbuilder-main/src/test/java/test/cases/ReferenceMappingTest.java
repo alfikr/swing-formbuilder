@@ -7,10 +7,7 @@ import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
 import org.formbuilder.main.map.type.ReferenceMapper;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import test.env.FormEnvironment;
 
 import java.util.List;
 
@@ -23,30 +20,10 @@ import static org.testng.Assert.assertEquals;
  *         Time: 16:17:38
  */
 public class ReferenceMappingTest
+        extends FormTest
 {
-    private FormEnvironment env;
-
-    @BeforeClass
-    public void setUp()
-            throws
-            Exception
-    {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
-    }
-
-    @AfterClass
-    public void tearDown()
-            throws
-            Exception
-    {
-        this.env.tearDown( this );
-    }
-
     @Test
     public void testReferenceEditor()
-            throws
-            InterruptedException
     {
         final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).use( new RoleMapper() ) );
         env.addToWindow( form );
