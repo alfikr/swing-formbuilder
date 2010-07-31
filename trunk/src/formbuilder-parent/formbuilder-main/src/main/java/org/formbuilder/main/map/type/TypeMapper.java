@@ -15,15 +15,15 @@ public interface TypeMapper<C extends JComponent, V>
 {
     Class<V> getValueClass();
 
-    V getValue( C component );
+    V getValue( C editorComponent );
 
-    void setValue( C component,
+    void setValue( C editorComponent,
                    V value );
 
-    C createComponent();
+    C createEditorComponent();
 
-    void bindChangeListener( C component,
+    void bindChangeListener( C editorComponent,
                              ValueChangeListener<V> changeListener );
 
-    ValidationMarker getValidationHighlighter();
+    ValidationMarker getValidationMarker();
 }

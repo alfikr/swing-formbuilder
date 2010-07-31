@@ -3,6 +3,7 @@
  */
 package domain;
 
+import org.formbuilder.main.annotations.UIReadOnly;
 import org.formbuilder.main.annotations.UITitle;
 
 import javax.validation.constraints.Size;
@@ -62,6 +63,7 @@ public class Person
         return this.age;
     }
 
+    @UIReadOnly
     @UITitle( "Date of birth" )
     public Date getBirthDate()
     {

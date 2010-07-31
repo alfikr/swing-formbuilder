@@ -36,9 +36,9 @@ public class DefaultBuilderTest
         env.setValueInEDT( form, null );
         assert form.getValue() != null;
 
-        final Person oldValue = env.createPerson();
-        env.setValueInEDT( form, oldValue );
-        requireNewBeanCreated( form, oldValue );
+        final Person person = env.createPerson();
+        env.setValueInEDT( form, person );
+        requireNewBeanCreated( form, person );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
 
@@ -46,9 +46,9 @@ public class DefaultBuilderTest
         wrapperPanel.label( "age" ).requireText( "Age" );
         wrapperPanel.label( "birthDate" ).requireText( "Date of birth" );
 
-        wrapperPanel.textBox( "name" ).requireText( oldValue.getName() );
-        wrapperPanel.spinner( "age" ).requireValue( oldValue.getAge() );
-        wrapperPanel.spinner( "birthDate" ).requireValue( oldValue.getBirthDate() );
+        wrapperPanel.textBox( "name" ).requireText( person.getName() );
+        wrapperPanel.spinner( "age" ).requireValue( person.getAge() );
+        wrapperPanel.spinner( "birthDate" ).requireValue( person.getBirthDate() );
     }
 
     private void requireNewBeanCreated( final Form<Person> form,

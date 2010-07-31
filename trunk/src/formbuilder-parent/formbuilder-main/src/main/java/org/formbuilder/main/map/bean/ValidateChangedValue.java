@@ -19,17 +19,17 @@ public class ValidateChangedValue
         implements ValueChangeListener
 {
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
+    
     private final TypeMapper mapper;
-    private final JComponent editor;
+    private final JComponent editorComponent;
     private final PropertyDescriptor descriptor;
 
     public ValidateChangedValue( final TypeMapper mapper,
-                                 final JComponent editor,
+                                 final JComponent editorComponent,
                                  final PropertyDescriptor descriptor )
     {
         this.mapper = mapper;
-        this.editor = editor;
+        this.editorComponent = editorComponent;
         this.descriptor = descriptor;
     }
 
@@ -37,13 +37,14 @@ public class ValidateChangedValue
     @Override
     public void onChange()
     {
-        final Object newValue = mapper.getValue( editor );
-        final Set<ConstraintViolation> violations = doValidation( descriptor, newValue );
-        mapper.getValidationHighlighter().markViolations( editor, violations );
+        final Object newValue = mapper.getValue( editorComponent );
+        final Set<ConstraintViolation> violations = doValidation( validator, descriptor, newValue );
+        mapper.getValidationMarker().markViolations( editorComponent, violations );
     }
 
     @SuppressWarnings( {"unchecked"} )
-    protected Set<ConstraintViolation> doValidation( final PropertyDescriptor descriptor,
+    protected Set<ConstraintViolation> doValidation( final Validator validator,
+                                                     final PropertyDescriptor descriptor,
                                                      final Object newValue )
     {
         final Class beanType = descriptor.getReadMethod().getDeclaringClass();
