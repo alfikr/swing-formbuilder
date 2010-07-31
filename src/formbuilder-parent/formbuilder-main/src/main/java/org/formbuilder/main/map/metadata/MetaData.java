@@ -13,7 +13,7 @@ public interface MetaData
 
     Integer getOrder( PropertyDescriptor descriptor );
 
-    Boolean isHidden( PropertyDescriptor descriptor );
+    boolean isHidden( PropertyDescriptor descriptor );
 
-    Boolean isReadOnly( PropertyDescriptor descriptor );
+    boolean isReadOnly( PropertyDescriptor descriptor );
 }

@@ -30,15 +30,15 @@ public class CombinedMetaData
     }
 
     @Override
-    public Boolean isHidden( final PropertyDescriptor descriptor )
+    public boolean isHidden( final PropertyDescriptor descriptor )
     {
-        return nvl( annotationMetaData.isHidden( descriptor ), uiManagerMetaData.isHidden( descriptor ) );
+        return annotationMetaData.isHidden( descriptor ) || uiManagerMetaData.isHidden( descriptor );
     }
 
     @Override
-    public Boolean isReadOnly( final PropertyDescriptor descriptor )
+    public boolean isReadOnly( final PropertyDescriptor descriptor )
     {
-        return nvl( annotationMetaData.isReadOnly( descriptor ), uiManagerMetaData.isHidden( descriptor ) );
+        return annotationMetaData.isReadOnly( descriptor ) || uiManagerMetaData.isReadOnly( descriptor );
     }
 
     private <T> T nvl( T... t )

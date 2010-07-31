@@ -16,9 +16,9 @@ public class GridBagPanel
         super( new GridBagLayout() );
 
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.anchor = GridBagConstraints.BASELINE;
         constraints.ipadx = 10;
-        constraints.ipady = 10;
+        constraints.ipady = 0;
     }
 
     public GridBagConstraints add( final JComponent component,
