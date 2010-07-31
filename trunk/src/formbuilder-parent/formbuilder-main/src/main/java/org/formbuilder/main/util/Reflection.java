@@ -130,4 +130,36 @@ public class Reflection
         }
         throw new RuntimeException( readMethod + " is not a getter method for a bean" );
     }
+
+    public static void setValue( final Object bean,
+                                 final Object propertyValue,
+                                 final PropertyDescriptor propertyDescriptor )
+    {
+        try
+        {
+            propertyDescriptor.getWriteMethod().invoke( bean, propertyValue );
+        }
+        catch ( Exception e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
+
+    public static Object getValue( final PropertyDescriptor descriptor,
+                                   final Object bean )
+    {
+        if ( bean == null )
+        {
+            return emptyValue( descriptor.getReadMethod() );
+        }
+
+        try
+        {
+            return descriptor.getReadMethod().invoke( bean );
+        }
+        catch ( Exception e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
 }
