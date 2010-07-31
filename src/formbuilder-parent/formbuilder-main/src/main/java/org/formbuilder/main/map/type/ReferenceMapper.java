@@ -20,20 +20,20 @@ public abstract class ReferenceMapper<R>
 {
     @SuppressWarnings( {"unchecked"} )
     @Override
-    public R getValue( final JComboBox component )
+    public R getValue( final JComboBox editorComponent )
     {
-        return (R) component.getSelectedItem();
+        return (R) editorComponent.getSelectedItem();
     }
 
     @Override
-    public void setValue( final JComboBox component,
+    public void setValue( final JComboBox editorComponent,
                           final R value )
     {
-        component.setSelectedItem( value );
+        editorComponent.setSelectedItem( value );
     }
 
     @Override
-    public JComboBox createComponent()
+    public JComboBox createEditorComponent()
     {
         return new JComboBox( new Vector<R>( getSuitableData() ) );
     }
@@ -41,10 +41,10 @@ public abstract class ReferenceMapper<R>
     protected abstract Collection<R> getSuitableData();
 
     @Override
-    public void bindChangeListener( final JComboBox component,
+    public void bindChangeListener( final JComboBox editorComponent,
                                     final ValueChangeListener<R> rValueChangeListener )
     {
-        component.addItemListener( new ItemListener()
+        editorComponent.addItemListener( new ItemListener()
         {
             @Override
             public void itemStateChanged( final ItemEvent e )
@@ -58,7 +58,7 @@ public abstract class ReferenceMapper<R>
     }
 
     @Override
-    public ValidationMarker getValidationHighlighter()
+    public ValidationMarker getValidationMarker()
     {
         return DoNothingMarker.INSTANCE;
     }

@@ -25,29 +25,29 @@ public enum StringMapper
     }
 
     @Override
-    public String getValue( JTextField component )
+    public String getValue( JTextField editorComponent )
     {
-        return component.getText();
+        return editorComponent.getText();
     }
 
     @Override
-    public void setValue( JTextField component,
+    public void setValue( JTextField editorComponent,
                           String value )
     {
-        component.setText( value );
+        editorComponent.setText( value );
     }
 
     @Override
-    public JTextField createComponent()
+    public JTextField createEditorComponent()
     {
         return new JTextField();
     }
 
     @Override
-    public void bindChangeListener( final JTextField component,
+    public void bindChangeListener( final JTextField editorComponent,
                                     final ValueChangeListener<String> stringChangeListener )
     {
-        component.getDocument().addDocumentListener( new DocumentListener()
+        editorComponent.getDocument().addDocumentListener( new DocumentListener()
         {
             @Override
             public void insertUpdate( final DocumentEvent e )
@@ -70,7 +70,7 @@ public enum StringMapper
     }
 
     @Override
-    public ValidationMarker getValidationHighlighter()
+    public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
     }

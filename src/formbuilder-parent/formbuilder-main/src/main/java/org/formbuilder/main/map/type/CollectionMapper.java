@@ -21,9 +21,9 @@ public abstract class CollectionMapper<R, CT extends Collection>
 {
     @SuppressWarnings( {"unchecked"} )
     @Override
-    public CT getValue( final JList component )
+    public CT getValue( final JList editorComponent )
     {
-        Object[] vs = component.getSelectedValues();
+        Object[] vs = editorComponent.getSelectedValues();
         List<R> selectedValueList = new ArrayList<R>( vs.length );
         for ( Object v : vs )
         {
@@ -34,16 +34,16 @@ public abstract class CollectionMapper<R, CT extends Collection>
 
     @SuppressWarnings( {"unchecked"} )
     @Override
-    public void setValue( final JList component,
+    public void setValue( final JList editorComponent,
                           final CT value )
     {
         if ( value == null || value.isEmpty() )
         {
-            component.clearSelection();
+            editorComponent.clearSelection();
             return;
         }
 
-        ImmutableListModel<R> model = (ImmutableListModel<R>) component.getModel();
+        ImmutableListModel<R> model = (ImmutableListModel<R>) editorComponent.getModel();
 
         int[] ixs = new int[value.size()];
         int i = 0;
@@ -53,11 +53,11 @@ public abstract class CollectionMapper<R, CT extends Collection>
             i++;
         }
 
-        component.setSelectedIndices( ixs );
+        editorComponent.setSelectedIndices( ixs );
     }
 
     @Override
-    public JList createComponent()
+    public JList createEditorComponent()
     {
         return new JList( new ImmutableListModel<R>( getSuitableData() ) );
     }
@@ -67,10 +67,10 @@ public abstract class CollectionMapper<R, CT extends Collection>
     protected abstract CT refine( List<R> selectedValues );
 
     @Override
-    public void bindChangeListener( final JList component,
+    public void bindChangeListener( final JList editorComponent,
                                     final ValueChangeListener<CT> iValueChangeListener )
     {
-        component.getSelectionModel().addListSelectionListener( new ListSelectionListener()
+        editorComponent.getSelectionModel().addListSelectionListener( new ListSelectionListener()
         {
             @Override
             public void valueChanged( final ListSelectionEvent e )
@@ -84,7 +84,7 @@ public abstract class CollectionMapper<R, CT extends Collection>
     }
 
     @Override
-    public ValidationMarker getValidationHighlighter()
+    public ValidationMarker getValidationMarker()
     {
         return DoNothingMarker.INSTANCE;
     }

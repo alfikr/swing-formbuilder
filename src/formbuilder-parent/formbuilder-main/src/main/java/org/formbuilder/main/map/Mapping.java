@@ -30,36 +30,6 @@ public class Mapping
         }
     }
 
-    private class PropertyMapping
-    {
-        private JComponent component;
-        private TypeMapper mapper;
-
-        private PropertyMapping( final JComponent component,
-                                 final TypeMapper mapper )
-        {
-            this.component = component;
-            this.mapper = mapper;
-        }
-
-        @SuppressWarnings( {"unchecked"} )
-        public void setValue( Object value )
-        { mapper.setValue( component, value ); }
-
-        @SuppressWarnings( {"unchecked"} )
-        public Object getValue()
-        {return mapper.getValue( component );}
-    }
-
-    public Mapping( final JComponent panel )
-    {
-        this.panel = panel;
-    }
-
-    public Mapping()
-    {
-    }
-
     public void setPanel( final JComponent panel )
     {
         this.panel = panel;

@@ -24,29 +24,29 @@ public enum NumberMapper
     }
 
     @Override
-    public Number getValue( final JSpinner component )
+    public Number getValue( final JSpinner editorComponent )
     {
-        return (Number) component.getValue();
+        return (Number) editorComponent.getValue();
     }
 
     @Override
-    public void setValue( final JSpinner component,
+    public void setValue( final JSpinner editorComponent,
                           final Number value )
     {
-        component.setValue( value );
+        editorComponent.setValue( value );
     }
 
     @Override
-    public JSpinner createComponent()
+    public JSpinner createEditorComponent()
     {
         return new JSpinner( new SpinnerNumberModel() );
     }
 
     @Override
-    public void bindChangeListener( final JSpinner component,
+    public void bindChangeListener( final JSpinner editorComponent,
                                     final ValueChangeListener<Number> numberChangeListener )
     {
-        component.addChangeListener( new ChangeListener()
+        editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
@@ -57,7 +57,7 @@ public enum NumberMapper
     }
 
     @Override
-    public ValidationMarker getValidationHighlighter()
+    public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
     }

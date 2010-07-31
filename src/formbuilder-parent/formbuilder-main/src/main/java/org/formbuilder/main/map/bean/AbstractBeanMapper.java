@@ -4,20 +4,15 @@
 package org.formbuilder.main.map.bean;
 
 import org.apache.log4j.Logger;
-import org.formbuilder.main.annotations.UITitle;
 import org.formbuilder.main.map.Mapping;
-import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.map.MappingRules;
+import org.formbuilder.main.map.exception.MappingException;
+import org.formbuilder.main.map.metadata.CombinedMetaData;
+import org.formbuilder.main.map.metadata.MetaData;
 import org.formbuilder.main.map.type.TypeMapper;
 
 import javax.swing.*;
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
-
-import static org.formbuilder.main.util.TextUtil.capitalize;
 
 /**
  * @author aeremenok 2010
@@ -27,41 +22,15 @@ public abstract class AbstractBeanMapper<B>
         implements BeanMapper<B>
 {
     private static final Logger log = Logger.getLogger( AbstractBeanMapper.class );
+    protected final MetaData metaData = createMetaData();
 
     protected JLabel createLabel( final Mapping mapping,
                                   final PropertyDescriptor descriptor )
     {
-        final JLabel label = new JLabel( getTitle( descriptor ) );
+        final JLabel label = new JLabel( metaData.getTitle( descriptor ) );
         label.setName( descriptor.getName() );
         mapping.addLabel( descriptor, label );
         return label;
-    }
-
-    protected String getTitle( final PropertyDescriptor descriptor )
-    {
-        final Method readMethod = descriptor.getReadMethod();
-
-        UITitle uiTitle = readMethod.getAnnotation( UITitle.class );
-        if ( uiTitle != null )
-        {
-            return uiTitle.value();
-        }
-
-        String className = readMethod.getDeclaringClass().getSimpleName();
-        String propertyName = descriptor.getName();
-        String uiManagerTitle = UIManager.getString( className + "." + propertyName );
-        if ( uiManagerTitle != null )
-        {
-            return uiManagerTitle;
-        }
-
-        String displayName = descriptor.getDisplayName();
-        if ( displayName != null )
-        {
-            return capitalize( displayName );
-        }
-
-        return capitalize( descriptor.getName() );
     }
 
     @SuppressWarnings( {"unchecked"} )
@@ -72,7 +41,7 @@ public abstract class AbstractBeanMapper<B>
             MappingException
     {
         final TypeMapper mapper = mappingRules.getMapper( descriptor );
-        final JComponent editor = mapper.createComponent();
+        final JComponent editor = mapper.createEditorComponent();
         editor.setEnabled( isEditable( descriptor ) );
         editor.setName( descriptor.getName() );
 
@@ -89,6 +58,11 @@ public abstract class AbstractBeanMapper<B>
         log.warn( "Cannot find mapper for method " + e.getDescriptor() );
     }
 
+    protected MetaData createMetaData()
+    {
+        return new CombinedMetaData();
+    }
+
     protected boolean isSupported( final PropertyDescriptor descriptor )
     {
         return descriptor.getReadMethod() != null && !"class".equals( descriptor.getName() );
@@ -96,6 +70,12 @@ public abstract class AbstractBeanMapper<B>
 
     protected boolean isEditable( final PropertyDescriptor descriptor )
     {
-        return descriptor.getWriteMethod() != null;
+        final boolean hasWriteMethod = descriptor.getWriteMethod() != null;
+        if ( !hasWriteMethod )
+        {
+            return false;
+        }
+
+        return !Boolean.TRUE.equals( metaData.isReadOnly( descriptor ) );
     }
 }

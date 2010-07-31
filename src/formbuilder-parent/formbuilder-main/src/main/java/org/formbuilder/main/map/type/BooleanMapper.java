@@ -25,29 +25,29 @@ public enum BooleanMapper
     }
 
     @Override
-    public Boolean getValue( final JCheckBox component )
+    public Boolean getValue( final JCheckBox editorComponent )
     {
-        return component.isSelected();
+        return editorComponent.isSelected();
     }
 
     @Override
-    public void setValue( final JCheckBox component,
+    public void setValue( final JCheckBox editorComponent,
                           final Boolean value )
     {
-        component.setSelected( Boolean.TRUE.equals( value ) );
+        editorComponent.setSelected( Boolean.TRUE.equals( value ) );
     }
 
     @Override
-    public JCheckBox createComponent()
+    public JCheckBox createEditorComponent()
     {
         return new JCheckBox();
     }
 
     @Override
-    public void bindChangeListener( final JCheckBox component,
+    public void bindChangeListener( final JCheckBox editorComponent,
                                     final ValueChangeListener<Boolean> booleanValueChangeListener )
     {
-        component.addChangeListener( new ChangeListener()
+        editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
@@ -58,7 +58,7 @@ public enum BooleanMapper
     }
 
     @Override
-    public ValidationMarker getValidationHighlighter()
+    public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
     }

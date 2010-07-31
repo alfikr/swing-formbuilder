@@ -26,33 +26,33 @@ public enum DateMapper
     }
 
     @Override
-    public Date getValue( final JSpinner component )
+    public Date getValue( final JSpinner editorComponent )
     {
-        return (Date) component.getValue();
+        return (Date) editorComponent.getValue();
     }
 
     @Override
-    public void setValue( final JSpinner component,
+    public void setValue( final JSpinner editorComponent,
                           Date value )
     {
         if ( value == null )
         {
             value = new Date( 0 );
         }
-        component.setValue( value );
+        editorComponent.setValue( value );
     }
 
     @Override
-    public JSpinner createComponent()
+    public JSpinner createEditorComponent()
     {
         return new JSpinner( new SpinnerDateModel() );
     }
 
     @Override
-    public void bindChangeListener( final JSpinner component,
+    public void bindChangeListener( final JSpinner editorComponent,
                                     final ValueChangeListener<Date> dateValueChangeListener )
     {
-        component.addChangeListener( new ChangeListener()
+        editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
@@ -63,7 +63,7 @@ public enum DateMapper
     }
 
     @Override
-    public ValidationMarker getValidationHighlighter()
+    public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
     }

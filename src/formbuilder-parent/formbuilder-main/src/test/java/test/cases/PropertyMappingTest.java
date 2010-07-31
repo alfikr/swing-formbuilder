@@ -59,8 +59,7 @@ public class PropertyMappingTest
         final Form<Person> form = env.buildFormInEDT( builder );
         env.addToWindow( form.asComponent() );
 
-        final Person oldValue = env.createPerson();
-        env.setValueInEDT( form, oldValue );
+        env.setValueInEDT( form, env.createPerson() );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
 
@@ -79,8 +78,7 @@ public class PropertyMappingTest
         final Form<Person> form = env.buildFormInEDT( builder );
         env.addToWindow( form.asComponent() );
 
-        final Person oldValue = env.createPerson();
-        env.setValueInEDT( form, oldValue );
+        env.setValueInEDT( form, env.createPerson() );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
 
@@ -103,29 +101,29 @@ public class PropertyMappingTest
         }
 
         @Override
-        public String getValue( final JTextArea component )
+        public String getValue( final JTextArea editorComponent )
         {
-            return component.getText();
+            return editorComponent.getText();
         }
 
         @Override
-        public void setValue( final JTextArea component,
+        public void setValue( final JTextArea editorComponent,
                               final String value )
         {
-            component.setText( value );
+            editorComponent.setText( value );
         }
 
         @Override
-        public JTextArea createComponent()
+        public JTextArea createEditorComponent()
         {
             return new JTextArea();
         }
 
         @Override
-        public void bindChangeListener( final JTextArea component,
+        public void bindChangeListener( final JTextArea editorComponent,
                                         final ValueChangeListener<String> stringValueChangeListener )
         {
-            component.getDocument().addDocumentListener( new DocumentListener()
+            editorComponent.getDocument().addDocumentListener( new DocumentListener()
             {
                 @Override
                 public void insertUpdate( final DocumentEvent e )
@@ -148,7 +146,7 @@ public class PropertyMappingTest
         }
 
         @Override
-        public ValidationMarker getValidationHighlighter()
+        public ValidationMarker getValidationMarker()
         {
             return BackgroundMarker.INSTANCE;
         }
