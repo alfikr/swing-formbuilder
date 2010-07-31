@@ -2,7 +2,6 @@ package test.cases;
 
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
-import org.fest.swing.fixture.JSpinnerFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
 import org.testng.annotations.AfterClass;
@@ -29,6 +28,8 @@ public class ReadOnlyTest
     {
         this.env = new FormEnvironment();
         this.env.setUp( this );
+
+        UIManager.getDefaults().put( "Person.name.readonly", true );
     }
 
     @AfterClass
@@ -49,7 +50,7 @@ public class ReadOnlyTest
         env.addToWindow( form );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
-        final JSpinnerFixture birthDateSpinner = wrapperPanel.spinner( "birthDate" );
-        assert !birthDateSpinner.target.isEnabled();
+        wrapperPanel.spinner( "birthDate" ).requireDisabled();
+        wrapperPanel.textBox( "name" ).requireDisabled();
     }
 }

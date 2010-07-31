@@ -37,28 +37,15 @@ public class UIManagerMetaData
     }
 
     @Override
-    public Boolean isHidden( final PropertyDescriptor descriptor )
+    public boolean isHidden( final PropertyDescriptor descriptor )
     {
-        return toBoolean( UIManager.getString( getQName( descriptor ) + ".hidden" ) );
+        return UIManager.getBoolean( getQName( descriptor ) + ".hidden" );
     }
 
     @Override
-    public Boolean isReadOnly( final PropertyDescriptor descriptor )
+    public boolean isReadOnly( final PropertyDescriptor descriptor )
     {
-        return toBoolean( UIManager.getString( getQName( descriptor ) + ".readonly" ) );
-    }
-
-    private Boolean toBoolean( final String s )
-    {
-        if ( "true".equalsIgnoreCase( s ) )
-        {
-            return true;
-        }
-        if ( "false".equalsIgnoreCase( s ) )
-        {
-            return false;
-        }
-        return null;
+        return UIManager.getBoolean( getQName( descriptor ) + ".readonly" );
     }
 
     protected String getQName( PropertyDescriptor descriptor )

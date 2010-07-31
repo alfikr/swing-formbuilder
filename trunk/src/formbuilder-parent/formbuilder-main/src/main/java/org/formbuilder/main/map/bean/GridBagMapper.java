@@ -34,7 +34,7 @@ public class GridBagMapper<B>
         for ( int i = 0; i < propertyDescriptors.length; i++ )
         {
             final PropertyDescriptor descriptor = propertyDescriptors[i];
-            if ( isSupported( descriptor ) && !Boolean.TRUE.equals( metaData.isHidden( descriptor ) ) )
+            if ( isSupported( descriptor ) && !metaData.isHidden( descriptor ) )
             {
                 try
                 {

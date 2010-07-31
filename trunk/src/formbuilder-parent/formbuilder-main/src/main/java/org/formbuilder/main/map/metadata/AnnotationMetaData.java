@@ -39,13 +39,13 @@ public class AnnotationMetaData
     }
 
     @Override
-    public Boolean isHidden( final PropertyDescriptor descriptor )
+    public boolean isHidden( final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIHidden.class ) != null;
     }
 
     @Override
-    public Boolean isReadOnly( final PropertyDescriptor descriptor )
+    public boolean isReadOnly( final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIReadOnly.class ) != null;
     }

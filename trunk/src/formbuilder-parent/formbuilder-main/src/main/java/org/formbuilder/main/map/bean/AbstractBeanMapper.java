@@ -71,11 +71,6 @@ public abstract class AbstractBeanMapper<B>
     protected boolean isEditable( final PropertyDescriptor descriptor )
     {
         final boolean hasWriteMethod = descriptor.getWriteMethod() != null;
-        if ( !hasWriteMethod )
-        {
-            return false;
-        }
-
-        return !Boolean.TRUE.equals( metaData.isReadOnly( descriptor ) );
+        return hasWriteMethod && !metaData.isReadOnly( descriptor );
     }
 }
