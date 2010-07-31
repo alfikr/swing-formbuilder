@@ -1,10 +1,7 @@
-package org.formbuilder.main.util;
+package test.env;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author eav 2009
@@ -12,7 +9,7 @@ import javax.swing.JScrollPane;
 public class WrapperPanel
     extends JPanel
 {
-    private final JComponent component;
+    protected final JComponent component;
 
     public WrapperPanel( final JComponent component )
     {
@@ -33,7 +30,7 @@ public class WrapperPanel
         }
     }
 
-    public JComponent getComponent()
+    public JComponent unwrap()
     {
         return this.component;
     }

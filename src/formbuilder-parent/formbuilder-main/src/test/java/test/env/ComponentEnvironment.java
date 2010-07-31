@@ -9,7 +9,6 @@ import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.fixture.GenericComponentFixture;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.main.util.WrapperPanel;
 
 import javax.swing.*;
 import java.util.concurrent.Callable;

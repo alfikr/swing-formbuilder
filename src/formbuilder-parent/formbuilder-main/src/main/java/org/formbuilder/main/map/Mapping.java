@@ -26,21 +26,7 @@ public class Mapping
             final PropertyDescriptor propertyDescriptor = entry.getKey();
 
             final Object propertyValue = propertyMapping.getValue();
-            setValue( bean, propertyValue, propertyDescriptor );
-        }
-    }
-
-    private void setValue( final Object bean,
-                           final Object propertyValue,
-                           final PropertyDescriptor propertyDescriptor )
-    {
-        try
-        {
-            propertyDescriptor.getWriteMethod().invoke( bean, propertyValue );
-        }
-        catch ( Exception e )
-        {
-            throw new RuntimeException( e );
+            Reflection.setValue( bean, propertyValue, propertyDescriptor );
         }
     }
 
@@ -106,26 +92,8 @@ public class Mapping
             final PropertyMapping propertyMapping = entry.getValue();
             final PropertyDescriptor propertyDescriptor = entry.getKey();
 
-            final Object propertyValue = getValue( propertyDescriptor, bean );
+            final Object propertyValue = Reflection.getValue( propertyDescriptor, bean );
             propertyMapping.setValue( propertyValue );
-        }
-    }
-
-    private Object getValue( final PropertyDescriptor descriptor,
-                             final Object bean )
-    {
-        if ( bean == null )
-        {
-            return Reflection.emptyValue( descriptor.getReadMethod() );
-        }
-        
-        try
-        {
-            return descriptor.getReadMethod().invoke( bean );
-        }
-        catch ( Exception e )
-        {
-            throw new RuntimeException( e );
         }
     }
 }

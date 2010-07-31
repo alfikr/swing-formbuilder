@@ -46,7 +46,7 @@ public class PropertyMappingTest
     }
 
     @Test
-    public void mapByName()
+    public void mapByGetter()
     {
         final Builder<Person> builder = Builder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
@@ -71,8 +71,8 @@ public class PropertyMappingTest
         assert descComponent.target instanceof JTextArea;
     }
 
-    @Test( dependsOnMethods = "mapByName" )
-    public void mapByMethod()
+    @Test( dependsOnMethods = "mapByGetter" )
+    public void mapByPropertyName()
     {
         final Builder<Person> builder = Builder.map( Person.class )
                 .useForProperty( "description", TextAreaMapper.INSTANCE );
