@@ -88,4 +88,14 @@ public class FormEnvironment
         oldValue.setBirthDate( new Date( 1 ) );
         return oldValue;
     }
+
+    public <B> Form<B> addDefaultForm( Class<B> beanClass )
+    {
+        final Form<B> form = buildFormInEDT( Builder.map( beanClass ) );
+
+        final JComponent component = form.asComponent();
+        verifyLayout( component, JPanel.class, GridBagLayout.class );
+        addToWindow( form );
+        return form;
+    }
 }

@@ -3,6 +3,7 @@
  */
 package domain;
 
+import org.formbuilder.main.annotations.UIHidden;
 import org.formbuilder.main.annotations.UIReadOnly;
 import org.formbuilder.main.annotations.UITitle;
 
@@ -22,6 +23,18 @@ public class Person
     private Set<Account> goodAccounts;
     private Set<Account> badAccounts;
     private Role role;
+    private long id;
+
+    @UIHidden
+    public long getId()
+    {
+        return id;
+    }
+
+    public void setId( final long id )
+    {
+        this.id = id;
+    }
 
     public String getDescription()
     {

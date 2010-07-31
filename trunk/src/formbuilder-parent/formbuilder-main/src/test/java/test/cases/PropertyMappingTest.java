@@ -10,10 +10,7 @@ import org.formbuilder.main.map.ValueChangeListener;
 import org.formbuilder.main.map.type.TypeMapper;
 import org.formbuilder.main.validation.BackgroundMarker;
 import org.formbuilder.main.validation.ValidationMarker;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import test.env.FormEnvironment;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -25,26 +22,8 @@ import javax.swing.event.DocumentListener;
  *         Time: 16:36:33
  */
 public class PropertyMappingTest
+        extends FormTest
 {
-    private FormEnvironment env;
-
-    @BeforeClass
-    public void setUp()
-            throws
-            Exception
-    {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
-    }
-
-    @AfterClass
-    public void tearDown()
-            throws
-            Exception
-    {
-        this.env.tearDown( this );
-    }
-
     @Test
     public void mapByGetter()
     {

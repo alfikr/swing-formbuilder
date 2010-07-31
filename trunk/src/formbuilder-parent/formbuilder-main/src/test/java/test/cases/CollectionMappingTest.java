@@ -7,10 +7,7 @@ import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
 import org.formbuilder.main.map.type.CollectionMapper;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import test.env.FormEnvironment;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,26 +23,8 @@ import static java.util.Arrays.asList;
  *         Time: 16:20:09
  */
 public class CollectionMappingTest
+        extends FormTest
 {
-    private FormEnvironment env;
-
-    @BeforeClass
-    public void setUp()
-            throws
-            Exception
-    {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
-    }
-
-    @AfterClass
-    public void tearDown()
-            throws
-            Exception
-    {
-        this.env.tearDown( this );
-    }
-
     @Test
     public void testCollectionEditor()
             throws

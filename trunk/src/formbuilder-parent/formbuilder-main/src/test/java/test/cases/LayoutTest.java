@@ -5,10 +5,7 @@ import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.main.Builder;
 import org.formbuilder.main.Form;
 import org.formbuilder.main.map.bean.SampleBeanMapper;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import test.env.FormEnvironment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,26 +18,8 @@ import static org.testng.Assert.fail;
  *         Time: 16:22:16
  */
 public class LayoutTest
+        extends FormTest
 {
-    private FormEnvironment env;
-
-    @BeforeClass
-    public void setUp()
-            throws
-            Exception
-    {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
-    }
-
-    @AfterClass
-    public void tearDown()
-            throws
-            Exception
-    {
-        this.env.tearDown( this );
-    }
-
     @Test
     public void customizedLayout()
     {
@@ -65,7 +44,7 @@ public class LayoutTest
 
         try
         {
-            assert wrapperPanel.spinner( "age" ) == null;
+            wrapperPanel.spinner( "age" );
             fail();
         }
         catch ( final Exception ignored )
