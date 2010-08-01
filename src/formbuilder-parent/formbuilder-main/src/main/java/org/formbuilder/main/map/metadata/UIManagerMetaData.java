@@ -20,15 +20,20 @@ public class UIManagerMetaData
     @Override
     public Integer getOrder( final PropertyDescriptor descriptor )
     {
-        String o = UIManager.getString( getQName( descriptor ) + ".order" );
+        Object o = UIManager.get( getQName( descriptor ) + ".order" );
         if ( o == null )
         {
             return null;
         }
+        if ( o instanceof Number )
+        {
+            Number n = (Number) o;
+            return n.intValue();
+        }
 
         try
         {
-            return Integer.valueOf( o );
+            return Integer.valueOf( o.toString() );
         }
         catch ( NumberFormatException e )
         {

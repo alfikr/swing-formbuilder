@@ -8,6 +8,8 @@ import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.util.Reflection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -27,10 +29,11 @@ public abstract class SampleBeanMapper<B>
     private MappingRules currentMappingRules;
     private Mapping currentMapping;
 
+    @Nonnull
     @Override
-    public Object invoke( final Object proxy,
-                          final Method method,
-                          final Object[] args )
+    public Object invoke( @Nonnull final Object proxy,
+                          @Nonnull final Method method,
+                          @Nullable final Object[] args )
             throws
             InvocationTargetException,
             IllegalAccessException
@@ -41,9 +44,10 @@ public abstract class SampleBeanMapper<B>
         return Reflection.emptyValue( method );
     }
 
+    @Nonnull
     @Override
-    public Mapping map( final Class<B> beanClass,
-                        final MappingRules mappingRules )
+    public Mapping map( @Nonnull final Class<B> beanClass,
+                        @Nonnull final MappingRules mappingRules )
     {
         this.currentMappingRules = mappingRules;
         this.currentMapping = new Mapping();
@@ -51,7 +55,8 @@ public abstract class SampleBeanMapper<B>
         return this.currentMapping;
     }
 
-    protected JComponent component( @SuppressWarnings( "unused" ) final Object whatProxyGetterReturned )
+    @Nonnull
+    protected JComponent component( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
             throws
             MappingException
     {
@@ -62,5 +67,6 @@ public abstract class SampleBeanMapper<B>
         return createEditor( Reflection.getDescriptor( readMethod ), mappers, mapping );
     }
 
-    protected abstract JComponent mapBean( B beanSample );
+    @Nonnull
+    protected abstract JComponent mapBean( @Nonnull B beanSample );
 }
