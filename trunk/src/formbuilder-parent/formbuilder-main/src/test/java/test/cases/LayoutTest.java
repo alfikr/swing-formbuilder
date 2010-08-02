@@ -2,9 +2,9 @@ package test.cases;
 
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.main.Builder;
-import org.formbuilder.main.Form;
-import org.formbuilder.main.map.bean.SampleBeanMapper;
+import org.main.Builder;
+import org.main.Form;
+import org.main.mapping.bean.SampleBeanMapper;
 import org.testng.annotations.Test;
 
 import javax.swing.*;

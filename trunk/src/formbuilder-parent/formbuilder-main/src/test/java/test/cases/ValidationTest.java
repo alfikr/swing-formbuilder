@@ -3,8 +3,8 @@ package test.cases;
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
-import org.formbuilder.main.Builder;
-import org.formbuilder.main.Form;
+import org.main.Builder;
+import org.main.Form;
 import org.testng.annotations.Test;
 
 import java.awt.*;

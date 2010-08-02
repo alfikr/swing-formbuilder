@@ -4,9 +4,9 @@ import domain.Person;
 import domain.Role;
 import org.fest.swing.fixture.JComboBoxFixture;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.main.Builder;
-import org.formbuilder.main.Form;
-import org.formbuilder.main.map.type.ReferenceMapper;
+import org.main.Builder;
+import org.main.Form;
+import org.main.mapping.type.ReferenceMapper;
 import org.testng.annotations.Test;
 
 import java.util.List;
