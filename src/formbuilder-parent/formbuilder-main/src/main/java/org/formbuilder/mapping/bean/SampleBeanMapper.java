@@ -10,9 +10,9 @@ import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -23,28 +23,28 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  * @author aeremenok 2010
  * @param <B>
  */
+@NotThreadSafe
 public abstract class SampleBeanMapper<B>
         extends AbstractBeanMapper<B>
-        implements InvocationHandler
 {
     private Method lastCalledMethod;
     private MappingRules currentMappingRules;
     private BeanMapping currentBeanMapping;
-
-    @Nonnull
-    @Override
-    public Object invoke( @Nonnull final Object proxy,
-                          @Nonnull final Method method,
-                          @Nullable final Object[] args )
-            throws
-            InvocationTargetException,
-            IllegalAccessException
+    private final InvocationHandler invocationHandler = new InvocationHandler()
     {
-        checkState( isEventDispatchThread() );
+        @Override
+        public Object invoke( final Object proxy,
+                              final Method method,
+                              final Object[] args )
+                throws
+                Throwable
+        {
+            checkState( isEventDispatchThread() );
 
-        lastCalledMethod = method;
-        return Reflection.emptyValue( method );
-    }
+            lastCalledMethod = method;
+            return Reflection.emptyValue( method );
+        }
+    };
 
     @Nonnull
     @Override
@@ -53,7 +53,9 @@ public abstract class SampleBeanMapper<B>
     {
         this.currentMappingRules = mappingRules;
         this.currentBeanMapping = new BeanMapping();
-        this.currentBeanMapping.setPanel( mapBean( Reflection.createProxy( beanClass, this ) ) );
+
+        final B beanSample = Reflection.createProxy( beanClass, invocationHandler );
+        this.currentBeanMapping.setPanel( mapBean( beanSample ) );
         return this.currentBeanMapping;
     }
 

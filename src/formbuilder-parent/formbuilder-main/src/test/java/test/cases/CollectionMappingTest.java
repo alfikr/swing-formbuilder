@@ -6,7 +6,7 @@ import org.fest.swing.fixture.JListFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Builder;
 import org.formbuilder.Form;
-import org.formbuilder.mapping.type.CollectionMapper;
+import org.formbuilder.mapping.type.CollectionToJListMapper;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
@@ -45,7 +45,7 @@ public class CollectionMappingTest
     }
 
     private static class AccountSetMapper
-            extends CollectionMapper<Account, Set>
+            extends CollectionToJListMapper<Account, Set>
     {
         @Override
         protected Collection<Account> getSuitableData()

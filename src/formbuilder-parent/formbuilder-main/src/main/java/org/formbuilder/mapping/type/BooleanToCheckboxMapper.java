@@ -1,6 +1,6 @@
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
 
@@ -17,11 +17,9 @@ import javax.swing.event.ChangeListener;
  *         Time: 13:38:16
  */
 @NotThreadSafe
-public enum BooleanMapper
+public class BooleanToCheckboxMapper
         implements TypeMapper<JCheckBox, Boolean>
 {
-    INSTANCE;
-
     @Nonnull
     @Override
     public Class<Boolean> getValueClass()

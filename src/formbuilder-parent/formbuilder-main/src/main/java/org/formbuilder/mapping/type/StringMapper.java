@@ -1,11 +1,12 @@
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
@@ -15,6 +16,7 @@ import javax.swing.text.JTextComponent;
  *         Date: Aug 2, 2010
  *         Time: 11:54:19 PM
  */
+@NotThreadSafe
 public abstract class StringMapper<C extends JTextComponent>
         implements TypeMapper<C, String>
 {

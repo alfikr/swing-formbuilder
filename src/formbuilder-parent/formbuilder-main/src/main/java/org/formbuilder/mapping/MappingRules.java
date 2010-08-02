@@ -3,9 +3,9 @@ package org.formbuilder.mapping;
 import org.formbuilder.mapping.exception.InvalidPropertyMappingException;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
-import org.formbuilder.mapping.type.BooleanMapper;
-import org.formbuilder.mapping.type.DateMapper;
-import org.formbuilder.mapping.type.NumberMapper;
+import org.formbuilder.mapping.type.BooleanToCheckboxMapper;
+import org.formbuilder.mapping.type.DateToSpinnerMapper;
+import org.formbuilder.mapping.type.NumberToSpinnerMapper;
 import org.formbuilder.mapping.type.StringToTextFieldMapper;
 import org.formbuilder.mapping.type.TypeMapper;
 import org.formbuilder.util.Reflection;
@@ -16,8 +16,6 @@ import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * @author aeremenok
  *         Date: 28.07.2010
@@ -25,8 +23,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class MappingRules
 {
-    private final Map<Class, TypeMapper> typeToMapper = new HashMap<Class, TypeMapper>();
-    private final Map<String, TypeMapper> propertyToMapper = new HashMap<String, TypeMapper>();
+    protected final Map<Class, TypeMapper> typeToMapper = new HashMap<Class, TypeMapper>();
+    protected final Map<String, TypeMapper> propertyToMapper = new HashMap<String, TypeMapper>();
 
     public MappingRules()
     {
@@ -36,10 +34,10 @@ public class MappingRules
 
     protected void initDefaults()
     {
-        addMapper( StringToTextFieldMapper.INSTANCE );
-        addMapper( NumberMapper.INSTANCE );
-        addMapper( BooleanMapper.INSTANCE );
-        addMapper( DateMapper.INSTANCE );
+        addMapper( new StringToTextFieldMapper() );
+        addMapper( new NumberToSpinnerMapper() );
+        addMapper( new BooleanToCheckboxMapper() );
+        addMapper( new DateToSpinnerMapper() );
     }
 
     public void addMapper( @Nonnull TypeMapper mapper )

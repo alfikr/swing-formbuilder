@@ -1,6 +1,6 @@
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.DoNothingMarker;
 import org.formbuilder.validation.ValidationMarker;
 
@@ -19,7 +19,7 @@ import java.util.Vector;
  *         Time: 13:41:29
  */
 @NotThreadSafe
-public abstract class ReferenceMapper<R>
+public abstract class ReferenceToComboboxMapper<R>
         implements TypeMapper<JComboBox, R>
 {
     @Nullable

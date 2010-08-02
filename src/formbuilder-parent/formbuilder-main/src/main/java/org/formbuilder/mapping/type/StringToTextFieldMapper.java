@@ -13,8 +13,6 @@ import javax.swing.*;
 public class StringToTextFieldMapper
         extends StringMapper<JTextField>
 {
-    public static final StringToTextFieldMapper INSTANCE = new StringToTextFieldMapper();
-
     @Nonnull
     @Override
     public JTextField createEditorComponent()

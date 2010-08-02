@@ -1,4 +1,4 @@
-package org.formbuilder.mapping;
+package org.formbuilder.mapping.change;
 
 /**
  * @author aeremenok

@@ -15,10 +15,22 @@ import java.lang.reflect.Method;
  */
 @NotThreadSafe
 public abstract class GetterMapper<B>
-        implements InvocationHandler
 {
     private MappingRules currentMappingRules;
     private Method lastCalledMethod;
+    private final InvocationHandler invocationHandler = new InvocationHandler()
+    {
+        @Override
+        public Object invoke( final Object proxy,
+                              final Method method,
+                              final Object[] args )
+                throws
+                Throwable
+        {
+            lastCalledMethod = method;
+            return Reflection.emptyValue( method );
+        }
+    };
 
     protected abstract void mapGetters( @Nonnull B beanSample );
 
@@ -32,19 +44,8 @@ public abstract class GetterMapper<B>
     public void mapGettersToRules( @Nonnull Class<B> beanClass,
                                    @Nonnull MappingRules mappingRules )
     {
-        // todo not running in EDT - restrict threads?
+// todo reduce visibility
         currentMappingRules = mappingRules;
-        mapGetters( Reflection.createProxy( beanClass, this ) );
-    }
-
-    @Override
-    public Object invoke( final Object proxy,
-                          final Method method,
-                          final Object[] args )
-            throws
-            Throwable
-    {
-        lastCalledMethod = method;
-        return Reflection.emptyValue( method );
+        mapGetters( Reflection.createProxy( beanClass, invocationHandler ) );
     }
 }

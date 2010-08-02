@@ -3,7 +3,7 @@
  */
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
