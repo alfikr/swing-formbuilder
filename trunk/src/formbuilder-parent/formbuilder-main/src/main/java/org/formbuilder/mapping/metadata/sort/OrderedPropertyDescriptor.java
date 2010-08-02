@@ -1,4 +1,4 @@
-package org.formbuilder.mapping.metadata;
+package org.formbuilder.mapping.metadata.sort;
 
 import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;

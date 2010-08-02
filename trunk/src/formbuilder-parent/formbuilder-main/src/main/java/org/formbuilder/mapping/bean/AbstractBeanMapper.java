@@ -6,7 +6,7 @@ package org.formbuilder.mapping.bean;
 import org.apache.log4j.Logger;
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
@@ -14,6 +14,7 @@ import org.formbuilder.mapping.type.TypeMapper;
 import org.formbuilder.validation.ValidateChangedValue;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
 import java.beans.PropertyDescriptor;
 
@@ -21,6 +22,7 @@ import java.beans.PropertyDescriptor;
  * @author aeremenok 2010
  * @param <B>
  */
+@NotThreadSafe
 public abstract class AbstractBeanMapper<B>
         implements BeanMapper<B>
 {

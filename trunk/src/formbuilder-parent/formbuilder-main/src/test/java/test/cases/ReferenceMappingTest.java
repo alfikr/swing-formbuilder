@@ -6,7 +6,7 @@ import org.fest.swing.fixture.JComboBoxFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Builder;
 import org.formbuilder.Form;
-import org.formbuilder.mapping.type.ReferenceMapper;
+import org.formbuilder.mapping.type.ReferenceToComboboxMapper;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class ReferenceMappingTest
     }
 
     private static class RoleMapper
-            extends ReferenceMapper<Role>
+            extends ReferenceToComboboxMapper<Role>
     {
         @Override
         public Class<Role> getValueClass()

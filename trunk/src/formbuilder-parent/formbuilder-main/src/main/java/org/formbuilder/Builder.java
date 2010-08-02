@@ -3,6 +3,7 @@
  */
 package org.formbuilder;
 
+import org.formbuilder.mapping.FormImpl;
 import org.formbuilder.mapping.GetterMapper;
 import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.bean.BeanMapper;

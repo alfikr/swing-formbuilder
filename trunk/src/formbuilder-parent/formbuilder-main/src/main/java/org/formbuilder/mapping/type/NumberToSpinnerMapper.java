@@ -1,6 +1,6 @@
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
 
@@ -10,40 +10,37 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.util.Date;
 
 /**
  * @author aeremenok
  *         Date: 28.07.2010
- *         Time: 11:57:47
+ *         Time: 11:55:54
  */
 @NotThreadSafe
-public enum DateMapper
-        implements TypeMapper<JSpinner, Date>
+public class NumberToSpinnerMapper
+        implements TypeMapper<JSpinner, Number>
 {
-    INSTANCE;
-
     @Nonnull
     @Override
-    public Class<Date> getValueClass()
+    public Class<Number> getValueClass()
     {
-        return Date.class;
+        return Number.class;
     }
 
     @Nullable
     @Override
-    public Date getValue( @Nonnull final JSpinner editorComponent )
+    public Number getValue( @Nonnull final JSpinner editorComponent )
     {
-        return (Date) editorComponent.getValue();
+        return (Number) editorComponent.getValue();
     }
 
     @Override
     public void setValue( @Nonnull final JSpinner editorComponent,
-                          @Nullable Date value )
+                          @Nullable Number value )
     {
         if ( value == null )
         {
-            value = new Date( 0 );
+            value = 0;
         }
         editorComponent.setValue( value );
     }
@@ -52,19 +49,19 @@ public enum DateMapper
     @Override
     public JSpinner createEditorComponent()
     {
-        return new JSpinner( new SpinnerDateModel() );
+        return new JSpinner( new SpinnerNumberModel() );
     }
 
     @Override
     public void bindChangeListener( @Nonnull final JSpinner editorComponent,
-                                    @Nonnull final ValueChangeListener<Date> dateValueChangeListener )
+                                    @Nullable final ValueChangeListener<Number> numberChangeListener )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                dateValueChangeListener.onChange();
+                numberChangeListener.onChange();
             }
         } );
     }

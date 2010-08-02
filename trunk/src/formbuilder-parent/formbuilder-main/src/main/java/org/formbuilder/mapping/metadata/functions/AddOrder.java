@@ -2,7 +2,7 @@ package org.formbuilder.mapping.metadata.functions;
 
 import com.google.common.base.Function;
 import org.formbuilder.mapping.metadata.MetaDataUser;
-import org.formbuilder.mapping.metadata.OrderedPropertyDescriptor;
+import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 import org.formbuilder.mapping.metadata.MetaData;
 
 import javax.annotation.Nonnull;

@@ -1,6 +1,6 @@
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.DoNothingMarker;
 import org.formbuilder.validation.ValidationMarker;
 
@@ -20,7 +20,7 @@ import java.util.List;
  *         Time: 14:08:34
  */
 @NotThreadSafe
-public abstract class CollectionMapper<R, CT extends Collection>
+public abstract class CollectionToJListMapper<R, CT extends Collection>
         implements TypeMapper<JList, CT>
 {
     @Nullable

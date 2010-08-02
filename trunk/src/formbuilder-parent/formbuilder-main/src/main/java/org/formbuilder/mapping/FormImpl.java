@@ -1,10 +1,9 @@
 /**
  *
  */
-package org.formbuilder;
+package org.formbuilder.mapping;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
+import org.formbuilder.Form;
 import org.formbuilder.mapping.bean.BeanMapper;
 import org.formbuilder.util.Reflection;
 

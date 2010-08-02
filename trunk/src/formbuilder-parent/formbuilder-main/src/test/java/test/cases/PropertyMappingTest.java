@@ -6,7 +6,7 @@ import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Builder;
 import org.formbuilder.Form;
 import org.formbuilder.mapping.GetterMapper;
-import org.formbuilder.mapping.ValueChangeListener;
+import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.mapping.type.TypeMapper;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;

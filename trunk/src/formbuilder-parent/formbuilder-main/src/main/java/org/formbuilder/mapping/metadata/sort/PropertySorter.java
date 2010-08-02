@@ -1,6 +1,8 @@
-package org.formbuilder.mapping.metadata;
+package org.formbuilder.mapping.metadata.sort;
 
 import com.google.common.collect.Ordering;
+import org.formbuilder.mapping.metadata.MetaData;
+import org.formbuilder.mapping.metadata.MetaDataUser;
 import org.formbuilder.mapping.metadata.functions.AddOrder;
 import org.formbuilder.mapping.metadata.functions.IsSupported;
 import org.formbuilder.mapping.metadata.functions.IsVisible;
