@@ -4,8 +4,8 @@ import domain.Person;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.edt.GuiTask;
-import org.formbuilder.main.Builder;
-import org.formbuilder.main.Form;
+import org.main.Builder;
+import org.main.Form;
 
 import javax.swing.*;
 import java.awt.*;

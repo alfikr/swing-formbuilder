@@ -1,0 +1,58 @@
+/**
+ *
+ */
+package org.main;
+
+import org.main.mapping.BeanMapping;
+import org.main.mapping.MappingRules;
+import org.main.mapping.bean.BeanMapper;
+import org.main.util.Reflection;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
+
+/**
+ * @author aeremenok 2010
+ * @param <B>
+ */
+public class FormImpl<B>
+        implements Form<B>
+{
+    private BeanMapping beanMapping;
+    private Class<B> beanClass;
+
+    public FormImpl( @Nonnull final Class<B> beanClass,
+                     @Nonnull final BeanMapper<B> beanMapper,
+                     @Nonnull final MappingRules mappingRules )
+    {
+        this.beanClass = beanClass;
+        this.beanMapping = beanMapper.map( beanClass, mappingRules );
+    }
+
+    @Nonnull
+    @Override
+    public JComponent asComponent()
+    {
+        return beanMapping.getPanel();
+    }
+
+    @Nonnull
+    @Override
+    public B getValue()
+    {
+        B newBean = Reflection.newInstance( beanClass );
+        beanMapping.setBeanValues( newBean );
+        return newBean;
+    }
+
+    @Override
+    public void setValue( @Nullable final B bean )
+    {
+        checkState( isEventDispatchThread() );
+        beanMapping.setComponentValues( bean );
+    }
+}
