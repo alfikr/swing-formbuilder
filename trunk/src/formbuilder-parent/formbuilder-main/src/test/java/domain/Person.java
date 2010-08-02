@@ -3,9 +3,9 @@
  */
 package domain;
 
-import org.main.annotations.UIHidden;
-import org.main.annotations.UIReadOnly;
-import org.main.annotations.UITitle;
+import org.formbuilder.annotations.UIHidden;
+import org.formbuilder.annotations.UIReadOnly;
+import org.formbuilder.annotations.UITitle;
 
 import javax.validation.constraints.Size;
 import java.util.Date;

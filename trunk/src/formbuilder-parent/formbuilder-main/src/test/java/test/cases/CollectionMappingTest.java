@@ -4,9 +4,9 @@ import domain.Account;
 import domain.Person;
 import org.fest.swing.fixture.JListFixture;
 import org.fest.swing.fixture.JPanelFixture;
-import org.main.Builder;
-import org.main.Form;
-import org.main.mapping.type.CollectionMapper;
+import org.formbuilder.Builder;
+import org.formbuilder.Form;
+import org.formbuilder.mapping.type.CollectionMapper;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
