@@ -1,5 +1,7 @@
 package org.formbuilder.main.map.metadata;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
 
 /**
@@ -9,11 +11,13 @@ import java.beans.PropertyDescriptor;
  */
 public interface MetaData
 {
-    String getTitle( PropertyDescriptor descriptor );
+    @Nullable
+    String getTitle( @Nonnull PropertyDescriptor descriptor );
 
-    Integer getOrder( PropertyDescriptor descriptor );
+    @Nullable
+    Integer getOrder( @Nonnull PropertyDescriptor descriptor );
 
-    boolean isHidden( PropertyDescriptor descriptor );
+    boolean isHidden( @Nonnull PropertyDescriptor descriptor );
 
-    boolean isReadOnly( PropertyDescriptor descriptor );
+    boolean isReadOnly( @Nonnull PropertyDescriptor descriptor );
 }

@@ -3,7 +3,7 @@
  */
 package org.formbuilder.main;
 
-import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.BeanMapping;
 import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.bean.BeanMapper;
 import org.formbuilder.main.util.Reflection;
@@ -17,7 +17,7 @@ import javax.swing.*;
 public class FormImpl<B>
         implements Form<B>
 {
-    private Mapping mapping;
+    private BeanMapping beanMapping;
     private Class<B> beanClass;
 
     public FormImpl( final Class<B> beanClass,
@@ -25,20 +25,20 @@ public class FormImpl<B>
                      final MappingRules mappingRules )
     {
         this.beanClass = beanClass;
-        this.mapping = beanMapper.map( beanClass, mappingRules );
+        this.beanMapping = beanMapper.map( beanClass, mappingRules );
     }
 
     @Override
     public JComponent asComponent()
     {
-        return mapping.getPanel();
+        return beanMapping.getPanel();
     }
 
     @Override
     public B getValue()
     {
         B newBean = Reflection.newInstance( beanClass );
-        mapping.setBeanValues( newBean );
+        beanMapping.setBeanValues( newBean );
         return newBean;
     }
 
@@ -46,6 +46,6 @@ public class FormImpl<B>
     public void setValue( final B bean )
     {
         assert SwingUtilities.isEventDispatchThread();
-        mapping.setComponentValues( bean );
+        beanMapping.setComponentValues( bean );
     }
 }

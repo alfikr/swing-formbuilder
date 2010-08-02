@@ -5,6 +5,8 @@ package org.formbuilder.main.util;
 
 import net.sf.cglib.proxy.Enhancer;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -21,8 +23,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class Reflection
 {
-    private static Map<Class, Object> emptyValues = new HashMap<Class, Object>();
-    private static Map<Class, Class> primitiveToBox = new HashMap<Class, Class>();
+    private static final Map<Class, Object> emptyValues = new HashMap<Class, Object>();
+    private static final Map<Class, Class> primitiveToBox = new HashMap<Class, Class>();
 
     static
     {
@@ -52,8 +54,9 @@ public class Reflection
     }
 
     @SuppressWarnings( "unchecked" )
-    public static <T> T createProxy( final Class<T> beanClass,
-                                     final InvocationHandler handler )
+    @Nonnull
+    public static <T> T createProxy( @Nonnull final Class<T> beanClass,
+                                     @Nonnull final InvocationHandler handler )
     {
         final Enhancer e = new Enhancer();
         e.setSuperclass( beanClass );
@@ -73,7 +76,8 @@ public class Reflection
         return (T) e.create();
     }
 
-    public static Object emptyValue( final Method method )
+    @Nullable
+    public static Object emptyValue( @Nonnull final Method method )
     {
         final Class<?> returnType = method.getReturnType();
         if ( !returnType.isPrimitive() )
@@ -83,7 +87,8 @@ public class Reflection
         return checkNotNull( emptyValues.get( returnType ), "No default return value for method " + method );
     }
 
-    public static <T> T newInstance( Class<T> aClass )
+    @Nonnull
+    public static <T> T newInstance( @Nonnull Class<T> aClass )
     {
         try
         {
@@ -95,7 +100,8 @@ public class Reflection
         }
     }
 
-    public static Class<?> box( final Class<?> mayBePrimitive )
+    @Nonnull
+    public static Class<?> box( @Nonnull final Class<?> mayBePrimitive )
     {
         if ( !mayBePrimitive.isPrimitive() )
         {
@@ -106,7 +112,8 @@ public class Reflection
         return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
     }
 
-    public static BeanInfo getBeanInfo( final Class<?> beanClass )
+    @Nonnull
+    public static BeanInfo getBeanInfo( @Nonnull final Class<?> beanClass )
     {
         try
         {
@@ -118,7 +125,8 @@ public class Reflection
         }
     }
 
-    public static PropertyDescriptor getDescriptor( final Method readMethod )
+    @Nonnull
+    public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
     {
         BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
         for ( PropertyDescriptor descriptor : info.getPropertyDescriptors() )
@@ -131,9 +139,9 @@ public class Reflection
         throw new RuntimeException( readMethod + " is not a getter method for a bean" );
     }
 
-    public static void setValue( final Object bean,
-                                 final Object propertyValue,
-                                 final PropertyDescriptor propertyDescriptor )
+    public static void setValue( @Nullable final Object bean,
+                                 @Nullable final Object propertyValue,
+                                 @Nonnull final PropertyDescriptor propertyDescriptor )
     {
         try
         {
@@ -145,8 +153,9 @@ public class Reflection
         }
     }
 
-    public static Object getValue( final PropertyDescriptor descriptor,
-                                   final Object bean )
+    @Nullable
+    public static Object getValue( @Nonnull final PropertyDescriptor descriptor,
+                                   @Nullable final Object bean )
     {
         if ( bean == null )
         {

@@ -10,9 +10,13 @@ import org.formbuilder.main.map.type.StringMapper;
 import org.formbuilder.main.map.type.TypeMapper;
 import org.formbuilder.main.util.Reflection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author aeremenok
@@ -38,18 +42,19 @@ public class MappingRules
         addMapper( DateMapper.INSTANCE );
     }
 
-    public void addMapper( TypeMapper mapper )
+    public void addMapper( @Nonnull TypeMapper mapper )
     {
         typeToMapper.put( mapper.getValueClass(), mapper );
     }
 
-    public void addMapper( String propertyName,
-                           TypeMapper mapper )
+    public void addMapper( @Nonnull String propertyName,
+                           @Nonnull TypeMapper mapper )
     {
         propertyToMapper.put( propertyName, mapper );
     }
 
-    public TypeMapper getMapper( PropertyDescriptor descriptor )
+    @Nonnull
+    public TypeMapper getMapper( @Nonnull PropertyDescriptor descriptor )
             throws
             MappingException
     {
@@ -76,8 +81,9 @@ public class MappingRules
         throw new UnmappedTypeException( descriptor );
     }
 
-    private TypeMapper checkType( final TypeMapper mapper,
-                                  final PropertyDescriptor descriptor )
+    @Nonnull
+    private TypeMapper checkType( @Nonnull final TypeMapper mapper,
+                                  @Nonnull final PropertyDescriptor descriptor )
             throws
             InvalidPropertyMappingException
     {
@@ -89,7 +95,8 @@ public class MappingRules
         return mapper;
     }
 
-    private TypeMapper findMapperOfSuperType( final Class<?> subtype )
+    @Nullable
+    private TypeMapper findMapperOfSuperType( @Nonnull final Class<?> subtype )
     {
         for ( Map.Entry<Class, TypeMapper> entry : typeToMapper.entrySet() )
         {

@@ -5,6 +5,8 @@ import org.formbuilder.main.annotations.UIOrder;
 import org.formbuilder.main.annotations.UIReadOnly;
 import org.formbuilder.main.annotations.UITitle;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 
@@ -17,7 +19,8 @@ public class AnnotationMetaData
         implements MetaData
 {
     @Override
-    public String getTitle( final PropertyDescriptor descriptor )
+    @Nullable
+    public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
         final UITitle uiTitle = getAnnotation( descriptor, UITitle.class );
         if ( uiTitle != null )
@@ -28,7 +31,7 @@ public class AnnotationMetaData
     }
 
     @Override
-    public Integer getOrder( final PropertyDescriptor descriptor )
+    public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
         final UIOrder uiOrder = getAnnotation( descriptor, UIOrder.class );
         if ( uiOrder != null )
@@ -39,19 +42,20 @@ public class AnnotationMetaData
     }
 
     @Override
-    public boolean isHidden( final PropertyDescriptor descriptor )
+    public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIHidden.class ) != null;
     }
 
     @Override
-    public boolean isReadOnly( final PropertyDescriptor descriptor )
+    public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIReadOnly.class ) != null;
     }
 
-    protected <T extends Annotation> T getAnnotation( final PropertyDescriptor descriptor,
-                                                      Class<T> annotationClass )
+    @Nullable
+    protected <T extends Annotation> T getAnnotation( @Nonnull final PropertyDescriptor descriptor,
+                                                      @Nonnull Class<T> annotationClass )
     {
         return descriptor.getReadMethod().getAnnotation( annotationClass );
     }

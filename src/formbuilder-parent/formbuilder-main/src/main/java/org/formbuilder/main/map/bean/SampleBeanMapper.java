@@ -3,7 +3,7 @@
  */
 package org.formbuilder.main.map.bean;
 
-import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.BeanMapping;
 import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.util.Reflection;
@@ -16,6 +16,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * @author aeremenok 2010
@@ -27,7 +29,7 @@ public abstract class SampleBeanMapper<B>
 {
     private Method lastCalledMethod;
     private MappingRules currentMappingRules;
-    private Mapping currentMapping;
+    private BeanMapping currentBeanMapping;
 
     @Nonnull
     @Override
@@ -38,7 +40,7 @@ public abstract class SampleBeanMapper<B>
             InvocationTargetException,
             IllegalAccessException
     {
-        assert SwingUtilities.isEventDispatchThread();
+        checkState( isEventDispatchThread() );
 
         lastCalledMethod = method;
         return Reflection.emptyValue( method );
@@ -46,13 +48,13 @@ public abstract class SampleBeanMapper<B>
 
     @Nonnull
     @Override
-    public Mapping map( @Nonnull final Class<B> beanClass,
-                        @Nonnull final MappingRules mappingRules )
+    public BeanMapping map( @Nonnull final Class<B> beanClass,
+                            @Nonnull final MappingRules mappingRules )
     {
         this.currentMappingRules = mappingRules;
-        this.currentMapping = new Mapping();
-        this.currentMapping.setPanel( mapBean( Reflection.createProxy( beanClass, this ) ) );
-        return this.currentMapping;
+        this.currentBeanMapping = new BeanMapping();
+        this.currentBeanMapping.setPanel( mapBean( Reflection.createProxy( beanClass, this ) ) );
+        return this.currentBeanMapping;
     }
 
     @Nonnull
@@ -63,8 +65,8 @@ public abstract class SampleBeanMapper<B>
         // todo error messages
         final MappingRules mappers = checkNotNull( currentMappingRules );
         final Method readMethod = checkNotNull( lastCalledMethod );
-        final Mapping mapping = checkNotNull( currentMapping );
-        return createEditor( Reflection.getDescriptor( readMethod ), mappers, mapping );
+        final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
+        return createEditor( Reflection.getDescriptor( readMethod ), mappers, beanMapping );
     }
 
     @Nonnull
