@@ -3,58 +3,70 @@
  */
 package org.formbuilder.main;
 
-import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.GetterMapper;
-import org.formbuilder.main.map.bean.GridBagMapper;
+import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.bean.BeanMapper;
+import org.formbuilder.main.map.bean.GridBagMapper;
 import org.formbuilder.main.map.type.TypeMapper;
-import org.formbuilder.main.util.Reflection;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author aeremenok 2010
  * @param <B>
  */
+@NotThreadSafe
 public class Builder<B>
 {
     private final Class<B> beanClass;
+    private final MappingRules mappingRules = new MappingRules();
+    @Nonnull
     private BeanMapper<B> beanMapper = new GridBagMapper<B>();
-    private MappingRules mappingRules = new MappingRules();
 
     private Builder( final Class<B> beanClass )
     {
         this.beanClass = beanClass;
     }
 
-    public static <T> Builder<T> map( final Class<T> beanClass )
+    @Nonnull
+    public static <T> Builder<T> map( @Nonnull final Class<T> beanClass )
     {
-        return new Builder<T>( beanClass );
+        return new Builder<T>( checkNotNull( beanClass ) );
     }
 
+    @Nonnull
     public Form<B> buildForm()
     {
         return new FormImpl<B>( beanClass, beanMapper, mappingRules );
     }
 
-    public Builder<B> with( final BeanMapper<B> beanMapper )
+    @Nonnull
+    public Builder<B> with( @Nonnull final BeanMapper<B> beanMapper )
     {
-        this.beanMapper = beanMapper;
+        this.beanMapper = checkNotNull( beanMapper );
         return this;
     }
 
-    public Builder<B> use( final TypeMapper typeMapper )
+    @Nonnull
+    public Builder<B> use( @Nonnull final TypeMapper typeMapper )
     {
-        this.mappingRules.addMapper( typeMapper );
+        this.mappingRules.addMapper( checkNotNull( typeMapper ) );
         return this;
     }
 
-    public Builder<B> useForProperty( final String propertyName,
-                                      final TypeMapper propertyMapper )
+    @Nonnull
+    public Builder<B> useForProperty( @Nonnull final String propertyName,
+                                      @Nonnull final TypeMapper propertyMapper )
     {
-        this.mappingRules.addMapper( propertyName, propertyMapper );
+        this.mappingRules.addMapper( checkNotNull( propertyName ), checkNotNull( propertyMapper ) );
         return this;
     }
 
-    public Builder<B> useForGetters( final GetterMapper<B> getterMapper )
+    @Nonnull
+    public Builder<B> useForGetters( @Nonnull final GetterMapper<B> getterMapper )
     {
         getterMapper.mapGettersToRules( beanClass, mappingRules );
         return this;

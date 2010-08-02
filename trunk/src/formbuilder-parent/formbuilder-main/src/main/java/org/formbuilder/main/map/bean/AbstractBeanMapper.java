@@ -3,18 +3,16 @@
  */
 package org.formbuilder.main.map.bean;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import org.apache.log4j.Logger;
-import org.formbuilder.main.map.Mapping;
+import org.formbuilder.main.map.BeanMapping;
 import org.formbuilder.main.map.MappingRules;
 import org.formbuilder.main.map.exception.MappingException;
 import org.formbuilder.main.map.metadata.CombinedMetaData;
 import org.formbuilder.main.map.metadata.MetaData;
 import org.formbuilder.main.map.type.TypeMapper;
+import org.formbuilder.main.validation.ValidateChangedValue;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.*;
 import java.beans.PropertyDescriptor;
 
@@ -27,53 +25,22 @@ public abstract class AbstractBeanMapper<B>
 {
     private static final Logger log = Logger.getLogger( AbstractBeanMapper.class );
     protected final MetaData metaData = createMetaData();
-    protected final Predicate<PropertyDescriptor> isSupported = new Predicate<PropertyDescriptor>()
-    {
-        @Override
-        public boolean apply( @Nullable final PropertyDescriptor descriptor )
-        {
-            return isSupported( descriptor );
-        }
-    };
-    protected final Predicate<PropertyDescriptor> isVisible = new Predicate<PropertyDescriptor>()
-    {
-        @Override
-        public boolean apply( @Nullable final PropertyDescriptor descriptor )
-        {
-            return !metaData.isHidden( descriptor );
-        }
-    };
-    protected final Function<PropertyDescriptor, OrderedPropertyDescriptor> addOrder = new Function<PropertyDescriptor, OrderedPropertyDescriptor>()
-    {
-        protected int nonNull( @Nullable Integer i )
-        {
-            if ( i == null )
-            {
-                return Integer.MAX_VALUE;
-            }
-            return i;
-        }
 
-        @Override
-        public OrderedPropertyDescriptor apply( @Nullable final PropertyDescriptor from )
-        {
-            return new OrderedPropertyDescriptor( from, nonNull( metaData.getOrder( from ) ) );
-        }
-    };
-
-    protected JLabel createLabel( final Mapping mapping,
-                                  final PropertyDescriptor descriptor )
+    @Nonnull
+    protected JLabel createLabel( @Nonnull final BeanMapping beanMapping,
+                                  @Nonnull final PropertyDescriptor descriptor )
     {
         final JLabel label = new JLabel( metaData.getTitle( descriptor ) );
         label.setName( descriptor.getName() );
-        mapping.addLabel( descriptor, label );
+        beanMapping.addLabel( descriptor, label );
         return label;
     }
 
     @SuppressWarnings( {"unchecked"} )
-    protected JComponent createEditor( final PropertyDescriptor descriptor,
-                                       final MappingRules mappingRules,
-                                       final Mapping mapping )
+    @Nonnull
+    protected JComponent createEditor( @Nonnull final PropertyDescriptor descriptor,
+                                       @Nonnull final MappingRules mappingRules,
+                                       @Nonnull final BeanMapping beanMapping )
             throws
             MappingException
     {
@@ -84,7 +51,7 @@ public abstract class AbstractBeanMapper<B>
 
         mapper.bindChangeListener( editor, new ValidateChangedValue( mapper, editor, descriptor ) );
 
-        mapping.addEditor( descriptor, editor, mapper );
+        beanMapping.addEditor( descriptor, editor, mapper );
 
         return editor;
     }
@@ -99,11 +66,6 @@ public abstract class AbstractBeanMapper<B>
     protected MetaData createMetaData()
     {
         return new CombinedMetaData();
-    }
-
-    protected boolean isSupported( @Nonnull final PropertyDescriptor descriptor )
-    {
-        return descriptor.getReadMethod() != null && !"class".equals( descriptor.getName() );
     }
 
     protected boolean isEditable( @Nonnull final PropertyDescriptor descriptor )

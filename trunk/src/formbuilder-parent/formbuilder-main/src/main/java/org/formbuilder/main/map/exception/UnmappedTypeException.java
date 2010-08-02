@@ -1,5 +1,6 @@
 package org.formbuilder.main.map.exception;
 
+import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
 
 /**
@@ -10,7 +11,7 @@ import java.beans.PropertyDescriptor;
 public class UnmappedTypeException
         extends MappingException
 {
-    public UnmappedTypeException( final PropertyDescriptor descriptor )
+    public UnmappedTypeException( @Nonnull final PropertyDescriptor descriptor )
     {
         super( descriptor );
     }

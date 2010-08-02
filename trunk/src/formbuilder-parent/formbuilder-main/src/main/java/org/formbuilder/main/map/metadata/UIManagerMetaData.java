@@ -1,5 +1,7 @@
 package org.formbuilder.main.map.metadata;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.beans.PropertyDescriptor;
 
@@ -12,13 +14,15 @@ public class UIManagerMetaData
         implements MetaData
 {
     @Override
-    public String getTitle( final PropertyDescriptor descriptor )
+    @Nullable
+    public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
         return UIManager.getString( getQName( descriptor ) + ".title" );
     }
 
     @Override
-    public Integer getOrder( final PropertyDescriptor descriptor )
+    @Nullable
+    public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
         Object o = UIManager.get( getQName( descriptor ) + ".order" );
         if ( o == null )
@@ -42,17 +46,18 @@ public class UIManagerMetaData
     }
 
     @Override
-    public boolean isHidden( final PropertyDescriptor descriptor )
+    public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
         return UIManager.getBoolean( getQName( descriptor ) + ".hidden" );
     }
 
     @Override
-    public boolean isReadOnly( final PropertyDescriptor descriptor )
+    public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
         return UIManager.getBoolean( getQName( descriptor ) + ".readonly" );
     }
 
+    @Nonnull
     protected String getQName( PropertyDescriptor descriptor )
     {
         String className = descriptor.getReadMethod().getDeclaringClass().getSimpleName();

@@ -1,5 +1,6 @@
 package org.formbuilder.main.map.exception;
 
+import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
 
 /**
@@ -13,20 +14,22 @@ public class InvalidPropertyMappingException
     private Class expectedType;
     private Class actualType;
 
-    public InvalidPropertyMappingException( final PropertyDescriptor descriptor,
-                                            Class expectedType,
-                                            Class actualType )
+    public InvalidPropertyMappingException( @Nonnull final PropertyDescriptor descriptor,
+                                            @Nonnull Class expectedType,
+                                            @Nonnull Class actualType )
     {
         super( descriptor );
         this.expectedType = expectedType;
         this.actualType = actualType;
     }
 
+    @Nonnull
     public Class getExpectedType()
     {
         return expectedType;
     }
 
+    @Nonnull
     public Class getActualType()
     {
         return actualType;
