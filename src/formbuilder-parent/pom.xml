@@ -3,7 +3,7 @@
 	<artifactId>formbuilder-parent</artifactId>
 	<groupId>org.formbuilder</groupId>
 	<packaging>pom</packaging>
-	<version>0.9.0</version>
+	<version>0.9.1-SNAPSHOT</version>
 	<!-- -->
 	<modules>
 		<module>formbuilder-main</module>
@@ -66,9 +66,9 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<scm>
-		<url>http://swing-formbuilder.googlecode.com/svn/tags/formbuilder-parent-0.9.0</url>
-		<connection>scm:svn:http://swing-formbuilder.googlecode.com/svn/tags/formbuilder-parent-0.9.0</connection>
-		<developerConnection>scm:svn:https://swing-formbuilder.googlecode.com/svn/tags/formbuilder-parent-0.9.0
+		<url>http://swing-formbuilder.googlecode.com/svn/trunk/src/formbuilder-parent</url>
+		<connection>scm:svn:http://swing-formbuilder.googlecode.com/svn/trunk/src/formbuilder-parent</connection>
+		<developerConnection>scm:svn:https://swing-formbuilder.googlecode.com/svn/trunk/src/formbuilder-parent
         </developerConnection>
 	</scm>
 </project>
