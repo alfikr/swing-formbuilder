@@ -11,7 +11,7 @@ public class Person
 // ... getters and setters
 }
 }}}
-We can create custom editors for its instances and it takes few lines of code.
+You can create custom editors for its instances and it takes few lines of code.
 
 =Default Configuration=
 This simple code will add a JPanel with GridBagLayout to a frame:
@@ -39,6 +39,7 @@ assert person != changed;
 }}}
 =Mapping by sample=
 What if you need a custom layout of the editor components? Pass an instance of a `BeanMapper` into builder.
+
 For example, `SampleBeanMapper` guides a panel creation using a dynamic proxy of a bean. Since a panel is created _before_ the value is set, an empty bean stub is being passed into `mapBean` method. Note that `beanSample` is a dynamic proxy, created by CGLIB.
 {{{
 Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
