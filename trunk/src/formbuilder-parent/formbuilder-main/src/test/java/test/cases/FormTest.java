@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import test.env.FormEnvironment;
+import test.env.ScreenshotSaver;
 
 /**
  * @author eav
@@ -13,7 +14,8 @@ import test.env.FormEnvironment;
  */
 public abstract class FormTest
 {
-    protected Logger log = LoggerFactory.getLogger( getClass() );
+    protected final Logger log = LoggerFactory.getLogger( getClass() );
+    protected final ScreenshotSaver screenshotSaver = new ScreenshotSaver();
     protected FormEnvironment env;
 
     @BeforeClass

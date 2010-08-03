@@ -20,10 +20,10 @@ public class Person
     private String description;
     private int age;
     private Date birthDate;
+    private boolean gender;
     private Set<Account> goodAccounts;
     private Set<Account> badAccounts;
     private Role role;
-    private boolean gender;
     private long id;
 
     public boolean isGender()

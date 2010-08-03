@@ -3,14 +3,8 @@
  */
 package test;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Date;
-
-import javax.swing.Box;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
+import com.toedter.calendar.JDateChooser;
+import domain.Person;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.formbuilder.GetterMapper;
@@ -19,12 +13,12 @@ import org.formbuilder.mapping.bean.SampleBeanMapper;
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
-
 import test.cases.PropertyMappingTest.StringToTextAreaMapper;
 
-import com.toedter.calendar.JDateChooser;
-
-import domain.Person;
+import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
 
 /**
  * @author aeremenok 2010
@@ -37,6 +31,13 @@ public class Example
 
         final Form<Person> form = FormBuilder.map( Person.class ).buildForm();
         myFrame.add( form.asComponent() );
+
+        Person person = new Person();
+        person.setName( "person" );
+        form.setValue( person );
+
+        Person changed = form.getValue();
+        assert person != changed;
     }
 
     public void ex2()
@@ -62,7 +63,8 @@ public class Example
     public void ex4()
     {
         final Form<Person> form = FormBuilder.map( Person.class )
-                .useForProperty( "description", new StringToTextAreaMapper() ).buildForm();
+                .useForProperty( "description", new StringToTextAreaMapper() )
+                .buildForm();
     }
 
     public void ex5()
@@ -83,8 +85,7 @@ public class Example
     }
 
     class DateToDateChooserMapper
-        implements
-        TypeMapper<JDateChooser, Date>
+            implements TypeMapper<JDateChooser, Date>
     {
         @Override
         public Class<Date> getValueClass()
@@ -105,14 +106,15 @@ public class Example
         }
 
         @Override
-        public void setValue( final JDateChooser editorComponent, final Date value )
+        public void setValue( final JDateChooser editorComponent,
+                              final Date value )
         {
             editorComponent.setDate( value );
         }
 
         @Override
         public void bindChangeListener( final JDateChooser editorComponent,
-            final ValueChangeListener<Date> changeListener )
+                                        final ValueChangeListener<Date> changeListener )
         {
             editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
             {
@@ -130,5 +132,4 @@ public class Example
             return BackgroundMarker.INSTANCE;
         }
     }
-
 }
