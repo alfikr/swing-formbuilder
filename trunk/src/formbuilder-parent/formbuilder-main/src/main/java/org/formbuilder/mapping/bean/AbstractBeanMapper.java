@@ -3,7 +3,6 @@
  */
 package org.formbuilder.mapping.bean;
 
-import org.apache.log4j.Logger;
 import org.formbuilder.BeanMapper;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.BeanMapping;
@@ -30,7 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class AbstractBeanMapper<B>
         implements BeanMapper<B>
 {
-    private static final Logger log = Logger.getLogger( AbstractBeanMapper.class );
     protected final MetaData metaData = createMetaData();
 
     @SuppressWarnings( {"unchecked"} )
@@ -83,8 +81,7 @@ public abstract class AbstractBeanMapper<B>
 
     protected void handleMappingException( @Nonnull final MappingException e )
     {
-        // todo implement different strategies
-        log.warn( "Cannot find mapper for method " + e.getDescriptor() );
+        // skip
     }
 
     protected boolean isEditable( @Nonnull final PropertyDescriptor descriptor )
