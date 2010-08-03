@@ -1,6 +1,8 @@
 package test.cases;
 
-import domain.Person;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
@@ -9,7 +11,7 @@ import org.formbuilder.GetterMapper;
 import org.formbuilder.mapping.type.StringMapper;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
+import domain.Person;
 
 /**
  * @author aeremenok
@@ -28,7 +30,7 @@ public class PropertyMappingTest
                     @Override
                     public void mapGetters( final Person beanSample )
                     {
-                        mapGetter( beanSample.getDescription(), new TextAreaMapper() );
+                        mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
                     }
                 } );
         final Form<Person> form = env.buildFormInEDT( formBuilder );
@@ -49,7 +51,7 @@ public class PropertyMappingTest
     public void mapByPropertyName()
     {
         final FormBuilder<Person> formBuilder = FormBuilder.map( Person.class )
-                .useForProperty( "description", new TextAreaMapper() );
+                .useForProperty( "description", new StringToTextAreaMapper() );
         final Form<Person> form = env.buildFormInEDT( formBuilder );
         env.addToWindow( form.asComponent() );
 
@@ -64,8 +66,8 @@ public class PropertyMappingTest
         assert descComponent.target instanceof JTextArea;
     }
 
-    private static class TextAreaMapper
-            extends StringMapper<JTextArea>
+    public static class StringToTextAreaMapper
+        extends StringMapper<JTextArea>
     {
         @Override
         public JTextArea createEditorComponent()
