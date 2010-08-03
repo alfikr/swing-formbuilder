@@ -1,10 +1,106 @@
 #labels Featured
-Add your content here.
+=Default Configuration=
+This simple code will add a JPanel with GridBagLayout to a frame:
+{{{        
+JFrame myFrame = new JFrame();
+// make proper initialization
+Form<Person> form = FormBuilder.map( Person.class ).buildForm();
+myFrame.add( form.asComponent() );
+}}}
+Each row represents a property and contains a JLabel and a specific editor component. 
 
+=Mapping by sample=
 
-= Details =
+{{{
+Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
+        {
+            @Override
+            protected JComponent mapBean( final Person beanSample )
+            {
+                final Box box = Box.createHorizontalBox();
+                box.add( label( beanSample.getName() ) );
+                box.add( editor( beanSample.getName() ) );
+                return box;
+            }
+        } ).buildForm();
+}}}
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=Custom type mapping=
+
+{{{
+Form<Person> form = FormBuilder.map( Person.class ).use( new StringToTextAreaMapper() ).buildForm();
+}}}
+
+=Custom property mapping=
+{{{
+Form<Person> form = FormBuilder.map( Person.class )
+                .useForProperty( "description", new StringToTextAreaMapper() ).buildForm();
+}}}
+or in a more sophisticated, but type-safe way
+{{{
+Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
+        {
+            @Override
+            protected void mapGetters( final Person beanSample )
+            {
+                mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+            }
+        } ).buildForm();
+}}}
+
+=Disabling the validation=
+{{{
+Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildForm();
+}}}
+
+=Writing a custom mapper=
+{{{
+class DateToDateChooserMapper
+        implements
+        TypeMapper<JDateChooser, Date>
+    {
+        @Override
+        public Class<Date> getValueClass()
+        {
+            return Date.class;
+        }
+
+        @Override
+        public JDateChooser createEditorComponent()
+        {
+            return new JDateChooser();
+        }
+
+        @Override
+        public Date getValue( final JDateChooser editorComponent )
+        {
+            return editorComponent.getDate();
+        }
+
+        @Override
+        public void setValue( final JDateChooser editorComponent, final Date value )
+        {
+            editorComponent.setDate( value );
+        }
+
+        @Override
+        public void bindChangeListener( final JDateChooser editorComponent,
+            final ValueChangeListener<Date> changeListener )
+        {
+            editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
+            {
+                @Override
+                public void propertyChange( final PropertyChangeEvent evt )
+                {
+                    changeListener.onChange();
+                }
+            } );
+        }
+
+        @Override
+        public ValidationMarker getValidationMarker()
+        {
+            return BackgroundMarker.INSTANCE;
+        }
+    }
+}}}
