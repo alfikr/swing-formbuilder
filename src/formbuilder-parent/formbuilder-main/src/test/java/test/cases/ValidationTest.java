@@ -23,8 +23,6 @@ public class ValidationTest
 {
     @Test
     public void testValidation()
-            throws
-            InterruptedException
     {
         final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ) );
         env.addToWindow( form.asComponent() );
@@ -33,7 +31,7 @@ public class ValidationTest
         env.setValueInEDT( form, oldValue );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
-        JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
+        final JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
 
         assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
         assertNull( nameTextBox.target.getToolTipText() );

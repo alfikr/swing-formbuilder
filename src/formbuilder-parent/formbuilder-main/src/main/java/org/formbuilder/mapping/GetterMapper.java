@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
  * @author aeremenok
  *         Date: 30.07.2010
  *         Time: 17:54:35
+ * @param <B>
  */
 @NotThreadSafe
 public abstract class GetterMapper<B>
@@ -24,28 +25,26 @@ public abstract class GetterMapper<B>
         public Object invoke( final Object proxy,
                               final Method method,
                               final Object[] args )
-                throws
-                Throwable
         {
             lastCalledMethod = method;
             return Reflection.emptyValue( method );
         }
     };
 
-    protected abstract void mapGetters( @Nonnull B beanSample );
-
-    protected <T> void mapGetter( T whatProxyGetterReturned,
-                                  @Nonnull TypeMapper<?, ? extends T> mapper )
-    {
-        final String propertyName = Reflection.getDescriptor( lastCalledMethod ).getName();
-        currentMappingRules.addMapper( propertyName, mapper );
-    }
-
-    public void mapGettersToRules( @Nonnull Class<B> beanClass,
-                                   @Nonnull MappingRules mappingRules )
+    public void mapGettersToRules( @Nonnull final Class<B> beanClass,
+                                   @Nonnull final MappingRules mappingRules )
     {
 // todo reduce visibility
         currentMappingRules = mappingRules;
         mapGetters( Reflection.createProxy( beanClass, invocationHandler ) );
     }
+
+    protected <T> void mapGetter( @SuppressWarnings( "unused" ) final T whatProxyGetterReturned,
+                                  @Nonnull final TypeMapper<?, ? extends T> mapper )
+    {
+        final String propertyName = Reflection.getDescriptor( lastCalledMethod ).getName();
+        currentMappingRules.addMapper( propertyName, mapper );
+    }
+
+    protected abstract void mapGetters( @Nonnull B beanSample );
 }

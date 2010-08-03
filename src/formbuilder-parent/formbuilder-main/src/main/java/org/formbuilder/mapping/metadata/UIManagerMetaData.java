@@ -15,23 +15,16 @@ public class UIManagerMetaData
 {
     @Override
     @Nullable
-    public String getTitle( @Nonnull final PropertyDescriptor descriptor )
-    {
-        return UIManager.getString( getQName( descriptor ) + ".title" );
-    }
-
-    @Override
-    @Nullable
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
-        Object o = UIManager.get( getQName( descriptor ) + ".order" );
+        final Object o = UIManager.get( getQName( descriptor ) + ".order" );
         if ( o == null )
         {
             return null;
         }
         if ( o instanceof Number )
         {
-            Number n = (Number) o;
+            final Number n = (Number) o;
             return n.intValue();
         }
 
@@ -39,10 +32,17 @@ public class UIManagerMetaData
         {
             return Integer.valueOf( o.toString() );
         }
-        catch ( NumberFormatException e )
+        catch ( final NumberFormatException e )
         {
             return null;
         }
+    }
+
+    @Override
+    @Nullable
+    public String getTitle( @Nonnull final PropertyDescriptor descriptor )
+    {
+        return UIManager.getString( getQName( descriptor ) + ".title" );
     }
 
     @Override
@@ -58,10 +58,10 @@ public class UIManagerMetaData
     }
 
     @Nonnull
-    protected String getQName( PropertyDescriptor descriptor )
+    protected String getQName( final PropertyDescriptor descriptor )
     {
-        String className = descriptor.getReadMethod().getDeclaringClass().getSimpleName();
-        String propertyName = descriptor.getName();
+        final String className = descriptor.getReadMethod().getDeclaringClass().getSimpleName();
+        final String propertyName = descriptor.getName();
         return className + "." + propertyName;
     }
 }

@@ -1,9 +1,9 @@
 package org.formbuilder.mapping.metadata.functions;
 
 import com.google.common.base.Function;
+import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.MetaDataUser;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
-import org.formbuilder.mapping.metadata.MetaData;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,19 +23,19 @@ public class AddOrder
         super( metaData );
     }
 
-    protected int toInt( @Nullable Integer i )
+    @Override
+    public OrderedPropertyDescriptor apply( @Nonnull final PropertyDescriptor from )
+    {
+        final int order = toInt( metaData.getOrder( from ) );
+        return new OrderedPropertyDescriptor( from, order );
+    }
+
+    protected int toInt( @Nullable final Integer i )
     {
         if ( i == null )
         {
             return Integer.MAX_VALUE;
         }
         return i;
-    }
-
-    @Override
-    public OrderedPropertyDescriptor apply( @Nonnull final PropertyDescriptor from )
-    {
-        final int order = toInt( metaData.getOrder( from ) );
-        return new OrderedPropertyDescriptor( from, order );
     }
 }

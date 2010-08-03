@@ -53,6 +53,18 @@ public class Reflection
         primitiveToBox.put( Void.TYPE, Void.class );
     }
 
+    @Nonnull
+    public static Class<?> box( @Nonnull final Class<?> mayBePrimitive )
+    {
+        if ( !mayBePrimitive.isPrimitive() )
+        {
+            return mayBePrimitive;
+        }
+
+        final Class boxed = primitiveToBox.get( mayBePrimitive );
+        return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
+    }
+
     @SuppressWarnings( "unchecked" )
     @Nonnull
     public static <T> T createProxy( @Nonnull final Class<T> beanClass,
@@ -88,31 +100,6 @@ public class Reflection
     }
 
     @Nonnull
-    public static <T> T newInstance( @Nonnull Class<T> aClass )
-    {
-        try
-        {
-            return aClass.newInstance();
-        }
-        catch ( Exception e )
-        {
-            throw new RuntimeException( e );
-        }
-    }
-
-    @Nonnull
-    public static Class<?> box( @Nonnull final Class<?> mayBePrimitive )
-    {
-        if ( !mayBePrimitive.isPrimitive() )
-        {
-            return mayBePrimitive;
-        }
-
-        final Class boxed = primitiveToBox.get( mayBePrimitive );
-        return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
-    }
-
-    @Nonnull
     public static BeanInfo getBeanInfo( @Nonnull final Class<?> beanClass )
     {
         try
@@ -128,8 +115,8 @@ public class Reflection
     @Nonnull
     public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
     {
-        BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
-        for ( PropertyDescriptor descriptor : info.getPropertyDescriptors() )
+        final BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
+        for ( final PropertyDescriptor descriptor : info.getPropertyDescriptors() )
         {
             if ( readMethod.equals( descriptor.getReadMethod() ) )
             {
@@ -137,20 +124,6 @@ public class Reflection
             }
         }
         throw new RuntimeException( readMethod + " is not a getter method for a bean" );
-    }
-
-    public static void setValue( @Nonnull final Object bean,
-                                 @Nullable final Object propertyValue,
-                                 @Nonnull final PropertyDescriptor propertyDescriptor )
-    {
-        try
-        {
-            propertyDescriptor.getWriteMethod().invoke( bean, propertyValue );
-        }
-        catch ( Exception e )
-        {
-            throw new RuntimeException( e );
-        }
     }
 
     @Nullable
@@ -166,7 +139,34 @@ public class Reflection
         {
             return descriptor.getReadMethod().invoke( bean );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
+
+    @Nonnull
+    public static <T> T newInstance( @Nonnull final Class<T> aClass )
+    {
+        try
+        {
+            return aClass.newInstance();
+        }
+        catch ( final Exception e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
+
+    public static void setValue( @Nonnull final Object bean,
+                                 @Nullable final Object propertyValue,
+                                 @Nonnull final PropertyDescriptor propertyDescriptor )
+    {
+        try
+        {
+            propertyDescriptor.getWriteMethod().invoke( bean, propertyValue );
+        }
+        catch ( final Exception e )
         {
             throw new RuntimeException( e );
         }

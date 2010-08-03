@@ -45,16 +45,16 @@ public class Builder<B>
     }
 
     @Nonnull
-    public Builder<B> with( @Nonnull final BeanMapper<B> beanMapper )
+    public Builder<B> use( @Nonnull final TypeMapper typeMapper )
     {
-        this.beanMapper = checkNotNull( beanMapper );
+        this.mappingRules.addMapper( checkNotNull( typeMapper ) );
         return this;
     }
 
     @Nonnull
-    public Builder<B> use( @Nonnull final TypeMapper typeMapper )
+    public Builder<B> useForGetters( @Nonnull final GetterMapper<B> getterMapper )
     {
-        this.mappingRules.addMapper( checkNotNull( typeMapper ) );
+        getterMapper.mapGettersToRules( beanClass, mappingRules );
         return this;
     }
 
@@ -67,9 +67,9 @@ public class Builder<B>
     }
 
     @Nonnull
-    public Builder<B> useForGetters( @Nonnull final GetterMapper<B> getterMapper )
+    public Builder<B> with( @Nonnull final BeanMapper<B> beanMapper )
     {
-        getterMapper.mapGettersToRules( beanClass, mappingRules );
+        this.beanMapper = checkNotNull( beanMapper );
         return this;
     }
 }

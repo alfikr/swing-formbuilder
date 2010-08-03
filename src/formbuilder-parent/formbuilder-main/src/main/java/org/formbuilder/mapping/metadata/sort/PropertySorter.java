@@ -35,10 +35,11 @@ public class PropertySorter
     @Nonnull
     public List<OrderedPropertyDescriptor> activeSortedDescriptors( @Nonnull final Class beanClass )
     {
-        Iterable<PropertyDescriptor> descriptors = of( getBeanInfo( beanClass ).getPropertyDescriptors() );
-        Iterable<PropertyDescriptor> supportedAndVisible = filter( descriptors,
+        final Iterable<PropertyDescriptor> descriptors = of( getBeanInfo( beanClass ).getPropertyDescriptors() );
+        final Iterable<PropertyDescriptor> supportedAndVisible = filter( descriptors,
                 and( IsSupported.INSTANCE, new IsVisible( metaData ) ) );
-        Iterable<OrderedPropertyDescriptor> withOrder = transform( supportedAndVisible, new AddOrder( metaData ) );
+        final Iterable<OrderedPropertyDescriptor> withOrder = transform( supportedAndVisible,
+                new AddOrder( metaData ) );
         return Ordering.from( this ).sortedCopy( withOrder );
     }
 

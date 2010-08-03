@@ -21,38 +21,6 @@ import java.util.Date;
 public class DateToSpinnerMapper
         implements TypeMapper<JSpinner, Date>
 {
-    @Nonnull
-    @Override
-    public Class<Date> getValueClass()
-    {
-        return Date.class;
-    }
-
-    @Nullable
-    @Override
-    public Date getValue( @Nonnull final JSpinner editorComponent )
-    {
-        return (Date) editorComponent.getValue();
-    }
-
-    @Override
-    public void setValue( @Nonnull final JSpinner editorComponent,
-                          @Nullable Date value )
-    {
-        if ( value == null )
-        {
-            value = new Date( 0 );
-        }
-        editorComponent.setValue( value );
-    }
-
-    @Nonnull
-    @Override
-    public JSpinner createEditorComponent()
-    {
-        return new JSpinner( new SpinnerDateModel() );
-    }
-
     @Override
     public void bindChangeListener( @Nonnull final JSpinner editorComponent,
                                     @Nonnull final ValueChangeListener<Date> dateValueChangeListener )
@@ -69,8 +37,40 @@ public class DateToSpinnerMapper
 
     @Nonnull
     @Override
+    public JSpinner createEditorComponent()
+    {
+        return new JSpinner( new SpinnerDateModel() );
+    }
+
+    @Nonnull
+    @Override
     public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
+    }
+
+    @Nullable
+    @Override
+    public Date getValue( @Nonnull final JSpinner editorComponent )
+    {
+        return (Date) editorComponent.getValue();
+    }
+
+    @Nonnull
+    @Override
+    public Class<Date> getValueClass()
+    {
+        return Date.class;
+    }
+
+    @Override
+    public void setValue( @Nonnull final JSpinner editorComponent,
+                          @Nullable Date value )
+    {
+        if ( value == null )
+        {
+            value = new Date( 0 );
+        }
+        editorComponent.setValue( value );
     }
 }

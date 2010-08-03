@@ -16,38 +16,22 @@ import javax.swing.*;
 public class OrderTest
         extends FormTest
 {
-    @Test
-    public void naturalOrder()
-    {
-        env.addDefaultForm( Person.class );
-        JPanelFixture wrapper = env.getWrapperPanelFixture();
-
-        JSpinnerFixture ageSpinner = wrapper.spinner( "age" );
-        JSpinnerFixture birthDateSpinner = wrapper.spinner( "birthDate" );
-        JTextComponentFixture descTextBox = wrapper.textBox( "description" );
-        JTextComponentFixture nameTextBox = wrapper.textBox( "name" );
-
-        assert getY( ageSpinner ) < getY( birthDateSpinner );
-        assert getY( birthDateSpinner ) < getY( descTextBox );
-        assert getY( descTextBox ) < getY( nameTextBox );
-    }
-
     @Test( dependsOnMethods = "naturalOrder" )
     public void customOrder()
     {
-        // unspecified order = maxint, so this should be handled normally 
+        // unspecified order = maxint, so this should be handled normally
 //        UIManager.getDefaults().put( "Person.age.order", 3 );
         UIManager.getDefaults().put( "Person.birthDate.order", 2 );
         UIManager.getDefaults().put( "Person.description.order", 1 );
         UIManager.getDefaults().put( "Person.name.order", 0 );
 
         env.addDefaultForm( Person.class );
-        JPanelFixture wrapper = env.getWrapperPanelFixture();
+        final JPanelFixture wrapper = env.getWrapperPanelFixture();
 
-        JSpinnerFixture ageSpinner = wrapper.spinner( "age" );
-        JSpinnerFixture birthDateSpinner = wrapper.spinner( "birthDate" );
-        JTextComponentFixture descTextBox = wrapper.textBox( "description" );
-        JTextComponentFixture nameTextBox = wrapper.textBox( "name" );
+        final JSpinnerFixture ageSpinner = wrapper.spinner( "age" );
+        final JSpinnerFixture birthDateSpinner = wrapper.spinner( "birthDate" );
+        final JTextComponentFixture descTextBox = wrapper.textBox( "description" );
+        final JTextComponentFixture nameTextBox = wrapper.textBox( "name" );
 
         assert getY( ageSpinner ) > getY( birthDateSpinner );
         assert getY( birthDateSpinner ) > getY( descTextBox );
@@ -59,12 +43,28 @@ public class OrderTest
         UIManager.getDefaults().remove( "Person.name.order" );
     }
 
-    private int getY( JSpinnerFixture fixture )
+    @Test
+    public void naturalOrder()
+    {
+        env.addDefaultForm( Person.class );
+        final JPanelFixture wrapper = env.getWrapperPanelFixture();
+
+        final JSpinnerFixture ageSpinner = wrapper.spinner( "age" );
+        final JSpinnerFixture birthDateSpinner = wrapper.spinner( "birthDate" );
+        final JTextComponentFixture descTextBox = wrapper.textBox( "description" );
+        final JTextComponentFixture nameTextBox = wrapper.textBox( "name" );
+
+        assert getY( ageSpinner ) < getY( birthDateSpinner );
+        assert getY( birthDateSpinner ) < getY( descTextBox );
+        assert getY( descTextBox ) < getY( nameTextBox );
+    }
+
+    private int getY( final JSpinnerFixture fixture )
     {
         return fixture.target.getLocationOnScreen().y;
     }
 
-    private int getY( JTextComponentFixture fixture )
+    private int getY( final JTextComponentFixture fixture )
     {
         return fixture.target.getLocationOnScreen().y;
     }

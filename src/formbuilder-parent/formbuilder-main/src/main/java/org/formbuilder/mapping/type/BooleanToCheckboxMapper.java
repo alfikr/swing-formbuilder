@@ -20,33 +20,6 @@ import javax.swing.event.ChangeListener;
 public class BooleanToCheckboxMapper
         implements TypeMapper<JCheckBox, Boolean>
 {
-    @Nonnull
-    @Override
-    public Class<Boolean> getValueClass()
-    {
-        return Boolean.class;
-    }
-
-    @Override
-    public Boolean getValue( @Nonnull final JCheckBox editorComponent )
-    {
-        return editorComponent.isSelected();
-    }
-
-    @Override
-    public void setValue( @Nonnull final JCheckBox editorComponent,
-                          @Nullable final Boolean value )
-    {
-        editorComponent.setSelected( Boolean.TRUE.equals( value ) );
-    }
-
-    @Nonnull
-    @Override
-    public JCheckBox createEditorComponent()
-    {
-        return new JCheckBox();
-    }
-
     @Override
     public void bindChangeListener( @Nonnull final JCheckBox editorComponent,
                                     @Nonnull final ValueChangeListener<Boolean> booleanValueChangeListener )
@@ -63,8 +36,35 @@ public class BooleanToCheckboxMapper
 
     @Nonnull
     @Override
+    public JCheckBox createEditorComponent()
+    {
+        return new JCheckBox();
+    }
+
+    @Nonnull
+    @Override
     public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
+    }
+
+    @Override
+    public Boolean getValue( @Nonnull final JCheckBox editorComponent )
+    {
+        return editorComponent.isSelected();
+    }
+
+    @Nonnull
+    @Override
+    public Class<Boolean> getValueClass()
+    {
+        return Boolean.class;
+    }
+
+    @Override
+    public void setValue( @Nonnull final JCheckBox editorComponent,
+                          @Nullable final Boolean value )
+    {
+        editorComponent.setSelected( Boolean.TRUE.equals( value ) );
     }
 }

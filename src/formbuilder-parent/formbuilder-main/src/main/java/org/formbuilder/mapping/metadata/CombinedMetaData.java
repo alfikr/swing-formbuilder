@@ -17,6 +17,13 @@ public class CombinedMetaData
     private final AnnotationMetaData annotationMetaData = new AnnotationMetaData();
     private final UIManagerMetaData uiManagerMetaData = new UIManagerMetaData();
 
+    @Nullable
+    @Override
+    public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
+    {
+        return nvl( annotationMetaData.getOrder( descriptor ), uiManagerMetaData.getOrder( descriptor ) );
+    }
+
     @Nonnull
     @Override
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
@@ -24,13 +31,6 @@ public class CombinedMetaData
         return nvl( annotationMetaData.getTitle( descriptor ),
                 uiManagerMetaData.getTitle( descriptor ),
                 capitalize( descriptor.getDisplayName() ) );
-    }
-
-    @Nullable
-    @Override
-    public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
-    {
-        return nvl( annotationMetaData.getOrder( descriptor ), uiManagerMetaData.getOrder( descriptor ) );
     }
 
     @Override
@@ -46,9 +46,9 @@ public class CombinedMetaData
     }
 
     @Nullable
-    private <T> T nvl( T... t )
+    private <T> T nvl( final T... t )
     { // todo defer calls
-        for ( T t0 : t )
+        for ( final T t0 : t )
         {
             if ( t0 != null )
             {

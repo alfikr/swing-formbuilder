@@ -29,16 +29,6 @@ public abstract class AbstractBeanMapper<B>
     private static final Logger log = Logger.getLogger( AbstractBeanMapper.class );
     protected final MetaData metaData = createMetaData();
 
-    @Nonnull
-    protected JLabel createLabel( @Nonnull final BeanMapping beanMapping,
-                                  @Nonnull final PropertyDescriptor descriptor )
-    {
-        final JLabel label = new JLabel( metaData.getTitle( descriptor ) );
-        label.setName( descriptor.getName() );
-        beanMapping.addLabel( descriptor, label );
-        return label;
-    }
-
     @SuppressWarnings( {"unchecked"} )
     @Nonnull
     protected JComponent createEditor( @Nonnull final PropertyDescriptor descriptor,
@@ -60,6 +50,22 @@ public abstract class AbstractBeanMapper<B>
     }
 
     @Nonnull
+    protected JLabel createLabel( @Nonnull final BeanMapping beanMapping,
+                                  @Nonnull final PropertyDescriptor descriptor )
+    {
+        final JLabel label = new JLabel( metaData.getTitle( descriptor ) );
+        label.setName( descriptor.getName() );
+        beanMapping.addLabel( descriptor, label );
+        return label;
+    }
+
+    @Nonnull
+    protected MetaData createMetaData()
+    {
+        return new CombinedMetaData();
+    }
+
+    @Nonnull
     @SuppressWarnings( {"unchecked"} )
     protected <V> ValueChangeListener<V> createValueChangeListener( @Nonnull final PropertyDescriptor descriptor,
                                                                     @Nonnull final TypeMapper<?, ? extends V> mapper,
@@ -72,12 +78,6 @@ public abstract class AbstractBeanMapper<B>
     {
         // todo implement different strategies
         log.warn( "Cannot find mapper for method " + e.getDescriptor() );
-    }
-
-    @Nonnull
-    protected MetaData createMetaData()
-    {
-        return new CombinedMetaData();
     }
 
     protected boolean isEditable( @Nonnull final PropertyDescriptor descriptor )

@@ -32,19 +32,27 @@ public class FormEnvironment
         }, false );
     }
 
-    public <B> void setValueInEDT( final Form<B> form,
-                                   final B value )
+    public <B> Form<B> addDefaultForm( final Class<B> beanClass )
     {
-        GuiActionRunner.execute( new GuiTask()
-        {
-            @Override
-            protected void executeInEDT()
-                    throws
-                    Throwable
-            {
-                form.setValue( value );
-            }
-        } );
+        final Form<B> form = buildFormInEDT( Builder.map( beanClass ) );
+
+        final JComponent component = form.asComponent();
+        verifyLayout( component, JPanel.class, GridBagLayout.class );
+        addToWindow( form );
+        return form;
+    }
+
+    public void addToWindow( final Form form )
+    {
+        addToWindow( form.asComponent() );
+    }
+
+    public void addToWindow( final JComponent component )
+    {
+        final JPanel panel = getComponent();
+        panel.removeAll();
+        panel.add( component );
+        getFrameFixture().component().pack();
     }
 
     public <B> Form<B> buildFormInEDT( final Builder<B> builder )
@@ -59,27 +67,6 @@ public class FormEnvironment
         } );
     }
 
-    public void addToWindow( final JComponent component )
-    {
-        final JPanel panel = getComponent();
-        panel.removeAll();
-        panel.add( component );
-        getFrameFixture().component().pack();
-    }
-
-    public void addToWindow( final Form form )
-    {
-        addToWindow( form.asComponent() );
-    }
-
-    public void verifyLayout( final JComponent component,
-                              final Class<? extends JComponent> superClass,
-                              final Class<? extends LayoutManager> layoutClass )
-    {
-        assert superClass.isAssignableFrom( component.getClass() ) : component;
-        assert layoutClass.isAssignableFrom( component.getLayout().getClass() ) : component.getLayout();
-    }
-
     public Person createPerson()
     {
         final Person oldValue = new Person();
@@ -89,13 +76,24 @@ public class FormEnvironment
         return oldValue;
     }
 
-    public <B> Form<B> addDefaultForm( Class<B> beanClass )
+    public <B> void setValueInEDT( final Form<B> form,
+                                   final B value )
     {
-        final Form<B> form = buildFormInEDT( Builder.map( beanClass ) );
+        GuiActionRunner.execute( new GuiTask()
+        {
+            @Override
+            protected void executeInEDT()
+            {
+                form.setValue( value );
+            }
+        } );
+    }
 
-        final JComponent component = form.asComponent();
-        verifyLayout( component, JPanel.class, GridBagLayout.class );
-        addToWindow( form );
-        return form;
+    public void verifyLayout( final JComponent component,
+                              final Class<? extends JComponent> superClass,
+                              final Class<? extends LayoutManager> layoutClass )
+    {
+        assert superClass.isAssignableFrom( component.getClass() ) : component;
+        assert layoutClass.isAssignableFrom( component.getLayout().getClass() ) : component.getLayout();
     }
 }

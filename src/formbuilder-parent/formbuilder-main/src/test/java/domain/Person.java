@@ -25,91 +25,6 @@ public class Person
     private Role role;
     private long id;
 
-    @UIHidden
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId( final long id )
-    {
-        this.id = id;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription( final String description )
-    {
-        this.description = description;
-    }
-
-    public Set<Account> getBadAccounts()
-    {
-        return badAccounts;
-    }
-
-    public void setBadAccounts( final Set<Account> badAccounts )
-    {
-        this.badAccounts = badAccounts;
-    }
-
-    public Role getRole()
-    {
-        return role;
-    }
-
-    public void setRole( final Role role )
-    {
-        this.role = role;
-    }
-
-    public Set<Account> getGoodAccounts()
-    {
-        return this.goodAccounts;
-    }
-
-    public int getAge()
-    {
-        return this.age;
-    }
-
-    @UIReadOnly
-    @UITitle( "Date of birth" )
-    public Date getBirthDate()
-    {
-        return this.birthDate;
-    }
-
-    @Size( min = 3 )
-    @UITitle( "Person's first name" )
-    public String getName()
-    {
-        return this.name;
-    }
-
-    public void setGoodAccounts( final Set<Account> goodAccounts )
-    {
-        this.goodAccounts = goodAccounts;
-    }
-
-    public void setAge( final int age )
-    {
-        this.age = age;
-    }
-
-    public void setBirthDate( final Date birthDate )
-    {
-        this.birthDate = birthDate;
-    }
-
-    public void setName( final String name )
-    {
-        this.name = name;
-    }
-
     @Override
     public boolean equals( final Object o )
     {
@@ -140,6 +55,51 @@ public class Person
         return true;
     }
 
+    public int getAge()
+    {
+        return age;
+    }
+
+    public Set<Account> getBadAccounts()
+    {
+        return badAccounts;
+    }
+
+    @UIReadOnly
+    @UITitle( "Date of birth" )
+    public Date getBirthDate()
+    {
+        return birthDate;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public Set<Account> getGoodAccounts()
+    {
+        return goodAccounts;
+    }
+
+    @UIHidden
+    public long getId()
+    {
+        return id;
+    }
+
+    @Size( min = 3 )
+    @UITitle( "Person's first name" )
+    public String getName()
+    {
+        return name;
+    }
+
+    public Role getRole()
+    {
+        return role;
+    }
+
     @Override
     public int hashCode()
     {
@@ -147,6 +107,46 @@ public class Person
         result = 31 * result + age;
         result = 31 * result + ( birthDate != null ? birthDate.hashCode() : 0 );
         return result;
+    }
+
+    public void setAge( final int age )
+    {
+        this.age = age;
+    }
+
+    public void setBadAccounts( final Set<Account> badAccounts )
+    {
+        this.badAccounts = badAccounts;
+    }
+
+    public void setBirthDate( final Date birthDate )
+    {
+        this.birthDate = birthDate;
+    }
+
+    public void setDescription( final String description )
+    {
+        this.description = description;
+    }
+
+    public void setGoodAccounts( final Set<Account> goodAccounts )
+    {
+        this.goodAccounts = goodAccounts;
+    }
+
+    public void setId( final long id )
+    {
+        this.id = id;
+    }
+
+    public void setName( final String name )
+    {
+        this.name = name;
+    }
+
+    public void setRole( final Role role )
+    {
+        this.role = role;
     }
 
     @Override
