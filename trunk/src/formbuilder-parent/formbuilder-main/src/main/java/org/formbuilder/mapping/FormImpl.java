@@ -3,8 +3,8 @@
  */
 package org.formbuilder.mapping;
 
+import org.formbuilder.BeanMapper;
 import org.formbuilder.Form;
-import org.formbuilder.mapping.bean.BeanMapper;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;

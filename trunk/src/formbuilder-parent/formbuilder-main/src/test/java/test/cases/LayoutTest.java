@@ -2,8 +2,8 @@ package test.cases;
 
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
+import org.formbuilder.FormBuilder;
 import org.formbuilder.mapping.bean.SampleBeanMapper;
 import org.testng.annotations.Test;
 
@@ -24,7 +24,7 @@ public class LayoutTest
     public void customizedLayout()
     {
         assert !SwingUtilities.isEventDispatchThread();
-        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).with( new SampleBeanMapper<Person>()
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
             public JComponent mapBean( final Person beanTemplate )

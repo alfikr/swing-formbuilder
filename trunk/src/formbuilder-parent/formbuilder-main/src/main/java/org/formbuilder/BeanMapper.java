@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.formbuilder.mapping.bean;
+package org.formbuilder;
 
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.MappingRules;

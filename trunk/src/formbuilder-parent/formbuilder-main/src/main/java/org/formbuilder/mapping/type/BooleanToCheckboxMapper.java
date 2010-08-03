@@ -1,5 +1,6 @@
 package org.formbuilder.mapping.type;
 
+import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;

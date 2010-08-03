@@ -1,6 +1,6 @@
-package org.formbuilder.mapping;
+package org.formbuilder;
 
-import org.formbuilder.mapping.type.TypeMapper;
+import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;

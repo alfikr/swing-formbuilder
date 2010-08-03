@@ -4,8 +4,8 @@ import domain.Person;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.edt.GuiTask;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
+import org.formbuilder.FormBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class FormEnvironment
 
     public <B> Form<B> addDefaultForm( final Class<B> beanClass )
     {
-        final Form<B> form = buildFormInEDT( Builder.map( beanClass ) );
+        final Form<B> form = buildFormInEDT( FormBuilder.map( beanClass ) );
 
         final JComponent component = form.asComponent();
         verifyLayout( component, JPanel.class, GridBagLayout.class );
@@ -55,14 +55,14 @@ public class FormEnvironment
         getFrameFixture().component().pack();
     }
 
-    public <B> Form<B> buildFormInEDT( final Builder<B> builder )
+    public <B> Form<B> buildFormInEDT( final FormBuilder<B> formBuilder )
     {
         return GuiActionRunner.execute( new GuiQuery<Form<B>>()
         {
             @Override
             protected Form<B> executeInEDT()
             {
-                return builder.buildForm();
+                return formBuilder.buildForm();
             }
         } );
     }

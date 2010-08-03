@@ -4,13 +4,14 @@
 package org.formbuilder.mapping.bean;
 
 import org.apache.log4j.Logger;
+import org.formbuilder.BeanMapper;
+import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
-import org.formbuilder.mapping.type.TypeMapper;
 import org.formbuilder.validation.ValidateChangedValue;
 
 import javax.annotation.Nonnull;

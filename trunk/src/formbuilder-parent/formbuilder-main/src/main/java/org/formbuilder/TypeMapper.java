@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.formbuilder.mapping.type;
+package org.formbuilder;
 
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.ValidationMarker;

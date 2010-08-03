@@ -3,8 +3,8 @@ package test.cases;
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
+import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
 import java.awt.*;
@@ -24,7 +24,7 @@ public class ValidationTest
     @Test
     public void testValidation()
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ) );
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ) );
         env.addToWindow( form.asComponent() );
 
         final Person oldValue = env.createPerson();
