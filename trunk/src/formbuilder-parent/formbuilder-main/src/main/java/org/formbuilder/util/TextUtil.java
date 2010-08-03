@@ -26,14 +26,14 @@ public class TextUtil
         }
     };
 
-    public static String capitalize( String s )
+    public static String capitalize( final String s )
     {
         return s.substring( 0, 1 ).toUpperCase() + s.substring( 1 );
     }
 
     @Nonnull
-    public static String digest( @Nonnull String delimiter,
-                                 @Nonnull final Set<ConstraintViolation> violations )
+    public static <B> String digest( @Nonnull final String delimiter,
+                                     @Nonnull final Set<ConstraintViolation<B>> violations )
     {
         return Joiner.on( delimiter ).join( transform( violations, TO_MESSAGE ) );
     }

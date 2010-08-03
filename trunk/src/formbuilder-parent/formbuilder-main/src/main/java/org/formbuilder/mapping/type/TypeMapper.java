@@ -13,25 +13,27 @@ import javax.swing.*;
 
 /**
  * @author aeremenok 2010
+ * @param <C>
+ * @param <V>
  */
 @NotThreadSafe
 public interface TypeMapper<C extends JComponent, V>
 {
-    @Nonnull
-    Class<V> getValueClass();
-
-    @Nullable
-    V getValue( @Nonnull C editorComponent );
-
-    void setValue( @Nonnull C editorComponent,
-                   @Nullable V value );
-
-    @Nonnull
-    C createEditorComponent();
-
     void bindChangeListener( @Nonnull C editorComponent,
                              @Nonnull ValueChangeListener<V> changeListener );
 
     @Nonnull
+    C createEditorComponent();
+
+    @Nonnull
     ValidationMarker getValidationMarker();
+
+    @Nullable
+    V getValue( @Nonnull C editorComponent );
+
+    @Nonnull
+    Class<V> getValueClass();
+
+    void setValue( @Nonnull C editorComponent,
+                   @Nullable V value );
 }

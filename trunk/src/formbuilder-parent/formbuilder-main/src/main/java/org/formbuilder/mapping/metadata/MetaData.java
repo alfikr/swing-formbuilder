@@ -12,10 +12,10 @@ import java.beans.PropertyDescriptor;
 public interface MetaData
 {
     @Nullable
-    String getTitle( @Nonnull PropertyDescriptor descriptor );
+    Integer getOrder( @Nonnull PropertyDescriptor descriptor );
 
     @Nullable
-    Integer getOrder( @Nonnull PropertyDescriptor descriptor );
+    String getTitle( @Nonnull PropertyDescriptor descriptor );
 
     boolean isHidden( @Nonnull PropertyDescriptor descriptor );
 

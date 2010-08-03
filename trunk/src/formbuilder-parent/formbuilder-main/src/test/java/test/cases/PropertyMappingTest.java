@@ -42,10 +42,10 @@ public class PropertyMappingTest
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
 
-        JTextComponentFixture nameComponent = wrapperPanel.textBox( "name" );
+        final JTextComponentFixture nameComponent = wrapperPanel.textBox( "name" );
         assert nameComponent.target instanceof JTextField;
 
-        JTextComponentFixture descComponent = wrapperPanel.textBox( "description" );
+        final JTextComponentFixture descComponent = wrapperPanel.textBox( "description" );
         assert descComponent.target instanceof JTextArea;
     }
 
@@ -61,10 +61,10 @@ public class PropertyMappingTest
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
 
-        JTextComponentFixture nameComponent = wrapperPanel.textBox( "name" );
+        final JTextComponentFixture nameComponent = wrapperPanel.textBox( "name" );
         assert nameComponent.target instanceof JTextField;
 
-        JTextComponentFixture descComponent = wrapperPanel.textBox( "description" );
+        final JTextComponentFixture descComponent = wrapperPanel.textBox( "description" );
         assert descComponent.target instanceof JTextArea;
     }
 
@@ -74,36 +74,17 @@ public class PropertyMappingTest
         INSTANCE;
 
         @Override
-        public Class<String> getValueClass()
-        {
-            return String.class;
-        }
-
-        @Override
-        public String getValue( final JTextArea editorComponent )
-        {
-            return editorComponent.getText();
-        }
-
-        @Override
-        public void setValue( final JTextArea editorComponent,
-                              final String value )
-        {
-            editorComponent.setText( value );
-        }
-
-        @Override
-        public JTextArea createEditorComponent()
-        {
-            return new JTextArea();
-        }
-
-        @Override
         public void bindChangeListener( final JTextArea editorComponent,
                                         final ValueChangeListener<String> stringValueChangeListener )
         {
             editorComponent.getDocument().addDocumentListener( new DocumentListener()
             {
+                @Override
+                public void changedUpdate( final DocumentEvent e )
+                {
+                    stringValueChangeListener.onChange();
+                }
+
                 @Override
                 public void insertUpdate( final DocumentEvent e )
                 {
@@ -115,19 +96,38 @@ public class PropertyMappingTest
                 {
                     stringValueChangeListener.onChange();
                 }
-
-                @Override
-                public void changedUpdate( final DocumentEvent e )
-                {
-                    stringValueChangeListener.onChange();
-                }
             } );
+        }
+
+        @Override
+        public JTextArea createEditorComponent()
+        {
+            return new JTextArea();
         }
 
         @Override
         public ValidationMarker getValidationMarker()
         {
             return BackgroundMarker.INSTANCE;
+        }
+
+        @Override
+        public String getValue( final JTextArea editorComponent )
+        {
+            return editorComponent.getText();
+        }
+
+        @Override
+        public Class<String> getValueClass()
+        {
+            return String.class;
+        }
+
+        @Override
+        public void setValue( final JTextArea editorComponent,
+                              final String value )
+        {
+            editorComponent.setText( value );
         }
     }
 }

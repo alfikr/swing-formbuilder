@@ -19,6 +19,17 @@ public class AnnotationMetaData
         implements MetaData
 {
     @Override
+    public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
+    {
+        final UIOrder uiOrder = getAnnotation( descriptor, UIOrder.class );
+        if ( uiOrder != null )
+        {
+            return uiOrder.value();
+        }
+        return null;
+    }
+
+    @Override
     @Nullable
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
@@ -26,17 +37,6 @@ public class AnnotationMetaData
         if ( uiTitle != null )
         {
             return uiTitle.value();
-        }
-        return null;
-    }
-
-    @Override
-    public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
-    {
-        final UIOrder uiOrder = getAnnotation( descriptor, UIOrder.class );
-        if ( uiOrder != null )
-        {
-            return uiOrder.value();
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class AnnotationMetaData
 
     @Nullable
     protected <T extends Annotation> T getAnnotation( @Nonnull final PropertyDescriptor descriptor,
-                                                      @Nonnull Class<T> annotationClass )
+                                                      @Nonnull final Class<T> annotationClass )
     {
         return descriptor.getReadMethod().getAnnotation( annotationClass );
     }

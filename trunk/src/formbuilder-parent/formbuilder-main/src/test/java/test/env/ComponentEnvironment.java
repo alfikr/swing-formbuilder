@@ -17,6 +17,7 @@ import java.util.concurrent.Callable;
  * @author eav 2010
  * @param <C>
  */
+@SuppressWarnings( "restriction" )
 public class ComponentEnvironment<C extends JComponent>
         extends Environment
 {

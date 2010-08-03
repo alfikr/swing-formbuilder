@@ -18,8 +18,8 @@ public abstract class FormTest
             throws
             Exception
     {
-        this.env = new FormEnvironment();
-        this.env.setUp( this );
+        env = new FormEnvironment();
+        env.setUp( this );
     }
 
     @AfterClass
@@ -27,6 +27,6 @@ public abstract class FormTest
             throws
             Exception
     {
-        this.env.tearDown( this );
+        env.tearDown( this );
     }
 }

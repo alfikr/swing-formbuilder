@@ -20,38 +20,6 @@ import javax.swing.event.ChangeListener;
 public class NumberToSpinnerMapper
         implements TypeMapper<JSpinner, Number>
 {
-    @Nonnull
-    @Override
-    public Class<Number> getValueClass()
-    {
-        return Number.class;
-    }
-
-    @Nullable
-    @Override
-    public Number getValue( @Nonnull final JSpinner editorComponent )
-    {
-        return (Number) editorComponent.getValue();
-    }
-
-    @Override
-    public void setValue( @Nonnull final JSpinner editorComponent,
-                          @Nullable Number value )
-    {
-        if ( value == null )
-        {
-            value = 0;
-        }
-        editorComponent.setValue( value );
-    }
-
-    @Nonnull
-    @Override
-    public JSpinner createEditorComponent()
-    {
-        return new JSpinner( new SpinnerNumberModel() );
-    }
-
     @Override
     public void bindChangeListener( @Nonnull final JSpinner editorComponent,
                                     @Nullable final ValueChangeListener<Number> numberChangeListener )
@@ -68,8 +36,40 @@ public class NumberToSpinnerMapper
 
     @Nonnull
     @Override
+    public JSpinner createEditorComponent()
+    {
+        return new JSpinner( new SpinnerNumberModel() );
+    }
+
+    @Nonnull
+    @Override
     public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
+    }
+
+    @Nullable
+    @Override
+    public Number getValue( @Nonnull final JSpinner editorComponent )
+    {
+        return (Number) editorComponent.getValue();
+    }
+
+    @Nonnull
+    @Override
+    public Class<Number> getValueClass()
+    {
+        return Number.class;
+    }
+
+    @Override
+    public void setValue( @Nonnull final JSpinner editorComponent,
+                          @Nullable Number value )
+    {
+        if ( value == null )
+        {
+            value = 0;
+        }
+        editorComponent.setValue( value );
     }
 }

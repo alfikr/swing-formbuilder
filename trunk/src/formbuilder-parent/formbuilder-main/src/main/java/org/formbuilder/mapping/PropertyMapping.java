@@ -13,8 +13,8 @@ import javax.swing.*;
  */
 public class PropertyMapping
 {
-    private JComponent component;
-    private TypeMapper mapper;
+    private final JComponent component;
+    private final TypeMapper mapper;
 
     public PropertyMapping( @Nonnull final JComponent component,
                             @Nonnull final TypeMapper mapper )
@@ -24,15 +24,15 @@ public class PropertyMapping
     }
 
     @SuppressWarnings( {"unchecked"} )
-    public void setValue( @Nullable Object value )
-    {
-        mapper.setValue( component, value );
-    }
-
-    @SuppressWarnings( {"unchecked"} )
     @Nullable
     public Object getValue()
     {
         return mapper.getValue( component );
+    }
+
+    @SuppressWarnings( {"unchecked"} )
+    public void setValue( @Nullable final Object value )
+    {
+        mapper.setValue( component, value );
     }
 }

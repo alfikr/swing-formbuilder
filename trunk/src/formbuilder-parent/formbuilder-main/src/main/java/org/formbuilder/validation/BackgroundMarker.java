@@ -18,14 +18,14 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  *         Time: 17:42:02
  */
 @NotThreadSafe
-public enum BackgroundMarker
+public class BackgroundMarker
         implements ValidationMarker
 {
-    INSTANCE;
+    public static final BackgroundMarker INSTANCE = new BackgroundMarker();
 
     @Override
-    public void markViolations( @Nonnull final JComponent editor,
-                                @Nonnull final Set<ConstraintViolation> violations )
+    public <B> void markViolations( @Nonnull final JComponent editor,
+                                    @Nonnull final Set<ConstraintViolation<B>> violations )
     {
         checkState( isEventDispatchThread() );
 

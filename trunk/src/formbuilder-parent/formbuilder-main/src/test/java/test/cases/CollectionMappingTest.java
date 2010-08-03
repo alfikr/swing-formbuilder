@@ -27,8 +27,6 @@ public class CollectionMappingTest
 {
     @Test
     public void testCollectionEditor()
-            throws
-            InterruptedException
     {
         final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).use( new AccountSetMapper() ) );
         env.addToWindow( form );
@@ -37,7 +35,7 @@ public class CollectionMappingTest
         env.setValueInEDT( form, oldValue );
 
         final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
-        JListFixture accsList = wrapperPanel.list( "goodAccounts" );
+        final JListFixture accsList = wrapperPanel.list( "goodAccounts" );
         accsList.requireItemCount( 2 );
 
         accsList.selectItem( "acc1" ).requireSelection( "acc1" );
@@ -48,6 +46,12 @@ public class CollectionMappingTest
             extends CollectionToJListMapper<Account, Set>
     {
         @Override
+        public Class<Set> getValueClass()
+        {
+            return Set.class;
+        }
+
+        @Override
         protected Collection<Account> getSuitableData()
         {
             return asList( new Account( "acc1" ), new Account( "acc2" ) );
@@ -57,12 +61,6 @@ public class CollectionMappingTest
         protected Set<Account> refine( final List<Account> selectedValues )
         {
             return new HashSet<Account>( selectedValues );
-        }
-
-        @Override
-        public Class<Set> getValueClass()
-        {
-            return Set.class;
         }
     }
 }

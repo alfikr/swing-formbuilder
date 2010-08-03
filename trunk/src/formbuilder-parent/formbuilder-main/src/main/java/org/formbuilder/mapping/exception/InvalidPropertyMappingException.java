@@ -11,12 +11,12 @@ import java.beans.PropertyDescriptor;
 public class InvalidPropertyMappingException
         extends MappingException
 {
-    private Class expectedType;
-    private Class actualType;
+    private final Class expectedType;
+    private final Class actualType;
 
     public InvalidPropertyMappingException( @Nonnull final PropertyDescriptor descriptor,
-                                            @Nonnull Class expectedType,
-                                            @Nonnull Class actualType )
+                                            @Nonnull final Class expectedType,
+                                            @Nonnull final Class actualType )
     {
         super( descriptor );
         this.expectedType = expectedType;
@@ -24,14 +24,14 @@ public class InvalidPropertyMappingException
     }
 
     @Nonnull
-    public Class getExpectedType()
-    {
-        return expectedType;
-    }
-
-    @Nonnull
     public Class getActualType()
     {
         return actualType;
+    }
+
+    @Nonnull
+    public Class getExpectedType()
+    {
+        return expectedType;
     }
 }

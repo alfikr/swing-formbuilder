@@ -9,53 +9,16 @@ package domain;
 public class Account
 {
     private String code;
-
-    public Account( final String code )
-    {
-        this.code = code;
-    }
+    private Person person;
+    private int amount;
 
     public Account()
     {
     }
 
-    public String getCode()
-    {
-        return code;
-    }
-
-    public void setCode( final String code )
+    public Account( final String code )
     {
         this.code = code;
-    }
-
-    private Person person;
-    private int amount;
-
-    public int getAmount()
-    {
-        return this.amount;
-    }
-
-    public Person getPerson()
-    {
-        return this.person;
-    }
-
-    public void setAmount( final int amount )
-    {
-        this.amount = amount;
-    }
-
-    public void setPerson( final Person person )
-    {
-        this.person = person;
-    }
-
-    @Override
-    public String toString()
-    {
-        return code;
     }
 
     @Override
@@ -84,11 +47,47 @@ public class Account
         return true;
     }
 
+    public int getAmount()
+    {
+        return amount;
+    }
+
+    public String getCode()
+    {
+        return code;
+    }
+
+    public Person getPerson()
+    {
+        return person;
+    }
+
     @Override
     public int hashCode()
     {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + amount;
         return result;
+    }
+
+    public void setAmount( final int amount )
+    {
+        this.amount = amount;
+    }
+
+    public void setCode( final String code )
+    {
+        this.code = code;
+    }
+
+    public void setPerson( final Person person )
+    {
+        this.person = person;
+    }
+
+    @Override
+    public String toString()
+    {
+        return code;
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
  * @author eav 2009
  */
 public class WrapperPanel
-    extends JPanel
+        extends JPanel
 {
     protected final JComponent component;
 
@@ -16,11 +16,12 @@ public class WrapperPanel
         this( component, false );
     }
 
-    public WrapperPanel( final JComponent component, final boolean scroll )
+    public WrapperPanel( final JComponent component,
+                         final boolean scroll )
     {
         super( new BorderLayout() );
         this.component = component;
-        if( scroll )
+        if ( scroll )
         {
             add( new JScrollPane( component ), BorderLayout.CENTER );
         }
@@ -32,6 +33,6 @@ public class WrapperPanel
 
     public JComponent unwrap()
     {
-        return this.component;
+        return component;
     }
 }

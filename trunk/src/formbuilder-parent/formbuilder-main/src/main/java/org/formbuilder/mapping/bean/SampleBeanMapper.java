@@ -36,8 +36,6 @@ public abstract class SampleBeanMapper<B>
         public Object invoke( final Object proxy,
                               final Method method,
                               final Object[] args )
-                throws
-                Throwable
         {
             checkState( isEventDispatchThread() );
 

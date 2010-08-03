@@ -16,8 +16,9 @@ import java.util.Set;
  * @author aeremenok
  *         Date: 30.07.2010
  *         Time: 17:26:09
+ * @param <B>
  */
-public class ValidateChangedValue
+public class ValidateChangedValue<B>
         implements ValueChangeListener
 {
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
@@ -39,17 +40,17 @@ public class ValidateChangedValue
     public void onChange()
     {
         final Object newValue = mapper.getValue( editorComponent );
-        final Set<ConstraintViolation> violations = doValidation( validator, descriptor, newValue );
+        final Set<ConstraintViolation<B>> violations = doValidation( validator, descriptor, newValue );
         mapper.getValidationMarker().markViolations( editorComponent, violations );
     }
 
     @Nonnull
     @SuppressWarnings( {"unchecked"} )
-    protected Set<ConstraintViolation> doValidation( @Nonnull final Validator validator,
-                                                     @Nonnull final PropertyDescriptor descriptor,
-                                                     @Nullable final Object newValue )
+    protected Set<ConstraintViolation<B>> doValidation( @Nonnull final Validator validator,
+                                                        @Nonnull final PropertyDescriptor descriptor,
+                                                        @Nullable final Object newValue )
     {
-        final Class beanType = descriptor.getReadMethod().getDeclaringClass();
+        final Class<B> beanType = (Class<B>) descriptor.getReadMethod().getDeclaringClass();
         final String propertyName = descriptor.getName();
         return validator.validateValue( beanType, propertyName, newValue );
     }

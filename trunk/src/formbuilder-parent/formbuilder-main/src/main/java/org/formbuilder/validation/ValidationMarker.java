@@ -14,6 +14,6 @@ import java.util.Set;
 @NotThreadSafe
 public interface ValidationMarker
 {
-    void markViolations( @Nonnull final JComponent editor,
-                         @Nonnull final Set<ConstraintViolation> violations );
+    <B> void markViolations( @Nonnull final JComponent editor,
+                             @Nonnull final Set<ConstraintViolation<B>> violations );
 }

@@ -21,8 +21,8 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
 public class FormImpl<B>
         implements Form<B>
 {
-    private BeanMapping beanMapping;
-    private Class<B> beanClass;
+    private final BeanMapping beanMapping;
+    private final Class<B> beanClass;
 
     public FormImpl( @Nonnull final Class<B> beanClass,
                      @Nonnull final BeanMapper<B> beanMapper,
@@ -43,7 +43,7 @@ public class FormImpl<B>
     @Override
     public B getValue()
     {
-        B newBean = Reflection.newInstance( beanClass );
+        final B newBean = Reflection.newInstance( beanClass );
         beanMapping.setBeanValues( newBean );
         return newBean;
     }

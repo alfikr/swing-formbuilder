@@ -32,27 +32,19 @@ public class MappingRules
         initDefaults();
     }
 
-    protected void initDefaults()
-    {
-        addMapper( new StringToTextFieldMapper() );
-        addMapper( new NumberToSpinnerMapper() );
-        addMapper( new BooleanToCheckboxMapper() );
-        addMapper( new DateToSpinnerMapper() );
-    }
-
-    public void addMapper( @Nonnull TypeMapper mapper )
-    {
-        typeToMapper.put( mapper.getValueClass(), mapper );
-    }
-
-    public void addMapper( @Nonnull String propertyName,
-                           @Nonnull TypeMapper mapper )
+    public void addMapper( @Nonnull final String propertyName,
+                           @Nonnull final TypeMapper mapper )
     {
         propertyToMapper.put( propertyName, mapper );
     }
 
+    public void addMapper( @Nonnull final TypeMapper mapper )
+    {
+        typeToMapper.put( mapper.getValueClass(), mapper );
+    }
+
     @Nonnull
-    public TypeMapper getMapper( @Nonnull PropertyDescriptor descriptor )
+    public TypeMapper getMapper( @Nonnull final PropertyDescriptor descriptor )
             throws
             MappingException
     {
@@ -93,10 +85,11 @@ public class MappingRules
         return mapper;
     }
 
+    @SuppressWarnings( "unchecked" )
     @Nullable
     private TypeMapper findMapperOfSuperType( @Nonnull final Class<?> subtype )
     {
-        for ( Map.Entry<Class, TypeMapper> entry : typeToMapper.entrySet() )
+        for ( final Map.Entry<Class, TypeMapper> entry : typeToMapper.entrySet() )
         {
             if ( entry.getKey().isAssignableFrom( subtype ) )
             {
@@ -104,5 +97,13 @@ public class MappingRules
             }
         }
         return null;
+    }
+
+    protected void initDefaults()
+    {
+        addMapper( new StringToTextFieldMapper() );
+        addMapper( new NumberToSpinnerMapper() );
+        addMapper( new BooleanToCheckboxMapper() );
+        addMapper( new DateToSpinnerMapper() );
     }
 }

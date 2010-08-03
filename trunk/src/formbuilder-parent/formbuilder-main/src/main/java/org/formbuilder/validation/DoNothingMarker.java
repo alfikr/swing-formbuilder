@@ -12,14 +12,14 @@ import java.util.Set;
  *         Time: 14:04:23
  */
 @ThreadSafe
-public enum DoNothingMarker
+public class DoNothingMarker
         implements ValidationMarker
 {
-    INSTANCE;
+    public static final DoNothingMarker INSTANCE = new DoNothingMarker();
 
     @Override
-    public void markViolations( @Nonnull final JComponent editor,
-                                @Nonnull final Set<ConstraintViolation> violations )
+    public <B> void markViolations( @Nonnull final JComponent editor,
+                                    @Nonnull final Set<ConstraintViolation<B>> violations )
     {
     }
 }

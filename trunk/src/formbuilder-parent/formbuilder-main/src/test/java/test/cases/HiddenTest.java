@@ -24,7 +24,7 @@ public class HiddenTest
             wrapperPanel.spinner( "id" );
             fail();
         }
-        catch ( Exception ignored )
+        catch ( final Exception ignored )
         { }
     }
 }

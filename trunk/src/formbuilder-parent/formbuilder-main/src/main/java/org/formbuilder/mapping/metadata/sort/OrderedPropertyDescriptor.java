@@ -20,14 +20,14 @@ public class OrderedPropertyDescriptor
         this.descriptor = descriptor;
     }
 
-    public int getOrder()
-    {
-        return order;
-    }
-
     @Nonnull
     public PropertyDescriptor getDescriptor()
     {
         return descriptor;
+    }
+
+    public int getOrder()
+    {
+        return order;
     }
 }

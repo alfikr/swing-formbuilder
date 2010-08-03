@@ -42,15 +42,15 @@ public class GridBagMapper<B>
 
         int row = 0;
         final List<OrderedPropertyDescriptor> sorted = sorter.activeSortedDescriptors( beanClass );
-        for ( OrderedPropertyDescriptor orderedPropertyDescriptor : sorted )
+        for ( final OrderedPropertyDescriptor orderedPropertyDescriptor : sorted )
         {
-            PropertyDescriptor descriptor = orderedPropertyDescriptor.getDescriptor();
+            final PropertyDescriptor descriptor = orderedPropertyDescriptor.getDescriptor();
             try
             {
                 gridBagPanel.add( createEditor( descriptor, mappingRules, beanMapping ), row, 1 );
                 gridBagPanel.add( createLabel( beanMapping, descriptor ), row, 0 );
             }
-            catch ( MappingException e )
+            catch ( final MappingException e )
             {
                 handleMappingException( e );
             }

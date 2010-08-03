@@ -15,36 +15,24 @@ import javax.swing.text.JTextComponent;
  * @author eav
  *         Date: Aug 2, 2010
  *         Time: 11:54:19 PM
+ * @param <C>
  */
 @NotThreadSafe
 public abstract class StringMapper<C extends JTextComponent>
         implements TypeMapper<C, String>
 {
     @Override
-    public Class<String> getValueClass()
-    {
-        return String.class;
-    }
-
-    @Override
-    public String getValue( @Nonnull final C editorComponent )
-    {
-        return editorComponent.getText();
-    }
-
-    @Override
-    public void setValue( @Nonnull final C editorComponent,
-                          @Nullable final String value )
-    {
-        editorComponent.setText( value );
-    }
-
-    @Override
     public void bindChangeListener( @Nonnull final C editorComponent,
                                     @Nonnull final ValueChangeListener<String> stringValueChangeListener )
     {
         editorComponent.getDocument().addDocumentListener( new DocumentListener()
         {
+            @Override
+            public void changedUpdate( final DocumentEvent e )
+            {
+                stringValueChangeListener.onChange();
+            }
+
             @Override
             public void insertUpdate( final DocumentEvent e )
             {
@@ -56,12 +44,6 @@ public abstract class StringMapper<C extends JTextComponent>
             {
                 stringValueChangeListener.onChange();
             }
-
-            @Override
-            public void changedUpdate( final DocumentEvent e )
-            {
-                stringValueChangeListener.onChange();
-            }
         } );
     }
 
@@ -69,5 +51,24 @@ public abstract class StringMapper<C extends JTextComponent>
     public ValidationMarker getValidationMarker()
     {
         return BackgroundMarker.INSTANCE;
+    }
+
+    @Override
+    public String getValue( @Nonnull final C editorComponent )
+    {
+        return editorComponent.getText();
+    }
+
+    @Override
+    public Class<String> getValueClass()
+    {
+        return String.class;
+    }
+
+    @Override
+    public void setValue( @Nonnull final C editorComponent,
+                          @Nullable final String value )
+    {
+        editorComponent.setText( value );
     }
 }

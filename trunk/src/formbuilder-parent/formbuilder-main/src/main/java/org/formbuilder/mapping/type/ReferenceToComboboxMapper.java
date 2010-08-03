@@ -17,36 +17,12 @@ import java.util.Vector;
  * @author aeremenok
  *         Date: 30.07.2010
  *         Time: 13:41:29
+ * @param <R>
  */
 @NotThreadSafe
 public abstract class ReferenceToComboboxMapper<R>
         implements TypeMapper<JComboBox, R>
 {
-    @Nullable
-    @SuppressWarnings( {"unchecked"} )
-    @Override
-    public R getValue( @Nonnull final JComboBox editorComponent )
-    {
-        return (R) editorComponent.getSelectedItem();
-    }
-
-    @Override
-    public void setValue( @Nonnull final JComboBox editorComponent,
-                          @Nullable final R value )
-    {
-        editorComponent.setSelectedItem( value );
-    }
-
-    @Nonnull
-    @Override
-    public JComboBox createEditorComponent()
-    {
-        return new JComboBox( new Vector<R>( getSuitableData() ) );
-    }
-
-    @Nonnull
-    protected abstract Collection<R> getSuitableData();
-
     @Override
     public void bindChangeListener( @Nonnull final JComboBox editorComponent,
                                     @Nonnull final ValueChangeListener<R> rValueChangeListener )
@@ -66,8 +42,33 @@ public abstract class ReferenceToComboboxMapper<R>
 
     @Nonnull
     @Override
+    public JComboBox createEditorComponent()
+    {
+        return new JComboBox( new Vector<R>( getSuitableData() ) );
+    }
+
+    @Nonnull
+    @Override
     public ValidationMarker getValidationMarker()
     {
         return DoNothingMarker.INSTANCE;
     }
+
+    @Nullable
+    @SuppressWarnings( {"unchecked"} )
+    @Override
+    public R getValue( @Nonnull final JComboBox editorComponent )
+    {
+        return (R) editorComponent.getSelectedItem();
+    }
+
+    @Override
+    public void setValue( @Nonnull final JComboBox editorComponent,
+                          @Nullable final R value )
+    {
+        editorComponent.setSelectedItem( value );
+    }
+
+    @Nonnull
+    protected abstract Collection<R> getSuitableData();
 }
