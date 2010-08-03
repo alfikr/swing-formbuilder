@@ -1,5 +1,7 @@
 package org.formbuilder.mapping.exception;
 
+import org.formbuilder.TypeMapper;
+
 import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
 
@@ -12,21 +14,27 @@ public class InvalidPropertyMappingException
         extends MappingException
 {
     private final Class expectedType;
-    private final Class actualType;
+    private final TypeMapper mapper;
 
     public InvalidPropertyMappingException( @Nonnull final PropertyDescriptor descriptor,
-                                            @Nonnull final Class expectedType,
-                                            @Nonnull final Class actualType )
+                                            @Nonnull final TypeMapper mapper )
     {
-        super( descriptor );
-        this.expectedType = expectedType;
-        this.actualType = actualType;
+        super( message( descriptor, mapper ), descriptor );
+        this.expectedType = descriptor.getPropertyType();
+        this.mapper = mapper;
+    }
+
+    private static String message( final PropertyDescriptor descriptor,
+                                   final TypeMapper mapper )
+    {
+        return "Property " + descriptor.getName() + " of type " + descriptor.getPropertyType() + " cannot be mapped using " + mapper + " since it maps " + mapper
+                .getValueClass();
     }
 
     @Nonnull
     public Class getActualType()
     {
-        return actualType;
+        return mapper.getValueClass();
     }
 
     @Nonnull

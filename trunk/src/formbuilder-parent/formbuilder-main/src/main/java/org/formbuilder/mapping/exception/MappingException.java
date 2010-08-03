@@ -1,6 +1,7 @@
 package org.formbuilder.mapping.exception;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
 
 /**
@@ -13,9 +14,14 @@ public class MappingException
 {
     private final PropertyDescriptor descriptor;
 
-    public MappingException( @Nonnull final PropertyDescriptor descriptor ) {this.descriptor = descriptor;}
+    public MappingException( @Nonnull String message,
+                             @Nullable final PropertyDescriptor descriptor )
+    {
+        super( message );
+        this.descriptor = descriptor;
+    }
 
-    @Nonnull
+    @Nullable
     public PropertyDescriptor getDescriptor()
     {
         return descriptor;

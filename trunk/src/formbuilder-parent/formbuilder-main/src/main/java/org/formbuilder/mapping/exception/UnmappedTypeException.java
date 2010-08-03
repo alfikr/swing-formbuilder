@@ -13,6 +13,6 @@ public class UnmappedTypeException
 {
     public UnmappedTypeException( @Nonnull final PropertyDescriptor descriptor )
     {
-        super( descriptor );
+        super( "No mapper found for property " + descriptor.getName(), descriptor );
     }
 }

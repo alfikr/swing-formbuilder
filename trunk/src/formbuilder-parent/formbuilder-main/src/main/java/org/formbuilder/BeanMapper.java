@@ -18,5 +18,6 @@ public interface BeanMapper<B>
 {
     @Nonnull
     BeanMapping map( @Nonnull final Class<B> beanClass,
-                     @Nonnull final MappingRules mappingRules );
+                     @Nonnull final MappingRules mappingRules,
+                     final boolean doValidation );
 }

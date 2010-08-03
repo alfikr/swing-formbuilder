@@ -39,4 +39,23 @@ public class ValidationTest
         assertEquals( nameTextBox.target.getBackground(), Color.PINK );
         nameTextBox.requireToolTip( "size must be between 3 and 2147483647" );
     }
+
+    @Test( dependsOnMethods = "testValidation" )
+    public void disableValidation()
+    {
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).doValidation( false ) );
+        env.addToWindow( form.asComponent() );
+
+        final Person oldValue = env.createPerson();
+        env.setValueInEDT( form, oldValue );
+
+        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
+        final JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
+
+        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        assertNull( nameTextBox.target.getToolTipText() );
+        nameTextBox.setText( "ee" );
+        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        assertNull( nameTextBox.target.getToolTipText() );
+    }
 }

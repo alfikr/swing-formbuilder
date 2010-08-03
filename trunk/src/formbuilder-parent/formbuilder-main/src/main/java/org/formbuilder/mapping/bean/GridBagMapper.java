@@ -31,7 +31,8 @@ public class GridBagMapper<B>
     @Nonnull
     @Override
     public BeanMapping map( @Nonnull final Class<B> beanClass,
-                            @Nonnull final MappingRules mappingRules )
+                            @Nonnull final MappingRules mappingRules,
+                            final boolean doValidation )
     {
         checkState( isEventDispatchThread() );
 
@@ -47,7 +48,7 @@ public class GridBagMapper<B>
             final PropertyDescriptor descriptor = orderedPropertyDescriptor.getDescriptor();
             try
             {
-                gridBagPanel.add( createEditor( descriptor, mappingRules, beanMapping ), row, 1 );
+                gridBagPanel.add( createEditor( descriptor, mappingRules, beanMapping, doValidation ), row, 1 );
                 gridBagPanel.add( createLabel( beanMapping, descriptor ), row, 0 );
             }
             catch ( final MappingException e )
