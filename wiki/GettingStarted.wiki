@@ -23,7 +23,7 @@ myFrame.add( form.asComponent() );
 }}}
 Each row represents a property and contains a JLabel and a specific editor component:
 
-[http://swing-task-monitor.googlecode.com/svn/trunk/doc/default.png]
+[http://swing-formbuilder.googlecode.com/svn/trunk/doc/default.png]
 
 To display a given instance, simply write:
 {{{
