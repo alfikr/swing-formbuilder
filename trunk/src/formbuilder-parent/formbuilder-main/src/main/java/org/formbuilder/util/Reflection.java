@@ -3,7 +3,9 @@
  */
 package org.formbuilder.util;
 
+import com.google.common.base.Predicate;
 import net.sf.cglib.proxy.Enhancer;
+import org.formbuilder.mapping.exception.GetterNotFoundException;
 import org.formbuilder.mapping.exception.PropertyNotFoundException;
 
 import javax.annotation.Nonnull;
@@ -16,8 +18,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Iterators.find;
+import static com.google.common.collect.Iterators.forArray;
 
 /**
  * @author aeremenok 2010
@@ -114,16 +119,15 @@ public class Reflection
 
     @Nonnull
     public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
-    { // todo use cache
-        final BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
-        for ( final PropertyDescriptor descriptor : info.getPropertyDescriptors() )
+    {
+        try
         {
-            if ( readMethod.equals( descriptor.getReadMethod() ) )
-            {
-                return descriptor;
-            }
+            return getDescpriptor( readMethod.getDeclaringClass(), new HasReadMethod( readMethod ) );
         }
-        throw new PropertyNotFoundException( readMethod );
+        catch ( NoSuchElementException e )
+        {
+            throw new GetterNotFoundException( readMethod );
+        }
     }
 
     @Nullable
@@ -171,6 +175,62 @@ public class Reflection
         catch ( final Exception e )
         {
             throw new RuntimeException( e );
+        }
+    }
+
+    public static PropertyDescriptor getDescriptor( final Class beanClass,
+                                                    final String propertyName )
+    {
+        try
+        {
+            return getDescpriptor( beanClass, new HasName( propertyName ) );
+        }
+        catch ( NoSuchElementException e )
+        {
+            throw new PropertyNotFoundException( beanClass, propertyName );
+        }
+    }
+
+    protected static PropertyDescriptor getDescpriptor( Class beanClass,
+                                                        Predicate<PropertyDescriptor> predicate )
+            throws
+            NoSuchElementException
+    {// todo use cache
+        final BeanInfo beanInfo = getBeanInfo( beanClass );
+        return find( forArray( beanInfo.getPropertyDescriptors() ), predicate );
+    }
+
+    protected static class HasName
+            implements Predicate<PropertyDescriptor>
+    {
+        private String name;
+
+        public HasName( @Nonnull final String name )
+        {
+            this.name = name;
+        }
+
+        @Override
+        public boolean apply( @Nonnull final PropertyDescriptor descriptor )
+        {
+            return descriptor.getName().equals( name );
+        }
+    }
+
+    protected static class HasReadMethod
+            implements Predicate<PropertyDescriptor>
+    {
+        private Method readMethod;
+
+        public HasReadMethod( @Nonnull final Method readMethod )
+        {
+            this.readMethod = readMethod;
+        }
+
+        @Override
+        public boolean apply( @Nonnull final PropertyDescriptor input )
+        {
+            return input.getReadMethod().equals( readMethod );
         }
     }
 }

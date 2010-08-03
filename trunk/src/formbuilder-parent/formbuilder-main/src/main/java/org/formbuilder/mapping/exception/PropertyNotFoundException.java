@@ -1,27 +1,37 @@
 package org.formbuilder.mapping.exception;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Method;
+import javax.annotation.Nullable;
+import java.beans.PropertyDescriptor;
 
 /**
  * @author aeremenok
  *         Date: Aug 3, 2010
- *         Time: 12:06:57 PM
+ *         Time: 1:28:52 PM
  */
 public class PropertyNotFoundException
         extends MappingException
 {
-    private Method readMethod;
+    private final Class beanClass;
+    private final String propertyName;
 
-    public PropertyNotFoundException( @Nonnull Method readMethod )
+    public PropertyNotFoundException( @Nonnull Class beanClass,
+                                      @Nonnull String propertyName )
     {
-        super( readMethod + " is not a getter method of a bean", null );
-        this.readMethod = readMethod;
+        super( "Cannot find property " + propertyName + " of class " + beanClass, null );
+        this.beanClass = beanClass;
+        this.propertyName = propertyName;
     }
 
     @Nonnull
-    public Method getReadMethod()
+    public Class getBeanClass()
     {
-        return readMethod;
+        return beanClass;
+    }
+
+    @Nonnull
+    public String getPropertyName()
+    {
+        return propertyName;
     }
 }

@@ -6,15 +6,10 @@ import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.formbuilder.GetterMapper;
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
+import org.formbuilder.mapping.type.StringMapper;
 import org.testng.annotations.Test;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  * @author aeremenok
@@ -33,7 +28,7 @@ public class PropertyMappingTest
                     @Override
                     public void mapGetters( final Person beanSample )
                     {
-                        mapGetter( beanSample.getDescription(), TextAreaMapper.INSTANCE );
+                        mapGetter( beanSample.getDescription(), new TextAreaMapper() );
                     }
                 } );
         final Form<Person> form = env.buildFormInEDT( formBuilder );
@@ -54,7 +49,7 @@ public class PropertyMappingTest
     public void mapByPropertyName()
     {
         final FormBuilder<Person> formBuilder = FormBuilder.map( Person.class )
-                .useForProperty( "description", TextAreaMapper.INSTANCE );
+                .useForProperty( "description", new TextAreaMapper() );
         final Form<Person> form = env.buildFormInEDT( formBuilder );
         env.addToWindow( form.asComponent() );
 
@@ -69,66 +64,13 @@ public class PropertyMappingTest
         assert descComponent.target instanceof JTextArea;
     }
 
-    private static enum TextAreaMapper
-            implements TypeMapper<JTextArea, String>
+    private static class TextAreaMapper
+            extends StringMapper<JTextArea>
     {
-        INSTANCE;
-
-        @Override
-        public void bindChangeListener( final JTextArea editorComponent,
-                                        final ValueChangeListener<String> stringValueChangeListener )
-        {
-            editorComponent.getDocument().addDocumentListener( new DocumentListener()
-            {
-                @Override
-                public void changedUpdate( final DocumentEvent e )
-                {
-                    stringValueChangeListener.onChange();
-                }
-
-                @Override
-                public void insertUpdate( final DocumentEvent e )
-                {
-                    stringValueChangeListener.onChange();
-                }
-
-                @Override
-                public void removeUpdate( final DocumentEvent e )
-                {
-                    stringValueChangeListener.onChange();
-                }
-            } );
-        }
-
         @Override
         public JTextArea createEditorComponent()
         {
             return new JTextArea();
-        }
-
-        @Override
-        public ValidationMarker getValidationMarker()
-        {
-            return BackgroundMarker.INSTANCE;
-        }
-
-        @Override
-        public String getValue( final JTextArea editorComponent )
-        {
-            return editorComponent.getText();
-        }
-
-        @Override
-        public Class<String> getValueClass()
-        {
-            return String.class;
-        }
-
-        @Override
-        public void setValue( final JTextArea editorComponent,
-                              final String value )
-        {
-            editorComponent.setText( value );
         }
     }
 }
