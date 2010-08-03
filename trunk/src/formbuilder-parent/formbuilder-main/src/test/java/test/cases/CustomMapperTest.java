@@ -18,7 +18,7 @@ import static org.testng.Assert.fail;
  *         Date: 30.07.2010
  *         Time: 16:22:16
  */
-public class LayoutTest
+public class CustomMapperTest
         extends FormTest
 {
     @Test

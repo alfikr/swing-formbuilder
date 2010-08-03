@@ -23,7 +23,18 @@ public class Person
     private Set<Account> goodAccounts;
     private Set<Account> badAccounts;
     private Role role;
+    private boolean gender;
     private long id;
+
+    public boolean isGender()
+    {
+        return gender;
+    }
+
+    public void setGender( final boolean gender )
+    {
+        this.gender = gender;
+    }
 
     @Override
     public boolean equals( final Object o )

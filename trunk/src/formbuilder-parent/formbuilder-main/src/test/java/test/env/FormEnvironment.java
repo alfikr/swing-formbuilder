@@ -73,6 +73,7 @@ public class FormEnvironment
         oldValue.setName( "jonh smith" );
         oldValue.setAge( 24 );
         oldValue.setBirthDate( new Date( 1 ) );
+        oldValue.setGender( true );
         return oldValue;
     }
 
