@@ -4,13 +4,13 @@
     <parent>
         <artifactId>formbuilder-parent</artifactId>
         <groupId>org.formbuilder</groupId>
-        <version>0.9.0</version>
+        <version>0.9.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <!-- -->
     <groupId>org.formbuilder</groupId>
     <artifactId>formbuilder-main</artifactId>
-    <version>0.9.0</version>
+    <version>0.9.1-SNAPSHOT</version>
     <name>formbuilder-main</name>
     <!-- -->
     <properties>
