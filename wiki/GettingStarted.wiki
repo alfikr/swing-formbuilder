@@ -1,4 +1,18 @@
 #labels Featured
+Consider a simple java bean:
+{{{
+public class Person
+{
+    private String name;
+    private String description;
+    private int age;
+    private Date birthDate;
+    private boolean gender;
+// ... getters and setters
+}
+}}}
+We can create custom editors for its instances and it takes few lines of code.
+
 =Default Configuration=
 This simple code will add a JPanel with GridBagLayout to a frame:
 {{{        
@@ -7,20 +21,49 @@ JFrame myFrame = new JFrame();
 Form<Person> form = FormBuilder.map( Person.class ).buildForm();
 myFrame.add( form.asComponent() );
 }}}
-Each row represents a property and contains a JLabel and a specific editor component. 
+Each row represents a property and contains a JLabel and a specific editor component:
 
+[http://swing-task-monitor.googlecode.com/svn/trunk/doc/default.png]
+
+To display a given instance, simply write:
+{{{
+Person person = new Person();
+person.setName( "john smith" );
+// ... further initialization
+form.setValue( person );
+}}}
+Note, that `person` will not be modified as you enter new values in a form. Instead, a copy will be returned. (_Different strategies of changing instances age coming up soon_). So
+{{{
+Person changed = form.getValue();
+assert person != changed;
+}}}
 =Mapping by sample=
-
+What if you need a custom layout of the editor components? Pass an instance of a `BeanMapper` into builder.
+For example, `SampleBeanMapper` guides a panel creation using a dynamic proxy of a bean. Since a panel is created _before_ the value is set, an empty bean stub is being passed into `mapBean` method. Note that `beanSample` is a dynamic proxy, created by CGLIB.
 {{{
 Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
             protected JComponent mapBean( final Person beanSample )
             {
-                final Box box = Box.createHorizontalBox();
+                final Box box = Box.createVerticalBox();
                 box.add( label( beanSample.getName() ) );
                 box.add( editor( beanSample.getName() ) );
                 return box;
+            }
+        } ).buildForm();
+}}}
+If you don't want to include CGLIB dependency, use `PropertyNameBeanMapper` instead. It founds suitable components by property names. This is less magical, but more error-prone, since property names can be changed or misspelled.
+{{{
+Form<Person> form = FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
+        {
+            @Override
+            public JComponent mapBean()
+            {
+                final Box box = Box.createVerticalBox();
+                box.add( label( "name" ) );
+                box.add( editor( "name" ) );
+                return panel;
             }
         } ).buildForm();
 }}}
