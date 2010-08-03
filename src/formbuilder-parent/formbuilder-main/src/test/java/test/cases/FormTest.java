@@ -1,5 +1,7 @@
 package test.cases;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import test.env.FormEnvironment;
@@ -11,6 +13,7 @@ import test.env.FormEnvironment;
  */
 public abstract class FormTest
 {
+    protected Logger log = LoggerFactory.getLogger( getClass() );
     protected FormEnvironment env;
 
     @BeforeClass

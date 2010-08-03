@@ -3,8 +3,8 @@
  */
 package test.env;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.LoggerFactory;
 import org.testng.ITest;
 
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -16,7 +16,7 @@ import java.net.URL;
 public class Environment
         implements UncaughtExceptionHandler
 {
-    protected final Logger log = Logger.getLogger( getClass() );
+    protected org.slf4j.Logger log = LoggerFactory.getLogger( getClass() );
 
     @SuppressWarnings( "unused" )
     public void setUp( final Object test )

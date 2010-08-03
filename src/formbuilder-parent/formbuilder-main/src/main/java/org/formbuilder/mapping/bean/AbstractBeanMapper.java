@@ -81,7 +81,7 @@ public abstract class AbstractBeanMapper<B>
 
     protected void handleMappingException( @Nonnull final MappingException e )
     {
-        // skip
+        // skip if property cannot be displayed
     }
 
     protected boolean isEditable( @Nonnull final PropertyDescriptor descriptor )

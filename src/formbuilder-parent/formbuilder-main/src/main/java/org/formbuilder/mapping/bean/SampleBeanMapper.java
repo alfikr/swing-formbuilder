@@ -29,7 +29,7 @@ public abstract class SampleBeanMapper<B>
 {
     private Method lastCalledMethod;
     private MappingRules currentMappingRules;
-    private Boolean doValidation;
+    private boolean doValidation;
     private BeanMapping currentBeanMapping;
     private final InvocationHandler invocationHandler = new InvocationHandler()
     {
@@ -69,11 +69,11 @@ public abstract class SampleBeanMapper<B>
         final MappingRules mappingRules = checkNotNull( currentMappingRules );
         final Method readMethod = checkNotNull( lastCalledMethod );
         final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
-        final boolean reallyDoValidation = checkNotNull( doValidation );
 
-        return createEditor( Reflection.getDescriptor( readMethod ), mappingRules, beanMapping, reallyDoValidation );
+        return createEditor( Reflection.getDescriptor( readMethod ), mappingRules, beanMapping, doValidation );
     }
 
+    @Nonnull
     protected JLabel label( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
             throws
             MappingException
