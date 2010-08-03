@@ -1,6 +1,4 @@
-#summary Getting Started
 #labels Featured
-
 Add your content here.
 
 
