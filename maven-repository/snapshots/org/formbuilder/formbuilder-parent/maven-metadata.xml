@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.formbuilder</groupId>
+  <artifactId>formbuilder-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20100803110937</lastUpdated>
+  </versioning>
+</metadata>
