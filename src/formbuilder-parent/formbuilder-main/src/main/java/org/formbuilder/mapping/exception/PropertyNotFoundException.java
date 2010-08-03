@@ -1,8 +1,6 @@
 package org.formbuilder.mapping.exception;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.beans.PropertyDescriptor;
 
 /**
  * @author aeremenok
@@ -15,8 +13,8 @@ public class PropertyNotFoundException
     private final Class beanClass;
     private final String propertyName;
 
-    public PropertyNotFoundException( @Nonnull Class beanClass,
-                                      @Nonnull String propertyName )
+    public PropertyNotFoundException( @Nonnull final Class beanClass,
+                                      @Nonnull final String propertyName )
     {
         super( "Cannot find property " + propertyName + " of class " + beanClass, null );
         this.beanClass = beanClass;
