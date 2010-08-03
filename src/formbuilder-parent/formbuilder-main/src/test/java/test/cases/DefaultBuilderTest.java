@@ -47,6 +47,9 @@ public class DefaultBuilderTest
         wrapperPanel.spinner( "age" ).requireValue( person.getAge() );
         wrapperPanel.spinner( "birthDate" ).requireValue( person.getBirthDate() );
         wrapperPanel.checkBox( "gender" ).requireSelected();
+
+        screenshotSaver.saveScreenshot( env.getWrapperPanelFixture().target,
+                System.getProperty( "user.home" ) + "/sfb" );
     }
 
     private void requireNewBeanCreated( final Form<Person> form,
