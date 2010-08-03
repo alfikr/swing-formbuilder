@@ -1,21 +1,24 @@
 package org.formbuilder.mapping.bean;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.beans.PropertyDescriptor;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.util.Reflection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
-import java.beans.PropertyDescriptor;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * @author aeremenok
  *         Date: Aug 3, 2010
  *         Time: 1:09:26 PM
+ * @param <B>
  */
 @NotThreadSafe
 public abstract class PropertyNameBeanMapper<B>
@@ -41,7 +44,7 @@ public abstract class PropertyNameBeanMapper<B>
     }
 
     @Nonnull
-    protected JComponent editor( @Nonnull String propertyName )
+    protected JComponent editor( @Nonnull final String propertyName )
             throws
             MappingException
     {
@@ -55,7 +58,7 @@ public abstract class PropertyNameBeanMapper<B>
     }
 
     @Nonnull
-    protected JLabel label( @Nonnull String propertyName )
+    protected JLabel label( @Nonnull final String propertyName )
             throws
             MappingException
     {

@@ -3,6 +3,15 @@
  */
 package org.formbuilder.mapping.bean;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.beans.PropertyDescriptor;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+
 import org.formbuilder.BeanMapper;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.BeanMapping;
@@ -13,13 +22,6 @@ import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.validation.ValidateChangedValue;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
-import java.beans.PropertyDescriptor;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author aeremenok 2010
@@ -79,7 +81,7 @@ public abstract class AbstractBeanMapper<B>
         return doValidation ? new ValidateChangedValue( mapper, editor, descriptor ) : EmptyChangeListener.INSTANCE;
     }
 
-    protected void handleMappingException( @Nonnull final MappingException e )
+    protected void handleMappingException( @SuppressWarnings( "unused" ) @Nonnull final MappingException e )
     {
         // skip if property cannot be displayed
     }
