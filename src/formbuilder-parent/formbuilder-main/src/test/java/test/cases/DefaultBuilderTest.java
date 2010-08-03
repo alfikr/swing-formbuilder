@@ -41,10 +41,12 @@ public class DefaultBuilderTest
         wrapperPanel.label( "name" ).requireText( "Person's first name" );
         wrapperPanel.label( "age" ).requireText( "Age" );
         wrapperPanel.label( "birthDate" ).requireText( "Date of birth" );
+        wrapperPanel.label( "gender" ).requireText( "Gender" );
 
         wrapperPanel.textBox( "name" ).requireText( person.getName() );
         wrapperPanel.spinner( "age" ).requireValue( person.getAge() );
         wrapperPanel.spinner( "birthDate" ).requireValue( person.getBirthDate() );
+        wrapperPanel.checkBox( "gender" ).requireSelected();
     }
 
     private void requireNewBeanCreated( final Form<Person> form,

@@ -35,9 +35,13 @@ public class ValidationTest
 
         assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
         assertNull( nameTextBox.target.getToolTipText() );
-        nameTextBox.setText( "ee" );
+        nameTextBox.setText( "12" );
         assertEquals( nameTextBox.target.getBackground(), Color.PINK );
         nameTextBox.requireToolTip( "size must be between 3 and 2147483647" );
+
+        nameTextBox.setText( "123" );
+        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        assertNull( nameTextBox.target.getToolTipText() );
     }
 
     @Test( dependsOnMethods = "testValidation" )

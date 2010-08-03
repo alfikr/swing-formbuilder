@@ -40,6 +40,7 @@ public class Reflection
         emptyValues.put( Character.TYPE, Character.MIN_VALUE );
         emptyValues.put( Double.TYPE, Double.MIN_VALUE );
         emptyValues.put( Float.TYPE, Float.MIN_VALUE );
+        emptyValues.put( Boolean.TYPE, Boolean.FALSE );
     }
 
     static
