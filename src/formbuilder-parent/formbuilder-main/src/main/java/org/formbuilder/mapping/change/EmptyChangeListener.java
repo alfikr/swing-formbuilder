@@ -9,6 +9,8 @@ package org.formbuilder.mapping.change;
 public class EmptyChangeListener<V>
         implements ValueChangeListener<V>
 {
+    public static final EmptyChangeListener INSTANCE = new EmptyChangeListener();
+
     @Override
     public void onChange()
     {

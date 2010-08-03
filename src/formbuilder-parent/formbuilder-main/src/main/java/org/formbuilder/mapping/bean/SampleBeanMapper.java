@@ -29,6 +29,7 @@ public abstract class SampleBeanMapper<B>
 {
     private Method lastCalledMethod;
     private MappingRules currentMappingRules;
+    private Boolean doValidation;
     private BeanMapping currentBeanMapping;
     private final InvocationHandler invocationHandler = new InvocationHandler()
     {
@@ -47,9 +48,11 @@ public abstract class SampleBeanMapper<B>
     @Nonnull
     @Override
     public BeanMapping map( @Nonnull final Class<B> beanClass,
-                            @Nonnull final MappingRules mappingRules )
+                            @Nonnull final MappingRules mappingRules,
+                            final boolean doValidation )
     {
         this.currentMappingRules = mappingRules;
+        this.doValidation = doValidation;
         this.currentBeanMapping = new BeanMapping();
 
         final B beanSample = Reflection.createProxy( beanClass, invocationHandler );
@@ -58,15 +61,26 @@ public abstract class SampleBeanMapper<B>
     }
 
     @Nonnull
-    protected JComponent component( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
+    protected JComponent editor( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
             throws
             MappingException
     {
         // todo error messages
-        final MappingRules mappers = checkNotNull( currentMappingRules );
+        final MappingRules mappingRules = checkNotNull( currentMappingRules );
         final Method readMethod = checkNotNull( lastCalledMethod );
         final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
-        return createEditor( Reflection.getDescriptor( readMethod ), mappers, beanMapping );
+        final boolean reallyDoValidation = checkNotNull( doValidation );
+
+        return createEditor( Reflection.getDescriptor( readMethod ), mappingRules, beanMapping, reallyDoValidation );
+    }
+
+    protected JLabel label( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
+            throws
+            MappingException
+    {
+        final Method readMethod = checkNotNull( lastCalledMethod );
+        final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
+        return createLabel( beanMapping, Reflection.getDescriptor( readMethod ) );
     }
 
     @Nonnull

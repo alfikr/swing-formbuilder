@@ -30,7 +30,7 @@ public class LayoutTest
             public JComponent mapBean( final Person beanTemplate )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
-                panel.add( component( beanTemplate.getName() ) );
+                panel.add( editor( beanTemplate.getName() ) );
                 return panel;
             }
         } ) );

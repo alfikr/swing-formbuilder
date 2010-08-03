@@ -4,6 +4,7 @@
 package org.formbuilder.util;
 
 import net.sf.cglib.proxy.Enhancer;
+import org.formbuilder.mapping.exception.PropertyNotFoundException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,7 +50,6 @@ public class Reflection
         primitiveToBox.put( Character.TYPE, Character.class );
         primitiveToBox.put( Short.TYPE, Short.class );
 
-        // todo will ever be used?
         primitiveToBox.put( Void.TYPE, Void.class );
     }
 
@@ -114,7 +114,7 @@ public class Reflection
 
     @Nonnull
     public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
-    {
+    { // todo use cache
         final BeanInfo info = getBeanInfo( readMethod.getDeclaringClass() );
         for ( final PropertyDescriptor descriptor : info.getPropertyDescriptors() )
         {
@@ -123,7 +123,7 @@ public class Reflection
                 return descriptor;
             }
         }
-        throw new RuntimeException( readMethod + " is not a getter method for a bean" );
+        throw new PropertyNotFoundException( readMethod );
     }
 
     @Nullable
@@ -137,7 +137,8 @@ public class Reflection
 
         try
         {
-            return descriptor.getReadMethod().invoke( bean );
+            final Method readMethod = descriptor.getReadMethod();
+            return readMethod.invoke( bean );
         }
         catch ( final Exception e )
         {
@@ -164,7 +165,8 @@ public class Reflection
     {
         try
         {
-            propertyDescriptor.getWriteMethod().invoke( bean, propertyValue );
+            final Method writeMethod = propertyDescriptor.getWriteMethod();
+            writeMethod.invoke( checkNotNull( bean ), propertyValue );
         }
         catch ( final Exception e )
         {

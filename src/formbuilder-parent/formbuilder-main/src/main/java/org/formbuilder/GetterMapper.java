@@ -4,6 +4,7 @@ import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -31,15 +32,14 @@ public abstract class GetterMapper<B>
         }
     };
 
-    public void mapGettersToRules( @Nonnull final Class<B> beanClass,
-                                   @Nonnull final MappingRules mappingRules )
+    protected void mapGettersToRules( @Nonnull final Class<B> beanClass,
+                                      @Nonnull final MappingRules mappingRules )
     {
-// todo reduce visibility
         currentMappingRules = mappingRules;
         mapGetters( Reflection.createProxy( beanClass, invocationHandler ) );
     }
 
-    protected <T> void mapGetter( @SuppressWarnings( "unused" ) final T whatProxyGetterReturned,
+    protected <T> void mapGetter( @SuppressWarnings( "unused" ) @Nullable final T whatProxyGetterReturned,
                                   @Nonnull final TypeMapper<?, ? extends T> mapper )
     {
         final String propertyName = Reflection.getDescriptor( lastCalledMethod ).getName();

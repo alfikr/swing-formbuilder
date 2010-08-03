@@ -10,6 +10,8 @@ import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * @author aeremenok
  *         Date: 28.07.2010
@@ -32,7 +34,7 @@ public class BeanMapping
     public void addLabel( @Nonnull final PropertyDescriptor descriptor,
                           @Nonnull final JLabel label )
     {
-        // todo
+        // todo should we control labels?
 //        labels.put( descriptor, label );
     }
 
@@ -68,6 +70,6 @@ public class BeanMapping
 
     public void setPanel( @Nonnull final JComponent panel )
     {
-        this.panel = panel;
+        this.panel = checkNotNull( panel );
     }
 }

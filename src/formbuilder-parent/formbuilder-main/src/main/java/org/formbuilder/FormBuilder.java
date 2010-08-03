@@ -3,7 +3,8 @@
  */
 package org.formbuilder;
 
-import org.formbuilder.mapping.FormImpl;
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.ValueRelpicatingForm;
 import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.bean.GridBagMapper;
 
@@ -23,6 +24,7 @@ public class FormBuilder<B>
     private final MappingRules mappingRules = new MappingRules();
     @Nonnull
     private BeanMapper<B> beanMapper = new GridBagMapper<B>();
+    private boolean doValidation = true;
 
     private FormBuilder( final Class<B> beanClass )
     {
@@ -38,7 +40,8 @@ public class FormBuilder<B>
     @Nonnull
     public Form<B> buildForm()
     {
-        return new FormImpl<B>( beanClass, beanMapper, mappingRules );
+        final BeanMapping mapping = beanMapper.map( beanClass, mappingRules, doValidation );
+        return new ValueRelpicatingForm<B>( mapping, beanClass );
     }
 
     @Nonnull
@@ -70,6 +73,13 @@ public class FormBuilder<B>
     public FormBuilder<B> with( @Nonnull final BeanMapper<B> beanMapper )
     {
         this.beanMapper = checkNotNull( beanMapper );
+        return this;
+    }
+
+    @Nonnull
+    public FormBuilder<B> doValidation( final boolean doValidation )
+    {
+        this.doValidation = doValidation;
         return this;
     }
 }

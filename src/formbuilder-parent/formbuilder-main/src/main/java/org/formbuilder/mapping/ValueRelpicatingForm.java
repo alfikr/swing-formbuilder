@@ -3,7 +3,6 @@
  */
 package org.formbuilder.mapping;
 
-import org.formbuilder.BeanMapper;
 import org.formbuilder.Form;
 import org.formbuilder.util.Reflection;
 
@@ -18,18 +17,17 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  * @author aeremenok 2010
  * @param <B>
  */
-public class FormImpl<B>
+public class ValueRelpicatingForm<B>
         implements Form<B>
 {
     private final BeanMapping beanMapping;
     private final Class<B> beanClass;
 
-    public FormImpl( @Nonnull final Class<B> beanClass,
-                     @Nonnull final BeanMapper<B> beanMapper,
-                     @Nonnull final MappingRules mappingRules )
+    public ValueRelpicatingForm( @Nonnull final BeanMapping beanMapping,
+                                 @Nonnull final Class<B> beanClass )
     {
+        this.beanMapping = beanMapping;
         this.beanClass = beanClass;
-        this.beanMapping = beanMapper.map( beanClass, mappingRules );
     }
 
     @Nonnull

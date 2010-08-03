@@ -80,7 +80,7 @@ public class MappingRules
         final Class<?> boxed = Reflection.box( descriptor.getPropertyType() );
         if ( !boxed.isAssignableFrom( mapper.getValueClass() ) )
         {
-            throw new InvalidPropertyMappingException( descriptor, boxed, mapper.getValueClass() );
+            throw new InvalidPropertyMappingException( descriptor, mapper );
         }
         return mapper;
     }
