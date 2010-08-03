@@ -4,8 +4,8 @@ import domain.Person;
 import domain.Role;
 import org.fest.swing.fixture.JComboBoxFixture;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
+import org.formbuilder.FormBuilder;
 import org.formbuilder.mapping.type.ReferenceToComboboxMapper;
 import org.testng.annotations.Test;
 
@@ -25,7 +25,7 @@ public class ReferenceMappingTest
     @Test
     public void testReferenceEditor()
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).use( new RoleMapper() ) );
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).use( new RoleMapper() ) );
         env.addToWindow( form );
 
         final Person oldValue = env.createPerson();

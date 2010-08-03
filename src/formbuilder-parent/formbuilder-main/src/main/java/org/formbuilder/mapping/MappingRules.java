@@ -1,5 +1,6 @@
 package org.formbuilder.mapping;
 
+import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.exception.InvalidPropertyMappingException;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
@@ -7,7 +8,6 @@ import org.formbuilder.mapping.type.BooleanToCheckboxMapper;
 import org.formbuilder.mapping.type.DateToSpinnerMapper;
 import org.formbuilder.mapping.type.NumberToSpinnerMapper;
 import org.formbuilder.mapping.type.StringToTextFieldMapper;
-import org.formbuilder.mapping.type.TypeMapper;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;

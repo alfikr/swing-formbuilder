@@ -1,7 +1,7 @@
 package org.formbuilder.validation;
 
+import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.mapping.type.TypeMapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

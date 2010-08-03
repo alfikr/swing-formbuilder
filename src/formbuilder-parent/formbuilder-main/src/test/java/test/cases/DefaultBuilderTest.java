@@ -5,8 +5,8 @@ package test.cases;
 
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
+import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class DefaultBuilderTest
     @Test
     public void setAndGetValue()
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ) );
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ) );
 
         final JComponent component = form.asComponent();
         env.verifyLayout( component, JPanel.class, GridBagLayout.class );

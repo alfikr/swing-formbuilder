@@ -4,8 +4,8 @@ import domain.Account;
 import domain.Person;
 import org.fest.swing.fixture.JListFixture;
 import org.fest.swing.fixture.JPanelFixture;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
+import org.formbuilder.FormBuilder;
 import org.formbuilder.mapping.type.CollectionToJListMapper;
 import org.testng.annotations.Test;
 
@@ -28,7 +28,7 @@ public class CollectionMappingTest
     @Test
     public void testCollectionEditor()
     {
-        final Form<Person> form = env.buildFormInEDT( Builder.map( Person.class ).use( new AccountSetMapper() ) );
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).use( new AccountSetMapper() ) );
         env.addToWindow( form );
 
         final Person oldValue = env.createPerson();

@@ -3,11 +3,11 @@ package test.cases;
 import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
-import org.formbuilder.Builder;
 import org.formbuilder.Form;
-import org.formbuilder.mapping.GetterMapper;
+import org.formbuilder.FormBuilder;
+import org.formbuilder.GetterMapper;
+import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.mapping.type.TypeMapper;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
 import org.testng.annotations.Test;
@@ -27,15 +27,16 @@ public class PropertyMappingTest
     @Test
     public void mapByGetter()
     {
-        final Builder<Person> builder = Builder.map( Person.class ).useForGetters( new GetterMapper<Person>()
-        {
-            @Override
-            public void mapGetters( final Person beanSample )
-            {
-                mapGetter( beanSample.getDescription(), TextAreaMapper.INSTANCE );
-            }
-        } );
-        final Form<Person> form = env.buildFormInEDT( builder );
+        final FormBuilder<Person> formBuilder = FormBuilder.map( Person.class )
+                .useForGetters( new GetterMapper<Person>()
+                {
+                    @Override
+                    public void mapGetters( final Person beanSample )
+                    {
+                        mapGetter( beanSample.getDescription(), TextAreaMapper.INSTANCE );
+                    }
+                } );
+        final Form<Person> form = env.buildFormInEDT( formBuilder );
         env.addToWindow( form.asComponent() );
 
         env.setValueInEDT( form, env.createPerson() );
@@ -52,9 +53,9 @@ public class PropertyMappingTest
     @Test( dependsOnMethods = "mapByGetter" )
     public void mapByPropertyName()
     {
-        final Builder<Person> builder = Builder.map( Person.class )
+        final FormBuilder<Person> formBuilder = FormBuilder.map( Person.class )
                 .useForProperty( "description", TextAreaMapper.INSTANCE );
-        final Form<Person> form = env.buildFormInEDT( builder );
+        final Form<Person> form = env.buildFormInEDT( formBuilder );
         env.addToWindow( form.asComponent() );
 
         env.setValueInEDT( form, env.createPerson() );
