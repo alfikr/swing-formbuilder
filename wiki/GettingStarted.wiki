@@ -14,7 +14,7 @@ public class Person
 You can create custom editors for its instances, and it takes few lines of code.
 
 =Default Configuration=
-This simple code will add a JPanel with GridBagLayout to a frame:
+This simple code will add a `JPanel` with `GridBagLayout` to a frame:
 {{{        
 JFrame myFrame = new JFrame();
 // ... further initialization
