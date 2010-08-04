@@ -1,0 +1,34 @@
+#labels Featured
+You can include a following maven dependency:
+{{{
+<repository>
+    <id>taskmonitor.repo</id>
+    <name>Swing Task Monitor Repository</name>
+    <url>http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/</url>
+    <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+...
+<dependency>
+    <groupId>org.formbuilder</groupId>
+    <artifactId>formbuilder-main</artifactId>
+    <version>0.9.0</version>
+<dependency>
+}}}
+
+Or directly download 
+
+ * [http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/0.9.0/formbuilder-main-1.2.jar binaries]
+ * [http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/0.9.0/formbuilder-main-1.2-sources.jar sources] 
+ * [http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/0.9.0/formbuilder-main-1.2-javadoc.jar javadoc]
+
+In such case, you will also need to add libraries, the formbuilder relies on:
+ * [http://code.google.com/p/findbugs/ jsr305]
+ * [http://www.hibernate.org/subprojects/validator.html hibernate validator]
+ * [http://code.google.com/p/google-collections/ google-collections]
+ * [http://cglib.sourceforge.net/ cglib]
