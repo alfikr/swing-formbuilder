@@ -106,6 +106,21 @@ Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildF
 The following parameters are also customizable for each property:
 ||Name||By annotation||By UIManager key||Description||
 ||Title||`@UITitle`||`"Person.name.title"`||Displayed by a JLabel||
-||Order||`@UIOrder`||`"Person.name.order"`||By default, rows are sorted using this parameter. If not specified it is 'Integer.MAX_VALUE'||
+||Order||`@UIOrder`||`"Person.name.order"`||By default, rows are sorted using this parameter. If not specified it is `Integer.MAX_VALUE`||
 ||Is Read Only||`@UIReadOnly`||`"Person.name.readonly"`||Locks an editor component||
 ||Is Hidden||`@UIHidden`||`"Person.name.hidden"`||Such property is skipped during a form creation||
+For example
+{{{
+UIManager.getDefaults().put( "Person.birthDate.title", "Date of birth" );
+UIManager.getDefaults().put( "Person.birthDate.readonly", true );
+}}}
+is equal to
+{{{
+    @UIReadOnly
+    @UITitle( "Date of birth" )
+    public Date getBirthDate()
+    {
+        return birthDate;
+    }
+}}}
+Note, that [http://code.google.com/p/swing-formbuilder/issues/detail?id=5 annotating bean fields isn't yet supported].
