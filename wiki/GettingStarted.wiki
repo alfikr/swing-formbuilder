@@ -70,7 +70,7 @@ Form<Person> form = FormBuilder.map( Person.class ).with( new PropertyNameBeanMa
 }}}
 
 =Custom type mapping=
-Most common property types are mapped by default to specific components using `TypeMapper`. If you need to change the default type mapping, implement your own mapper (see below) and pass it into a builder.
+Most common property types are mapped by default to specific components using `TypeMapper`. If you need to change the default type mapping, [CustomMapper implement your own mapper] and pass it into a builder.
 
 For instance, you want to represent each `String` with `JTextArea` instead of `JTextField`:
 {{{
@@ -103,63 +103,3 @@ If the validation isn't needed, and you don't want to include the hibernate vali
 Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildForm();
 }}}
 
-=Writing a custom mapper=
-Suppose, you want to map `java.util.Date` to [http://www.toedter.com/en/jcalendar/index.html JDateChooser] instead of `JSpinner`. Implement the following:
-{{{
-class DateToDateChooserMapper
-        implements
-        TypeMapper<JDateChooser, Date>
-    {
-// specify, which property type you map
-        @Override
-        public Class<Date> getValueClass()
-        { 
-            return Date.class;
-        }
-
-// when a form is created, this TypeMapper is asked to create a new instance of editor component
-        @Override
-        public JDateChooser createEditorComponent()
-        { 
-            return new JDateChooser();
-        }
-
-// transfers the value from component to bean property
-        @Override
-        public Date getValue( final JDateChooser editorComponent )
-        { 
-            return editorComponent.getDate();
-        }
-
-// transfers the value from bean property to component
-        @Override
-        public void setValue( final JDateChooser editorComponent, final Date value )
-        {
-            editorComponent.setDate( value );
-        }
-
-// propagate value change events from component to mapping
-// if you don't need validation, you may not implement a method body
-        @Override
-        public void bindChangeListener( final JDateChooser editorComponent,
-            final ValueChangeListener<Date> changeListener )
-        {
-            editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
-            {
-                @Override
-                public void propertyChange( final PropertyChangeEvent evt )
-                {
-                    changeListener.onChange();
-                }
-            } );
-        }
-
-// ValidationMarker marks the components, when constraint violations occur
-// you may implement your custom marker, or return a DoNothingMarker if the validation isn't needed
-        @Override
-        public ValidationMarker getValidationMarker()
-        {
-            return BackgroundMarker.INSTANCE;
-        }
-    }
-}}}
