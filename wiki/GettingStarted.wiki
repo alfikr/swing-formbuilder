@@ -105,7 +105,7 @@ Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildF
 =Custom appearance=
 The following parameters are also customizable for each property:
 
-||*Name*||*By annotation*||*By `UIManager` key*||*Description*||
+|| *Name* || *By annotation* || *By `UIManager` key* || *Description* ||
 ||Title||`@UITitle`||`"Person.name.title"`||Displayed by a JLabel||
 ||Order||`@UIOrder`||`"Person.name.order"`||By default, rows are sorted using this parameter. If not specified it is `Integer.MAX_VALUE`||
 ||Is Read Only||`@UIReadOnly`||`"Person.name.readonly"`||Locks an editor component||
