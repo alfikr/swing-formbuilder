@@ -70,17 +70,20 @@ Form<Person> form = FormBuilder.map( Person.class ).with( new PropertyNameBeanMa
 }}}
 
 =Custom type mapping=
+Most common property types are mapped by default to specific components using `TypeMapper`. If you need to change the default type mapping, implement your own mapper (see below) and pass it into a builder.
 
+For instance, you want to represent each `String` with `JTextArea` instead of `JTextField`:
 {{{
 Form<Person> form = FormBuilder.map( Person.class ).use( new StringToTextAreaMapper() ).buildForm();
 }}}
 
 =Custom property mapping=
+To use custom mapping only for specific properties, write the following:
 {{{
 Form<Person> form = FormBuilder.map( Person.class )
                 .useForProperty( "description", new StringToTextAreaMapper() ).buildForm();
 }}}
-or in a more sophisticated, but type-safe way
+or in a more sophisticated, but type-safe way (CGLIB proxy-magic again):
 {{{
 Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
