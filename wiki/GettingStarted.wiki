@@ -102,4 +102,7 @@ If the validation isn't needed, and you don't want to include the hibernate vali
 {{{
 Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildForm();
 }}}
-
+=Custom appearance=
+The following parameters are also customizable for each property:
+||Name||By annotation||By UIManager key||
+||Title||{{{@UITitle}}}||{{{"Person.name.title"}}}||
