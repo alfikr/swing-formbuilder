@@ -95,7 +95,7 @@ Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMap
         } ).buildForm();
 }}}
 
-=Disabling the validation=
+=Validation=
 By default, when you enter new value to a form, it is validated using _Java validation API_ and its default implementation - _[http://www.hibernate.org/subprojects/validator.html Hibernate validator]_. When a constraint violation occurs - a component is marked with red and receives a tooltip with the error message. The [http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/ hibenate validator manual] describes, how to customize your beans for validation.
 
 If the validation isn't needed, and you don't want to include the hibernate validator dependency (not the validation-api, however), simply turn off the validation:
@@ -104,35 +104,42 @@ Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildF
 }}}
 
 =Writing a custom mapper=
+Suppose, you want to map `java.util.Date` to [http://www.toedter.com/en/jcalendar/index.html JDateChooser] instead of `JSpinner`. Implement the following:
 {{{
 class DateToDateChooserMapper
         implements
         TypeMapper<JDateChooser, Date>
     {
+// specify, which property type you map
         @Override
         public Class<Date> getValueClass()
-        {
+        { 
             return Date.class;
         }
 
+// when a form is created, this TypeMapper is asked to create a new instance of editor component
         @Override
         public JDateChooser createEditorComponent()
-        {
+        { 
             return new JDateChooser();
         }
 
+// transfers the value from component to bean property
         @Override
         public Date getValue( final JDateChooser editorComponent )
-        {
+        { 
             return editorComponent.getDate();
         }
 
+// transfers the value from bean property to component
         @Override
         public void setValue( final JDateChooser editorComponent, final Date value )
         {
             editorComponent.setDate( value );
         }
 
+// propagate value change events from component to mapping
+// if you don't need validation, you may not implement a method body
         @Override
         public void bindChangeListener( final JDateChooser editorComponent,
             final ValueChangeListener<Date> changeListener )
@@ -147,6 +154,8 @@ class DateToDateChooserMapper
             } );
         }
 
+// ValidationMarker marks the components, when constaint violations occur
+// you may implement your custom marker, or return a DoNothingMarker if the validation isn't needed
         @Override
         public ValidationMarker getValidationMarker()
         {
