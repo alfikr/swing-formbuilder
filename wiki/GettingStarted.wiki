@@ -11,7 +11,7 @@ public class Person
 // ... getters and setters
 }
 }}}
-You can create custom editors for its instances and it takes few lines of code.
+You can create custom editors for its instances, and it takes few lines of code.
 
 =Default Configuration=
 This simple code will add a JPanel with GridBagLayout to a frame:
@@ -32,7 +32,7 @@ person.setName( "john smith" );
 // ... further initialization
 form.setValue( person );
 }}}
-Note, that `person` will not be modified as you enter new values in a form. Instead, a copy will be returned. (_Different strategies of changing instances age coming up soon_). So
+Note, that `person` will not be modified as you enter new values in a form. Instead, a copy will be returned. (_[http://code.google.com/p/swing-formbuilder/issues/detail?id=4 Different strategies of changing instances age coming up soon]_). So
 {{{
 Person changed = form.getValue();
 assert person != changed;
@@ -154,7 +154,7 @@ class DateToDateChooserMapper
             } );
         }
 
-// ValidationMarker marks the components, when constaint violations occur
+// ValidationMarker marks the components, when constraint violations occur
 // you may implement your custom marker, or return a DoNothingMarker if the validation isn't needed
         @Override
         public ValidationMarker getValidationMarker()
