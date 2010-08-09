@@ -20,6 +20,7 @@ import org.formbuilder.mapping.metadata.functions.IsSupported;
 import org.formbuilder.mapping.metadata.functions.IsVisible;
 
 import javax.annotation.Nonnull;
+import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;
 import java.util.Comparator;
 import java.util.List;
@@ -47,7 +48,8 @@ public class PropertySorter
     @Nonnull
     public List<OrderedPropertyDescriptor> activeSortedDescriptors( @Nonnull final Class beanClass )
     {
-        final Iterable<PropertyDescriptor> descriptors = of( getBeanInfo( beanClass ).getPropertyDescriptors() );
+        final BeanInfo beanInfo = getBeanInfo( beanClass );
+        final Iterable<PropertyDescriptor> descriptors = of( beanInfo.getPropertyDescriptors() );
         final Iterable<PropertyDescriptor> supportedAndVisible = filter( descriptors,
                 and( IsSupported.INSTANCE, new IsVisible( metaData ) ) );
         final Iterable<OrderedPropertyDescriptor> withOrder = transform( supportedAndVisible,

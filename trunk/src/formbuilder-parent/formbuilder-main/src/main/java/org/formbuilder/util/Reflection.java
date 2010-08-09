@@ -16,7 +16,6 @@
 package org.formbuilder.util;
 
 import com.google.common.base.Predicate;
-import net.sf.cglib.proxy.Enhancer;
 import org.formbuilder.mapping.exception.GetterNotFoundException;
 import org.formbuilder.mapping.exception.PropertyNotFoundException;
 
@@ -28,6 +27,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -83,27 +83,24 @@ public class Reflection
         return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
     }
 
-    @SuppressWarnings( "unchecked" )
     @Nonnull
     public static <T> T createProxy( @Nonnull final Class<T> beanClass,
                                      @Nonnull final InvocationHandler handler )
     {
-        final Enhancer e = new Enhancer();
-        e.setSuperclass( beanClass );
-        e.setUseFactory( false );
-        e.setCallback( new net.sf.cglib.proxy.InvocationHandler()
-        {
-            @Override
-            public Object invoke( final Object proxy,
-                                  final Method method,
-                                  final Object[] args )
-                    throws
-                    Throwable
-            {
-                return handler.invoke( proxy, method, args );
-            }
-        } );
-        return (T) e.create();
+        // todo support interfaces
+//        if ( beanClass.isInterface() )
+//        {
+//            return createNativeProxy( beanClass, handler );
+//        }
+        return CGLibUtil.createCGLibProxy( beanClass, handler );
+    }
+
+    @SuppressWarnings( {"unchecked"} )
+    @Nonnull
+    private static <T> T createNativeProxy( final Class<T> beanInterface,
+                                            final InvocationHandler handler )
+    {
+        return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
     }
 
     @Nullable
@@ -166,6 +163,10 @@ public class Reflection
     @Nonnull
     public static <T> T newInstance( @Nonnull final Class<T> aClass )
     {
+        // todo support interfaces
+//        if(aClass.isInterface()){
+//            createNativeProxy( aClass,  )
+//        }
         try
         {
             return aClass.newInstance();
