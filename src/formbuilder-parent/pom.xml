@@ -19,7 +19,8 @@
 	<!-- -->
 	<modules>
 		<module>formbuilder-main</module>
-	</modules>
+        <module>formbuilder-integration-test</module>
+    </modules>
 	<!-- -->
 	<build>
 		<pluginManagement>
