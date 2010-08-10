@@ -12,24 +12,26 @@
 
 package org.formbuilder.mapping.metadata.sort;
 
-import com.google.common.collect.Ordering;
+import static com.google.common.base.Predicates.and;
+import static com.google.common.collect.ImmutableList.of;
+import static com.google.common.collect.Iterables.filter;
+import static com.google.common.collect.Iterables.transform;
+import static org.formbuilder.util.Reflection.getBeanInfo;
+
+import java.beans.BeanInfo;
+import java.beans.PropertyDescriptor;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.MetaDataUser;
 import org.formbuilder.mapping.metadata.functions.AddOrder;
 import org.formbuilder.mapping.metadata.functions.IsSupported;
 import org.formbuilder.mapping.metadata.functions.IsVisible;
 
-import javax.annotation.Nonnull;
-import java.beans.BeanInfo;
-import java.beans.PropertyDescriptor;
-import java.util.Comparator;
-import java.util.List;
-
-import static com.google.common.base.Predicates.and;
-import static com.google.common.collect.ImmutableList.of;
-import static com.google.common.collect.Iterables.filter;
-import static com.google.common.collect.Iterables.transform;
-import static org.formbuilder.util.Reflection.getBeanInfo;
+import com.google.common.collect.Ordering;
 
 /**
  * @author aeremenok

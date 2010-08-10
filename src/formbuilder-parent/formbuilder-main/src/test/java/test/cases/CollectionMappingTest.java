@@ -12,8 +12,14 @@
 
 package test.cases;
 
-import domain.Account;
-import domain.Person;
+import static com.google.common.collect.Iterables.elementsEqual;
+import static java.util.Arrays.asList;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.fest.swing.fixture.JListFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
@@ -21,13 +27,8 @@ import org.formbuilder.FormBuilder;
 import org.formbuilder.mapping.type.CollectionToJListMapper;
 import org.testng.annotations.Test;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static com.google.common.collect.Iterables.elementsEqual;
-import static java.util.Arrays.asList;
+import domain.Account;
+import domain.Person;
 
 /**
  * @author aeremenok

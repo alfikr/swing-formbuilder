@@ -15,26 +15,27 @@
  */
 package org.formbuilder.util;
 
-import com.google.common.base.Predicate;
-import org.formbuilder.mapping.exception.GetterNotFoundException;
-import org.formbuilder.mapping.exception.PropertyNotFoundException;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Iterators.find;
+import static com.google.common.collect.Iterators.forArray;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Iterators.find;
-import static com.google.common.collect.Iterators.forArray;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.formbuilder.mapping.exception.GetterNotFoundException;
+import org.formbuilder.mapping.exception.PropertyNotFoundException;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author aeremenok 2010
@@ -95,13 +96,13 @@ public class Reflection
         return CGLibUtil.createCGLibProxy( beanClass, handler );
     }
 
-    @SuppressWarnings( {"unchecked"} )
-    @Nonnull
-    private static <T> T createNativeProxy( final Class<T> beanInterface,
-                                            final InvocationHandler handler )
-    {
-        return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
-    }
+//    @SuppressWarnings( {"unchecked"} )
+//    @Nonnull
+//    private static <T> T createNativeProxy( final Class<T> beanInterface,
+//                                            final InvocationHandler handler )
+//    {
+//        return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
+//    }
 
     @Nullable
     public static Object emptyValue( @Nonnull final Method method )
@@ -127,6 +128,19 @@ public class Reflection
         }
     }
 
+    public static PropertyDescriptor getDescriptor( final Class beanClass,
+                                                    final String propertyName )
+    {
+        try
+        {
+            return getDescpriptor( beanClass, new HasName( propertyName ) );
+        }
+        catch ( final NoSuchElementException e )
+        {
+            throw new PropertyNotFoundException( beanClass, propertyName );
+        }
+    }
+
     @Nonnull
     public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
     {
@@ -134,7 +148,7 @@ public class Reflection
         {
             return getDescpriptor( readMethod.getDeclaringClass(), new HasReadMethod( readMethod ) );
         }
-        catch ( NoSuchElementException e )
+        catch ( final NoSuchElementException e )
         {
             throw new GetterNotFoundException( readMethod );
         }
@@ -192,21 +206,8 @@ public class Reflection
         }
     }
 
-    public static PropertyDescriptor getDescriptor( final Class beanClass,
-                                                    final String propertyName )
-    {
-        try
-        {
-            return getDescpriptor( beanClass, new HasName( propertyName ) );
-        }
-        catch ( NoSuchElementException e )
-        {
-            throw new PropertyNotFoundException( beanClass, propertyName );
-        }
-    }
-
-    protected static PropertyDescriptor getDescpriptor( Class beanClass,
-                                                        Predicate<PropertyDescriptor> predicate )
+    protected static PropertyDescriptor getDescpriptor( final Class beanClass,
+                                                        final Predicate<PropertyDescriptor> predicate )
             throws
             NoSuchElementException
     {// todo use cache
@@ -217,7 +218,7 @@ public class Reflection
     protected static class HasName
             implements Predicate<PropertyDescriptor>
     {
-        private String name;
+        private final String name;
 
         public HasName( @Nonnull final String name )
         {
@@ -234,7 +235,7 @@ public class Reflection
     protected static class HasReadMethod
             implements Predicate<PropertyDescriptor>
     {
-        private Method readMethod;
+        private final Method readMethod;
 
         public HasReadMethod( @Nonnull final Method readMethod )
         {

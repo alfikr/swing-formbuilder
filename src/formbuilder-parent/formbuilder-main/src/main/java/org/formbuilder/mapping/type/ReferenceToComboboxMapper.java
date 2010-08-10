@@ -12,19 +12,20 @@
 
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.DoNothingMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collection;
 import java.util.Vector;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.JComboBox;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.validation.DoNothingMarker;
+import org.formbuilder.validation.ValidationMarker;
 
 /**
  * @author aeremenok

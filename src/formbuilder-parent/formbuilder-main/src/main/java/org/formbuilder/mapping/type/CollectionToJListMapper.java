@@ -12,20 +12,22 @@
 
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.DoNothingMarker;
-import org.formbuilder.validation.ValidationMarker;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
+import javax.swing.AbstractListModel;
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.validation.DoNothingMarker;
+import org.formbuilder.validation.ValidationMarker;
 
 /**
  * @author aeremenok

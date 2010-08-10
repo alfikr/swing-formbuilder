@@ -12,14 +12,15 @@
 
 package org.formbuilder;
 
-import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.util.Reflection;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+
+import org.formbuilder.mapping.MappingRules;
+import org.formbuilder.util.Reflection;
 
 /**
  * @author aeremenok
@@ -44,13 +45,6 @@ public abstract class GetterMapper<B>
         }
     };
 
-    protected void mapGettersToRules( @Nonnull final Class<B> beanClass,
-                                      @Nonnull final MappingRules mappingRules )
-    {
-        currentMappingRules = mappingRules;
-        mapGetters( Reflection.createProxy( beanClass, invocationHandler ) );
-    }
-
     protected <T> void mapGetter( @SuppressWarnings( "unused" ) @Nullable final T whatProxyGetterReturned,
                                   @Nonnull final TypeMapper<?, ? extends T> mapper )
     {
@@ -59,4 +53,11 @@ public abstract class GetterMapper<B>
     }
 
     protected abstract void mapGetters( @Nonnull B beanSample );
+
+    protected void mapGettersToRules( @Nonnull final Class<B> beanClass,
+                                      @Nonnull final MappingRules mappingRules )
+    {
+        currentMappingRules = mappingRules;
+        mapGetters( Reflection.createProxy( beanClass, invocationHandler ) );
+    }
 }

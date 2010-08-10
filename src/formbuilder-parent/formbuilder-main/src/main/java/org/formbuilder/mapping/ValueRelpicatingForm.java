@@ -15,15 +15,15 @@
  */
 package org.formbuilder.mapping;
 
-import org.formbuilder.Form;
-import org.formbuilder.util.Reflection;
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
+import javax.swing.JComponent;
 
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
+import org.formbuilder.Form;
+import org.formbuilder.util.Reflection;
 
 /**
  * @author aeremenok 2010

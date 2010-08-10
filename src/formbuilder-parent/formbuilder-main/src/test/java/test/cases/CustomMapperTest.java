@@ -12,7 +12,14 @@
 
 package test.cases;
 
-import domain.Person;
+import static org.testng.Assert.fail;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
@@ -20,10 +27,7 @@ import org.formbuilder.mapping.bean.PropertyNameBeanMapper;
 import org.formbuilder.mapping.bean.SampleBeanMapper;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
-import java.awt.*;
-
-import static org.testng.Assert.fail;
+import domain.Person;
 
 /**
  * @author aeremenok
@@ -33,18 +37,18 @@ import static org.testng.Assert.fail;
 public class CustomMapperTest
         extends FormTest
 {
-    @Test
-    public void customizedBySample()
+    @Test( dependsOnMethods = "customizedBySample" )
+    public void customizedByPropertyName()
     {
         assert !SwingUtilities.isEventDispatchThread();
-        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean( final Person beanTemplate )
+            public JComponent mapBean()
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
-                panel.add( label( beanTemplate.getName() ), BorderLayout.NORTH );
-                panel.add( editor( beanTemplate.getName() ), BorderLayout.CENTER );
+                panel.add( label( "name" ), BorderLayout.NORTH );
+                panel.add( editor( "name" ), BorderLayout.CENTER );
                 return panel;
             }
         } ) );
@@ -66,18 +70,18 @@ public class CustomMapperTest
         {}
     }
 
-    @Test( dependsOnMethods = "customizedBySample" )
-    public void customizedByPropertyName()
+    @Test
+    public void customizedBySample()
     {
         assert !SwingUtilities.isEventDispatchThread();
-        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean()
+            public JComponent mapBean( final Person beanTemplate )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
-                panel.add( label( "name" ), BorderLayout.NORTH );
-                panel.add( editor( "name" ), BorderLayout.CENTER );
+                panel.add( label( beanTemplate.getName() ), BorderLayout.NORTH );
+                panel.add( editor( beanTemplate.getName() ), BorderLayout.CENTER );
                 return panel;
             }
         } ) );

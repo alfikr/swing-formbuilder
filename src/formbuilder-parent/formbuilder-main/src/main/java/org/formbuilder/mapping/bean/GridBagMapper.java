@@ -15,20 +15,21 @@
  */
 package org.formbuilder.mapping.bean;
 
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
+
+import java.beans.PropertyDescriptor;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 import org.formbuilder.mapping.metadata.sort.PropertySorter;
 import org.formbuilder.util.GridBagPanel;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-import java.beans.PropertyDescriptor;
-import java.util.List;
-
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * @author aeremenok 2010

@@ -15,15 +15,15 @@
  */
 package org.formbuilder;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.ValueRelpicatingForm;
-import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.bean.GridBagMapper;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.MappingRules;
+import org.formbuilder.mapping.ValueRelpicatingForm;
+import org.formbuilder.mapping.bean.GridBagMapper;
 
 /**
  * @author aeremenok 2010
@@ -57,9 +57,16 @@ public class FormBuilder<B>
     }
 
     @Nonnull
+    public FormBuilder<B> doValidation( final boolean doValidation )
+    {
+        this.doValidation = doValidation;
+        return this;
+    }
+
+    @Nonnull
     public FormBuilder<B> use( @Nonnull final TypeMapper... typeMappers )
     {
-        for ( TypeMapper typeMapper : typeMappers )
+        for ( final TypeMapper typeMapper : typeMappers )
         {
             this.mappingRules.addMapper( checkNotNull( typeMapper ) );
         }
@@ -85,13 +92,6 @@ public class FormBuilder<B>
     public FormBuilder<B> with( @Nonnull final BeanMapper<B> beanMapper )
     {
         this.beanMapper = checkNotNull( beanMapper );
-        return this;
-    }
-
-    @Nonnull
-    public FormBuilder<B> doValidation( final boolean doValidation )
-    {
-        this.doValidation = doValidation;
         return this;
     }
 }

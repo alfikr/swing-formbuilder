@@ -12,11 +12,12 @@
 
 package org.formbuilder.validation;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
+import javax.swing.JComponent;
 import javax.validation.ConstraintViolation;
-import java.util.Set;
 
 /**
  * @author aeremenok

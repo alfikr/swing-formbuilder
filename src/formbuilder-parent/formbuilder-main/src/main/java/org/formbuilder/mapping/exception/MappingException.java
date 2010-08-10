@@ -12,9 +12,10 @@
 
 package org.formbuilder.mapping.exception;
 
+import java.beans.PropertyDescriptor;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.beans.PropertyDescriptor;
 
 /**
  * @author aeremenok
@@ -26,7 +27,7 @@ public class MappingException
 {
     private final PropertyDescriptor descriptor;
 
-    public MappingException( @Nonnull String message,
+    public MappingException( @Nonnull final String message,
                              @Nullable final PropertyDescriptor descriptor )
     {
         super( message );

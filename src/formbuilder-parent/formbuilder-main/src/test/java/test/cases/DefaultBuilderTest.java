@@ -15,16 +15,19 @@
  */
 package test.cases;
 
-import domain.Person;
+import static org.testng.Assert.assertEquals;
+
+import java.awt.GridBagLayout;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
-import java.awt.*;
-
-import static org.testng.Assert.assertEquals;
+import domain.Person;
 
 /**
  * @author aeremenok 2010

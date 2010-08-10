@@ -12,8 +12,9 @@
 
 package org.formbuilder.mapping.exception;
 
-import javax.annotation.Nonnull;
 import java.lang.reflect.Method;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author aeremenok
@@ -23,9 +24,9 @@ import java.lang.reflect.Method;
 public class GetterNotFoundException
         extends MappingException
 {
-    private Method readMethod;
+    private final Method readMethod;
 
-    public GetterNotFoundException( @Nonnull Method readMethod )
+    public GetterNotFoundException( @Nonnull final Method readMethod )
     {
         super( readMethod + " is not a getter method of a bean", null );
         this.readMethod = readMethod;

@@ -12,8 +12,11 @@
 
 package test.cases;
 
-import domain.Person;
-import domain.Role;
+import static java.util.Arrays.asList;
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+
 import org.fest.swing.fixture.JComboBoxFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
@@ -21,10 +24,8 @@ import org.formbuilder.FormBuilder;
 import org.formbuilder.mapping.type.ReferenceToComboboxMapper;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static org.testng.Assert.assertEquals;
+import domain.Person;
+import domain.Role;
 
 /**
  * @author aeremenok

@@ -12,11 +12,12 @@
 
 package org.formbuilder.mapping.metadata;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import static org.formbuilder.util.TextUtil.capitalize;
+
 import java.beans.PropertyDescriptor;
 
-import static org.formbuilder.util.TextUtil.capitalize;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author eav

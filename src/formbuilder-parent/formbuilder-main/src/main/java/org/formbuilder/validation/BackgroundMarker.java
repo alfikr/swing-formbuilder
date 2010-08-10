@@ -12,17 +12,18 @@
 
 package org.formbuilder.validation;
 
-import org.formbuilder.util.TextUtil;
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
+
+import java.awt.Color;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
+import javax.swing.JComponent;
 import javax.validation.ConstraintViolation;
-import java.awt.*;
-import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
+import org.formbuilder.util.TextUtil;
 
 /**
  * @author aeremenok

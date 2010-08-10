@@ -12,17 +12,17 @@
 
 package org.formbuilder.mapping.type;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.validation.BackgroundMarker;
+import org.formbuilder.validation.ValidationMarker;
 
 /**
  * @author eav

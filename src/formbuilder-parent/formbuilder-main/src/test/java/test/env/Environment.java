@@ -15,12 +15,12 @@
  */
 package test.env;
 
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.URL;
+
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.LoggerFactory;
 import org.testng.ITest;
-
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.URL;
 
 /**
  * @author eav 2010
@@ -35,7 +35,7 @@ public class Environment
             throws
             Exception
     {
-        URL url = Environment.class.getClassLoader().getResource( "log4j.properties" );
+        final URL url = Environment.class.getClassLoader().getResource( "log4j.properties" );
         assert url != null;
         PropertyConfigurator.configure( url );
         Thread.setDefaultUncaughtExceptionHandler( this );

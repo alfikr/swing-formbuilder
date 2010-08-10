@@ -12,9 +12,10 @@
 
 package org.formbuilder.mapping.metadata;
 
+import java.beans.PropertyDescriptor;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.beans.PropertyDescriptor;
 
 /**
  * @author eav

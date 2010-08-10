@@ -12,10 +12,11 @@
 
 package org.formbuilder.mapping.metadata.functions;
 
-import com.google.common.base.Predicate;
+import java.beans.PropertyDescriptor;
 
 import javax.annotation.Nonnull;
-import java.beans.PropertyDescriptor;
+
+import com.google.common.base.Predicate;
 
 /**
  * @author aeremenok

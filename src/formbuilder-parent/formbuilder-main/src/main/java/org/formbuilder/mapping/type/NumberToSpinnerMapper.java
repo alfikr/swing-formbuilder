@@ -12,17 +12,18 @@
 
 package org.formbuilder.mapping.type;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * @author aeremenok

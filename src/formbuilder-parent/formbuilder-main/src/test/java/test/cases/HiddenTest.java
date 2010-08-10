@@ -12,11 +12,12 @@
 
 package test.cases;
 
-import domain.Person;
+import static org.testng.Assert.fail;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.fail;
+import domain.Person;
 
 /**
  * @author eav

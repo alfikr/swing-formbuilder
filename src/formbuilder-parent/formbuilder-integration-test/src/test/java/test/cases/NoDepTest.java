@@ -1,16 +1,18 @@
 package test.cases;
 
-import domain.Address;
+import static org.testng.Assert.fail;
+
+import javax.annotation.Nonnull;
+import javax.swing.Box;
+import javax.swing.JComponent;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.formbuilder.mapping.bean.SampleBeanMapper;
 import org.testng.annotations.Test;
 
-import javax.annotation.Nonnull;
-import javax.swing.*;
-
-import static org.testng.Assert.fail;
+import domain.Address;
 
 /**
  * @author aeremenok
@@ -23,34 +25,19 @@ public class NoDepTest
     @Test
     public void testMinimalConfig()
     {
-        FormBuilder<Address> b = FormBuilder.map( Address.class ).doValidation( false );
-        Form<Address> form = env.buildFormInEDT( b );
+        final FormBuilder<Address> b = FormBuilder.map( Address.class ).doValidation( false );
+        final Form<Address> form = env.buildFormInEDT( b );
         env.addToWindow( form );
 
-        JPanelFixture mainPanel = env.getWrapperPanelFixture();
+        final JPanelFixture mainPanel = env.getWrapperPanelFixture();
         mainPanel.textBox( "country" ).enterText( "Russia" );
         mainPanel.textBox( "city" ).enterText( "Saint-Petersburg" );
-    }
-
-    @Test( dependsOnMethods = "testMinimalConfig" )
-    public void tryValidation()
-    {
-        FormBuilder<Address> b = FormBuilder.map( Address.class ).doValidation( true );
-        try
-        {
-            Form<Address> form = env.buildFormInEDT( b );
-            fail();
-        }
-        catch ( Throwable e )
-        {
-            log.error( e.getMessage(), e );
-        }
     }
 
     @Test( dependsOnMethods = "tryValidation" )
     public void tryCgLib()
     {
-        FormBuilder<Address> b = FormBuilder.map( Address.class ).with( new SampleBeanMapper<Address>()
+        final FormBuilder<Address> b = FormBuilder.map( Address.class ).with( new SampleBeanMapper<Address>()
         {
             @Override
             protected JComponent mapBean( @Nonnull final Address beanSample )
@@ -63,10 +50,25 @@ public class NoDepTest
 
         try
         {
-            Form<Address> form = env.buildFormInEDT( b );
+            env.buildFormInEDT( b );
             fail();
         }
-        catch ( Throwable e )
+        catch ( final Throwable e )
+        {
+            log.error( e.getMessage(), e );
+        }
+    }
+
+    @Test( dependsOnMethods = "testMinimalConfig" )
+    public void tryValidation()
+    {
+        final FormBuilder<Address> b = FormBuilder.map( Address.class ).doValidation( true );
+        try
+        {
+            env.buildFormInEDT( b );
+            fail();
+        }
+        catch ( final Throwable e )
         {
             log.error( e.getMessage(), e );
         }
