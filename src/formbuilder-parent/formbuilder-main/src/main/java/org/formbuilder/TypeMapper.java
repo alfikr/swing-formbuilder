@@ -21,31 +21,66 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JComponent;
 
 import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.validation.BackgroundMarker;
+import org.formbuilder.validation.DoNothingMarker;
 import org.formbuilder.validation.ValidationMarker;
 
 /**
+ * Maps the values of a given type to the given editors.
+ *
  * @author aeremenok 2010
- * @param <C>
- * @param <V>
+ * @param <C> editor component type
+ * @param <V> property value type
  */
 @NotThreadSafe
 public interface TypeMapper<C extends JComponent, V>
 {
+    /**
+     * Propagates the changes of the editor component's state to the form. Particularly, this is needed to validate the
+     * changes.
+     *
+     * @param editorComponent an editor, which state should be observed
+     * @param changeListener you should call {@link ValueChangeListener#onChange()} when editorComponent changes its
+     *            state
+     */
     void bindChangeListener( @Nonnull C editorComponent,
                              @Nonnull ValueChangeListener<V> changeListener );
 
+    /**
+     * A factory method for editors.
+     *
+     * @return new instance of editor component
+     */
     @Nonnull
     C createEditorComponent();
 
+    /**
+     * @return a strategy of marking editors according to validation results. If the validation isn't needed, you can
+     *         return a {@link DoNothingMarker}
+     * @see ValidationMarker
+     * @see BackgroundMarker
+     * @see DoNothingMarker
+     */
     @Nonnull
     ValidationMarker getValidationMarker();
 
+    /**
+     * @param editorComponent an editor to extract its value
+     * @return editor's value
+     */
     @Nullable
     V getValue( @Nonnull C editorComponent );
 
+    /**
+     * @return value class, which should be mapped using this mapper
+     */
     @Nonnull
     Class<V> getValueClass();
 
+    /**
+     * @param editorComponent an editor to display new value
+     * @param value a new property value
+     */
     void setValue( @Nonnull C editorComponent,
                    @Nullable V value );
 }

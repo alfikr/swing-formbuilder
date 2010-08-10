@@ -21,8 +21,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JComponent;
 
 /**
+ * Wraps the editor panel and holds the ediable bean instance
+ *
  * @author aeremenok 2010
- * @param <B>
+ * @param <B> editable bean type
  */
 @NotThreadSafe
 public interface Form<B>
@@ -30,7 +32,7 @@ public interface Form<B>
     @Nonnull
     JComponent asComponent();
 
-    @Nonnull
+    @Nullable
     B getValue();
 
     void setValue( @Nullable B bean );
