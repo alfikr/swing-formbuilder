@@ -29,13 +29,13 @@ import org.formbuilder.util.Reflection;
  * @author aeremenok 2010
  * @param <B>
  */
-public class ValueRelpicatingForm<B>
+public class BeanRelpicatingForm<B>
         implements Form<B>
 {
     private final BeanMapping beanMapping;
     private final Class<B> beanClass;
 
-    public ValueRelpicatingForm( @Nonnull final BeanMapping beanMapping,
+    public BeanRelpicatingForm( @Nonnull final BeanMapping beanMapping,
                                  @Nonnull final Class<B> beanClass )
     {
         this.beanMapping = beanMapping;
