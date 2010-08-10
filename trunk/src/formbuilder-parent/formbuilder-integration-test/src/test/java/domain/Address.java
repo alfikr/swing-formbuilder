@@ -11,19 +11,19 @@ public class Address
     private String city;
     private int house;
 
+    public String getCity()
+    {
+        return city;
+    }
+
     public String getCountry()
     {
         return country;
     }
 
-    public void setCountry( final String country )
+    public int getHouse()
     {
-        this.country = country;
-    }
-
-    public String getCity()
-    {
-        return city;
+        return house;
     }
 
     public void setCity( final String city )
@@ -31,9 +31,9 @@ public class Address
         this.city = city;
     }
 
-    public int getHouse()
+    public void setCountry( final String country )
     {
-        return house;
+        this.country = country;
     }
 
     public void setHouse( final int house )

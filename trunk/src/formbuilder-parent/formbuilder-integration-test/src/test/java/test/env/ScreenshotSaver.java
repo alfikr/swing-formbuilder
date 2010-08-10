@@ -15,12 +15,12 @@
  */
 package test.env;
 
-import org.fest.swing.image.ScreenshotTaker;
-
-import java.awt.*;
+import java.awt.Component;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.fest.swing.image.ScreenshotTaker;
 
 /**
  * @author aeremenok 2010

@@ -11,17 +11,22 @@
  */
 package test.env;
 
-import domain.Person;
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
+import java.awt.LayoutManager;
+import java.util.Date;
+import java.util.concurrent.Callable;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.edt.GuiTask;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Date;
-import java.util.concurrent.Callable;
+import domain.Person;
 
 /**
  * @author aeremenok

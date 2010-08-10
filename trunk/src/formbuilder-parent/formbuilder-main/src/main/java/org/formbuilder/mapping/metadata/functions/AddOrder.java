@@ -12,14 +12,16 @@
 
 package org.formbuilder.mapping.metadata.functions;
 
-import com.google.common.base.Function;
+import java.beans.PropertyDescriptor;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.MetaDataUser;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.beans.PropertyDescriptor;
+import com.google.common.base.Function;
 
 /**
  * @author aeremenok

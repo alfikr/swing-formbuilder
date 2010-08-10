@@ -12,18 +12,19 @@
 
 package test.cases;
 
-import domain.Person;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotSame;
+import static org.testng.Assert.assertNull;
+
+import java.awt.Color;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
-import java.awt.*;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotSame;
-import static org.testng.Assert.assertNull;
+import domain.Person;
 
 /**
  * @author aeremenok
@@ -33,6 +34,25 @@ import static org.testng.Assert.assertNull;
 public class ValidationTest
         extends FormTest
 {
+    @Test( dependsOnMethods = "testValidation" )
+    public void disableValidation()
+    {
+        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).doValidation( false ) );
+        env.addToWindow( form.asComponent() );
+
+        final Person oldValue = env.createPerson();
+        env.setValueInEDT( form, oldValue );
+
+        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
+        final JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
+
+        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        assertNull( nameTextBox.target.getToolTipText() );
+        nameTextBox.setText( "ee" );
+        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
+        assertNull( nameTextBox.target.getToolTipText() );
+    }
+
     @Test
     public void testValidation()
     {
@@ -52,25 +72,6 @@ public class ValidationTest
         nameTextBox.requireToolTip( "size must be between 3 and 2147483647" );
 
         nameTextBox.setText( "123" );
-        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
-        assertNull( nameTextBox.target.getToolTipText() );
-    }
-
-    @Test( dependsOnMethods = "testValidation" )
-    public void disableValidation()
-    {
-        final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).doValidation( false ) );
-        env.addToWindow( form.asComponent() );
-
-        final Person oldValue = env.createPerson();
-        env.setValueInEDT( form, oldValue );
-
-        final JPanelFixture wrapperPanel = env.getWrapperPanelFixture();
-        final JTextComponentFixture nameTextBox = wrapperPanel.textBox( "name" );
-
-        assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
-        assertNull( nameTextBox.target.getToolTipText() );
-        nameTextBox.setText( "ee" );
         assertNotSame( nameTextBox.target.getBackground(), Color.PINK );
         assertNull( nameTextBox.target.getToolTipText() );
     }

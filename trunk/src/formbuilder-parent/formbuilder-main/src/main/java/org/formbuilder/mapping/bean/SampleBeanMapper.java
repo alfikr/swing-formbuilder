@@ -15,21 +15,23 @@
  */
 package org.formbuilder.mapping.bean;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.exception.MappingException;
-import org.formbuilder.util.Reflection;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.MappingRules;
+import org.formbuilder.mapping.exception.MappingException;
+import org.formbuilder.util.Reflection;
 
 /**
  * @author aeremenok 2010

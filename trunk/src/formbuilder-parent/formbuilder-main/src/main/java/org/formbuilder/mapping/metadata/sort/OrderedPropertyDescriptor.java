@@ -12,8 +12,9 @@
 
 package org.formbuilder.mapping.metadata.sort;
 
-import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author eav

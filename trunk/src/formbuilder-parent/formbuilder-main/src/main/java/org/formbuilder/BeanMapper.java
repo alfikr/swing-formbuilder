@@ -15,11 +15,11 @@
  */
 package org.formbuilder;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.MappingRules;
 
 /**
  * @author aeremenok 2010

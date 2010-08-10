@@ -1,8 +1,9 @@
 package org.formbuilder.util;
 
-import javax.annotation.Nonnull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author aeremenok

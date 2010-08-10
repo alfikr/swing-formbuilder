@@ -12,14 +12,18 @@
 
 package test.cases;
 
-import domain.Person;
+import java.awt.GridBagLayout;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
-import java.awt.*;
+import domain.Person;
 
 /**
  * @author eav

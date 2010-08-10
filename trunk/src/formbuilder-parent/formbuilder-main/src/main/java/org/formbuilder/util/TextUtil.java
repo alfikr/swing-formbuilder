@@ -12,15 +12,16 @@
 
 package org.formbuilder.util;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
+import static com.google.common.collect.Iterables.transform;
+
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.validation.ConstraintViolation;
-import java.util.Set;
 
-import static com.google.common.collect.Iterables.transform;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 
 /**
  * @author aeremenok

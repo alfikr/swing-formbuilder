@@ -12,11 +12,11 @@
 
 package org.formbuilder.mapping;
 
-import org.formbuilder.TypeMapper;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
+import javax.swing.JComponent;
+
+import org.formbuilder.TypeMapper;
 
 /**
  * @author eav

@@ -14,7 +14,7 @@ package org.formbuilder.mapping.type;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
+import javax.swing.JTextField;
 
 /**
  * @author aeremenok

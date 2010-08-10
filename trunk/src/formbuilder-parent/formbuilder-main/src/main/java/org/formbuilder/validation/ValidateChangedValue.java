@@ -12,17 +12,18 @@
 
 package org.formbuilder.validation;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
+import java.beans.PropertyDescriptor;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
+import javax.swing.JComponent;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.beans.PropertyDescriptor;
-import java.util.Set;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ValueChangeListener;
 
 /**
  * @author aeremenok

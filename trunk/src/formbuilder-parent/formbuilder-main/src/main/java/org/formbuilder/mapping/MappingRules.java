@@ -12,6 +12,13 @@
 
 package org.formbuilder.mapping;
 
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.exception.InvalidPropertyMappingException;
 import org.formbuilder.mapping.exception.MappingException;
@@ -21,12 +28,6 @@ import org.formbuilder.mapping.type.DateToSpinnerMapper;
 import org.formbuilder.mapping.type.NumberToSpinnerMapper;
 import org.formbuilder.mapping.type.StringToTextFieldMapper;
 import org.formbuilder.util.Reflection;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.beans.PropertyDescriptor;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author aeremenok

@@ -12,15 +12,16 @@
 
 package org.formbuilder.mapping.metadata;
 
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.formbuilder.annotations.UIHidden;
 import org.formbuilder.annotations.UIOrder;
 import org.formbuilder.annotations.UIReadOnly;
 import org.formbuilder.annotations.UITitle;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
 
 /**
  * @author eav

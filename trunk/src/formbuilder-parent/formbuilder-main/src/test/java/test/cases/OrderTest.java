@@ -12,13 +12,14 @@
 
 package test.cases;
 
-import domain.Person;
+import javax.swing.UIManager;
+
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JSpinnerFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
+import domain.Person;
 
 /**
  * @author eav

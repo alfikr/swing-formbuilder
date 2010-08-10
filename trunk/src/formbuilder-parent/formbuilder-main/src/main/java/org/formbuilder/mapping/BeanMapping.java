@@ -12,17 +12,19 @@
 
 package org.formbuilder.mapping;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.util.Reflection;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.*;
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.util.Reflection;
 
 /**
  * @author aeremenok

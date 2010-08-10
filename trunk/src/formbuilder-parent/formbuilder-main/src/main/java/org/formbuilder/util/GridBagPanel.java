@@ -12,8 +12,11 @@
 
 package org.formbuilder.util;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  * @author eav 2009

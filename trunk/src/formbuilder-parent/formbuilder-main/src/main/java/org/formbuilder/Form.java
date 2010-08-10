@@ -18,7 +18,7 @@ package org.formbuilder;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
+import javax.swing.JComponent;
 
 /**
  * @author aeremenok 2010

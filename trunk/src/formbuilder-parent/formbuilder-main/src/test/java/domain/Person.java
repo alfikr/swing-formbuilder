@@ -15,13 +15,14 @@
  */
 package domain;
 
+import java.util.Date;
+import java.util.Set;
+
+import javax.validation.constraints.Size;
+
 import org.formbuilder.annotations.UIHidden;
 import org.formbuilder.annotations.UIReadOnly;
 import org.formbuilder.annotations.UITitle;
-
-import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.Set;
 
 /**
  * @author aeremenok 2010
@@ -37,16 +38,6 @@ public class Person
     private Set<Account> badAccounts;
     private Role role;
     private long id;
-
-    public boolean isGender()
-    {
-        return gender;
-    }
-
-    public void setGender( final boolean gender )
-    {
-        this.gender = gender;
-    }
 
     @Override
     public boolean equals( final Object o )
@@ -132,6 +123,11 @@ public class Person
         return result;
     }
 
+    public boolean isGender()
+    {
+        return gender;
+    }
+
     public void setAge( final int age )
     {
         this.age = age;
@@ -150,6 +146,11 @@ public class Person
     public void setDescription( final String description )
     {
         this.description = description;
+    }
+
+    public void setGender( final boolean gender )
+    {
+        this.gender = gender;
     }
 
     public void setGoodAccounts( final Set<Account> goodAccounts )

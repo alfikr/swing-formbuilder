@@ -15,15 +15,19 @@
  */
 package test.env;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
+import java.util.concurrent.Callable;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
 import org.fest.swing.fixture.GenericComponentFixture;
 import org.fest.swing.fixture.JPanelFixture;
 
-import javax.swing.*;
-import java.util.concurrent.Callable;
+import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
  * @author eav 2010

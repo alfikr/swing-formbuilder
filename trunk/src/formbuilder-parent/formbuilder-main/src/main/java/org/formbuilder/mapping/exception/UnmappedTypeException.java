@@ -12,8 +12,9 @@
 
 package org.formbuilder.mapping.exception;
 
-import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author aeremenok

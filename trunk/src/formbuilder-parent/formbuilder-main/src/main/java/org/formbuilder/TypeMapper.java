@@ -15,13 +15,13 @@
  */
 package org.formbuilder;
 
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.ValidationMarker;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.*;
+import javax.swing.JComponent;
+
+import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.validation.ValidationMarker;
 
 /**
  * @author aeremenok 2010
