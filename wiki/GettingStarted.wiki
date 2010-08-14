@@ -96,7 +96,7 @@ Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMap
 }}}
 
 =Validation=
-By default, when you enter new value to a form, it is validated using _Java validation API_ and its default implementation - _[http://www.hibernate.org/subprojects/validator.html Hibernate validator]_. When a constraint violation occurs - a component is marked with red and receives a tooltip with the error message. The [http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/ hibenate validator manual] describes, how to customize your beans for validation.
+By default, when you enter new value to a form, it is validated using _[Java validation API (JSR303) http://jcp.org/en/jsr/detail?id=303]_ and its default implementation - _[http://www.hibernate.org/subprojects/validator.html Hibernate validator]_. When a constraint violation occurs - a component is marked with red and receives a tooltip with the error message. The [http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/ hibenate validator manual] describes, how to customize your beans for validation.
 
 If the validation isn't needed, and you don't want to include the hibernate validator dependency (not the validation-api, however), simply turn off the validation:
 {{{
