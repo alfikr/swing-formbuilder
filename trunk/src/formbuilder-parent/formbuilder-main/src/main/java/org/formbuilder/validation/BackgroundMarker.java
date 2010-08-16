@@ -9,26 +9,26 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.validation;
+
+import org.formbuilder.util.TextUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
+import javax.validation.ConstraintViolation;
+import java.awt.*;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 import static javax.swing.SwingUtilities.isEventDispatchThread;
 
-import java.awt.Color;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JComponent;
-import javax.validation.ConstraintViolation;
-
-import org.formbuilder.util.TextUtil;
-
 /**
- * @author aeremenok
- *         Date: 29.07.2010
- *         Time: 17:42:02
+ * Changes the background of an editor to {@link Color#PINK} if there are some violations, or to {@link Color#WHITE} if
+ * no violations occured. Also decorates an editor with semicolon-separated violation messages if the occure.
+ *
+ * @author aeremenok Date: 29.07.2010 Time: 17:42:02
+ * @see ConstraintViolation#getMessage()
  */
 @NotThreadSafe
 public class BackgroundMarker

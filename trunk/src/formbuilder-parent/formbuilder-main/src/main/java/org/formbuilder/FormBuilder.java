@@ -15,15 +15,6 @@
  */
 package org.formbuilder;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.awt.Container;
-import java.math.BigDecimal;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.validation.Validator;
-
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanRelpicatingForm;
 import org.formbuilder.mapping.MappingRules;
@@ -38,10 +29,18 @@ import org.formbuilder.mapping.type.StringToTextFieldMapper;
 import org.formbuilder.validation.ValidateChangedValue;
 import org.formbuilder.validation.ValidationMarker;
 
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.validation.Validator;
+import java.awt.*;
+import java.math.BigDecimal;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The entry point to form building. Collects configuration and builds {@link Form}s using it. <br>
  * <h1>Usage:</h1>
- *
+ * <p/>
  * <pre>
  * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).with( new SampleBeanMapper&lt;Person&gt;()
  *                   {
@@ -77,7 +76,7 @@ public class FormBuilder<B>
     /**
      * Starts building of the form for the given class.
      *
-     * @param <T> bean type
+     * @param <T>       bean type
      * @param beanClass bean class object
      * @return builder instance, configured for the given class
      */
@@ -147,7 +146,7 @@ public class FormBuilder<B>
      * Allows to perform a <u>checked</u> mapping for properties, specified by user. For example, the following code
      * orders to use a <code>StringToTextAreaMapper</code> for property description, while other {@link String} properties
      * are mapped by default:
-     *
+     * <p/>
      * <pre>
      * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper&lt;Person&gt;()
      *                   {
@@ -174,13 +173,13 @@ public class FormBuilder<B>
      * Allows to perform an <u>unchecked</u> mapping for a property, specified by user. For example, the
      * following code orders to use a <code>StringToTextAreaMapper</code> for property description, while other
      * {@link String} properties are mapped by default:
-     *
+     * <p/>
      * <pre>
      * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForProperty( &quot;description&quot;, new StringToTextAreaMapper() )
      *                           .buildForm();
      * </pre>
      *
-     * @param propertyName the name of bean property
+     * @param propertyName   the name of bean property
      * @param propertyMapper the mapper to use for it
      * @return this builder
      * @see MappingRules

@@ -15,15 +15,15 @@
  */
 package org.formbuilder;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JComponent;
-
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.DoNothingMarker;
 import org.formbuilder.validation.ValidationMarker;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
 
 /**
  * Maps the values of a given type to the given editors.
@@ -40,8 +40,8 @@ public interface TypeMapper<C extends JComponent, V>
      * changes.
      *
      * @param editorComponent an editor, which state should be observed
-     * @param changeListener you should call {@link ValueChangeListener#onChange()} when editorComponent changes its
-     *            state
+     * @param changeListener  you should call {@link ValueChangeListener#onChange()} when editorComponent changes its
+     *                        state
      */
     void bindChangeListener( @Nonnull C editorComponent,
                              @Nonnull ValueChangeListener<V> changeListener );
@@ -79,7 +79,7 @@ public interface TypeMapper<C extends JComponent, V>
 
     /**
      * @param editorComponent an editor to display new value
-     * @param value a new property value
+     * @param value           a new property value
      */
     void setValue( @Nonnull C editorComponent,
                    @Nullable V value );

@@ -15,13 +15,20 @@
  */
 package org.formbuilder.annotations;
 
+import org.formbuilder.mapping.metadata.AnnotationMetaData;
+
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Adds a human-readable title to a property. Newly created label for such property will have text with {@link
+ * UITitle#value()}
+ *
  * @author aeremenok 2010
+ * @see AnnotationMetaData#getTitle(PropertyDescriptor)
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )

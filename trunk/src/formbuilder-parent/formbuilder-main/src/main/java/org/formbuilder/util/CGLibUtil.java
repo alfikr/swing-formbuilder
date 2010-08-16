@@ -1,21 +1,20 @@
 package org.formbuilder.util;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import javax.annotation.Nonnull;
-
 /**
- * @author aeremenok
- *         Date: 09.08.2010
- *         Time: 17:38:47
+ * A bridge to CGLib dependency
+ *
+ * @author aeremenok Date: 09.08.2010 Time: 17:38:47
  */
 public class CGLibUtil
 {
     @SuppressWarnings( {"unchecked"} )
     @Nonnull
-    static <T> T createCGLibProxy( final Class<T> beanClass,
-                                           final InvocationHandler handler )
+    public static <T> T createCGLibProxy( final Class<T> beanClass,
+                                          final InvocationHandler handler )
     {
         final net.sf.cglib.proxy.Enhancer e = new net.sf.cglib.proxy.Enhancer();
         e.setSuperclass( beanClass );

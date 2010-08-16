@@ -15,10 +15,12 @@
  */
 package org.formbuilder.util;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.Iterators.find;
-import static com.google.common.collect.Iterators.forArray;
+import com.google.common.base.Predicate;
+import org.formbuilder.mapping.exception.GetterNotFoundException;
+import org.formbuilder.mapping.exception.PropertyNotFoundException;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -29,15 +31,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.formbuilder.mapping.exception.GetterNotFoundException;
-import org.formbuilder.mapping.exception.PropertyNotFoundException;
-
-import com.google.common.base.Predicate;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.collect.Iterators.find;
+import static com.google.common.collect.Iterators.forArray;
 
 /**
+ * Common reflection operations
+ *
  * @author aeremenok 2010
  */
 public class Reflection
@@ -72,6 +72,10 @@ public class Reflection
         primitiveToBox.put( Void.TYPE, Void.class );
     }
 
+    /**
+     * @param mayBePrimitive a class to do the boxing
+     * @return a wrapper class, if the class is primitive, mayBePrimitive otherwise
+     */
     @Nonnull
     public static Class<?> box( @Nonnull final Class<?> mayBePrimitive )
     {
@@ -84,6 +88,12 @@ public class Reflection
         return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
     }
 
+    /**
+     * @param beanClass a class to make new proxy
+     * @param handler   a method interceptor
+     * @param <T>       bean type
+     * @return a proxy, that uses a given handler
+     */
     @Nonnull
     public static <T> T createProxy( @Nonnull final Class<T> beanClass,
                                      @Nonnull final InvocationHandler handler )
@@ -104,6 +114,12 @@ public class Reflection
 //        return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
 //    }
 
+    /**
+     * Pick a meaningless value to fake a getter call
+     *
+     * @param method a getter method
+     * @return null if the method should return a reference, a constant otherwise
+     */
     @Nullable
     public static Object emptyValue( @Nonnull final Method method )
     {
@@ -115,6 +131,12 @@ public class Reflection
         return checkNotNull( emptyValues.get( returnType ), "No default return value for method " + method );
     }
 
+    /**
+     * Swallow {@link IntrospectionException}s on {@link Introspector#getBeanInfo()} call
+     *
+     * @param beanClass introspection source
+     * @return bean info
+     */
     @Nonnull
     public static BeanInfo getBeanInfo( @Nonnull final Class<?> beanClass )
     {
@@ -128,8 +150,21 @@ public class Reflection
         }
     }
 
-    public static PropertyDescriptor getDescriptor( final Class beanClass,
-                                                    final String propertyName )
+    /**
+     * Finds a {@link PropertyDescriptor} by a property name
+     *
+     * @param beanClass    where to search
+     * @param propertyName a name of property
+     * @return property descriptor
+     *
+     * @throws PropertyNotFoundException no property with such name
+     * @see PropertyDescriptor#getName()
+     */
+    @Nonnull
+    public static PropertyDescriptor getDescriptor( @Nonnull final Class beanClass,
+                                                    @Nonnull final String propertyName )
+            throws
+            PropertyNotFoundException
     {
         try
         {
@@ -141,8 +176,19 @@ public class Reflection
         }
     }
 
+    /**
+     * Finds a {@link PropertyDescriptor} by a getter method
+     *
+     * @param readMethod a getter method
+     * @return property descriptor
+     *
+     * @throws GetterNotFoundException no property with such getter
+     * @see PropertyDescriptor#getReadMethod()
+     */
     @Nonnull
     public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
+            throws
+            GetterNotFoundException
     {
         try
         {
@@ -154,6 +200,16 @@ public class Reflection
         }
     }
 
+    /**
+     * Get a value of a given property of a given bean
+     *
+     * @param descriptor property descriptor
+     * @param bean       value holder
+     * @return a property value or an empty value for this property type if bean is null
+     *
+     * @see Reflection#emptyValue(Method)
+     * @see Reflection#setValue(Object, Object, PropertyDescriptor)
+     */
     @Nullable
     public static Object getValue( @Nonnull final PropertyDescriptor descriptor,
                                    @Nullable final Object bean )
@@ -174,6 +230,15 @@ public class Reflection
         }
     }
 
+    /**
+     * Swallow reflection exceptions
+     *
+     * @param aClass bean class
+     * @param <T>    bean type
+     * @return a newly allocated instance of given type
+     *
+     * @see Class#newInstance()
+     */
     @Nonnull
     public static <T> T newInstance( @Nonnull final Class<T> aClass )
     {
@@ -191,6 +256,14 @@ public class Reflection
         }
     }
 
+    /**
+     * Set a value of a given property of a given bean
+     *
+     * @param bean               value holder
+     * @param propertyValue      a value to set
+     * @param propertyDescriptor a property to modify
+     * @see Reflection#getValue(PropertyDescriptor, Object)
+     */
     public static void setValue( @Nonnull final Object bean,
                                  @Nullable final Object propertyValue,
                                  @Nonnull final PropertyDescriptor propertyDescriptor )

@@ -24,16 +24,26 @@ import javax.swing.JComponent;
  * Wraps the editor panel and holds the ediable bean instance
  *
  * @author aeremenok 2010
- * @param <B> editable bean type
  */
 @NotThreadSafe
 public interface Form<B>
 {
+    /** @return the form component */
     @Nonnull
     JComponent asComponent();
 
+    /**
+     * Converts values from the editor components to bean properties
+     *
+     * @return changed bean instance
+     */
     @Nullable
     B getValue();
 
+    /**
+     * Converts values from bean properties to the editor components
+     *
+     * @param bean a value source
+     */
     void setValue( @Nullable B bean );
 }
