@@ -9,20 +9,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.validation;
-
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.Set;
 
 /**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 14:04:23
+ * Ignores the constraint violations
+ *
+ * @author aeremenok Date: 30.07.2010 Time: 14:04:23
+ * @see Validator
  */
 @ThreadSafe
 public class DoNothingMarker
