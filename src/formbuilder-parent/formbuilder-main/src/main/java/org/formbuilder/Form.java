@@ -24,6 +24,7 @@ import javax.swing.JComponent;
  * Wraps the editor panel and holds the ediable bean instance
  *
  * @author aeremenok 2010
+ * @param <B> bean type
  */
 @NotThreadSafe
 public interface Form<B>

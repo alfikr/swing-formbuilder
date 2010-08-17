@@ -45,7 +45,7 @@ public class TextUtil
     }
 
     /**
-     * Converts a cnain of constraint violations to a single string, using a given separator
+     * Converts a chain of constraint violations to a single string, using a given separator
      *
      * @param delimiter  a separator to use
      * @param violations validation results
