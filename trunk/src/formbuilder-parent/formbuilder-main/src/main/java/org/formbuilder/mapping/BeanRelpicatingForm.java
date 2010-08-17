@@ -15,19 +15,20 @@
  */
 package org.formbuilder.mapping;
 
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-
 import org.formbuilder.Form;
 import org.formbuilder.util.Reflection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
+
 /**
+ * A {@link Form} that allocates a new instance of bean each time it is requested for a changed value.
+ *
  * @author aeremenok 2010
- * @param <B>
  */
 public class BeanRelpicatingForm<B>
         implements Form<B>
@@ -36,7 +37,7 @@ public class BeanRelpicatingForm<B>
     private final Class<B> beanClass;
 
     public BeanRelpicatingForm( @Nonnull final BeanMapping beanMapping,
-                                 @Nonnull final Class<B> beanClass )
+                                @Nonnull final Class<B> beanClass )
     {
         this.beanMapping = beanMapping;
         this.beanClass = beanClass;
@@ -49,6 +50,7 @@ public class BeanRelpicatingForm<B>
         return beanMapping.getPanel();
     }
 
+    /** @return a new bean instance with changed values */
     @Nonnull
     @Override
     public B getValue()
@@ -58,6 +60,11 @@ public class BeanRelpicatingForm<B>
         return newBean;
     }
 
+    /**
+     * Propagates changes to mapping, but doesn't remember a given bean instance.
+     *
+     * @param bean a value source
+     */
     @Override
     public void setValue( @Nullable final B bean )
     {

@@ -9,19 +9,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping;
-
-import java.beans.PropertyDescriptor;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.exception.InvalidPropertyMappingException;
-import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
 import org.formbuilder.mapping.type.BooleanToCheckboxMapper;
 import org.formbuilder.mapping.type.DateToSpinnerMapper;
@@ -29,10 +20,18 @@ import org.formbuilder.mapping.type.NumberToSpinnerMapper;
 import org.formbuilder.mapping.type.StringToTextFieldMapper;
 import org.formbuilder.util.Reflection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Arrays.asList;
+
 /**
- * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 11:39:46
+ * Detects which {@link TypeMapper} should be used for each property.
+ *
+ * @author aeremenok Date: 28.07.2010 Time: 11:39:46
  */
 public class MappingRules
 {
@@ -41,25 +40,67 @@ public class MappingRules
 
     public MappingRules()
     {
-        super();
-        initDefaults();
+        this( asList( new StringToTextFieldMapper(),
+                new NumberToSpinnerMapper(),
+                new BooleanToCheckboxMapper(),
+                new DateToSpinnerMapper() ) );
     }
 
+    public MappingRules( Iterable<? extends TypeMapper> mappers )
+    {
+        super();
+        for ( TypeMapper mapper : mappers )
+        {
+            addMapper( mapper );
+        }
+    }
+
+    /**
+     * Register a type mapper for a property with given name. Default mappers will remain for other properties of the
+     * same type.
+     *
+     * @param propertyName property name
+     * @param mapper       type mapper to register
+     * @see MappingRules#addMapper(TypeMapper)
+     * @see MappingRules#getMapper(PropertyDescriptor)
+     */
     public void addMapper( @Nonnull final String propertyName,
                            @Nonnull final TypeMapper mapper )
     {
+        // todo early call checkType
         propertyToMapper.put( propertyName, mapper );
     }
 
+    /**
+     * Register a type mapper for all properties of type, specified by {@link TypeMapper#getValueClass()}.
+     *
+     * @param mapper type mapper to register
+     * @see MappingRules#addMapper(String, TypeMapper)
+     * @see MappingRules#getMapper(PropertyDescriptor)
+     */
     public void addMapper( @Nonnull final TypeMapper mapper )
     {
         typeToMapper.put( mapper.getValueClass(), mapper );
     }
 
+    /**
+     * Pick a type mapper for a given property.
+     *
+     * @param descriptor property introspection info
+     * @return a mapper, which {@link TypeMapper#getValueClass()} is either the same as or the subclass of {@link
+     *         PropertyDescriptor#getReadMethod()} type
+     *
+     * @throws InvalidPropertyMappingException
+     *                               found type mapper, that returns wrong {@link TypeMapper#getValueClass()}
+     * @throws UnmappedTypeException no mappers found for a given proper
+     * @see MappingRules#addMapper(TypeMapper)
+     * @see MappingRules#addMapper(String, TypeMapper)
+     */
     @Nonnull
     public TypeMapper getMapper( @Nonnull final PropertyDescriptor descriptor )
             throws
-            MappingException
+            InvalidPropertyMappingException,
+            UnmappedTypeException
     {
         TypeMapper mapper = propertyToMapper.get( descriptor.getName() );
         if ( mapper != null )
@@ -85,8 +126,8 @@ public class MappingRules
     }
 
     @Nonnull
-    private TypeMapper checkType( @Nonnull final TypeMapper mapper,
-                                  @Nonnull final PropertyDescriptor descriptor )
+    protected TypeMapper checkType( @Nonnull final TypeMapper mapper,
+                                    @Nonnull final PropertyDescriptor descriptor )
             throws
             InvalidPropertyMappingException
     {
@@ -100,7 +141,7 @@ public class MappingRules
 
     @SuppressWarnings( "unchecked" )
     @Nullable
-    private TypeMapper findMapperOfSuperType( @Nonnull final Class<?> subtype )
+    protected TypeMapper findMapperOfSuperType( @Nonnull final Class<?> subtype )
     {
         for ( final Map.Entry<Class, TypeMapper> entry : typeToMapper.entrySet() )
         {
@@ -110,13 +151,5 @@ public class MappingRules
             }
         }
         return null;
-    }
-
-    protected void initDefaults()
-    {
-        addMapper( new StringToTextFieldMapper() );
-        addMapper( new NumberToSpinnerMapper() );
-        addMapper( new BooleanToCheckboxMapper() );
-        addMapper( new DateToSpinnerMapper() );
     }
 }

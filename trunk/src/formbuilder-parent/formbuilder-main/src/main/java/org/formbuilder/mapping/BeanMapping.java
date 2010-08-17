@@ -9,27 +9,25 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.beans.PropertyDescriptor;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.util.Reflection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 /**
- * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 13:47:07
+ * Maps bean properties to their editors.
+ *
+ * @author aeremenok Date: 28.07.2010 Time: 13:47:07
  */
 public class BeanMapping
 {
@@ -58,6 +56,11 @@ public class BeanMapping
         return panel;
     }
 
+    /**
+     * Propagate changes from editor components to a bean
+     *
+     * @param bean a value destination
+     */
     public void setBeanValues( @Nonnull final Object bean )
     {
         for ( final Map.Entry<PropertyDescriptor, PropertyMapping> entry : propertyMappings.entrySet() )
@@ -70,6 +73,11 @@ public class BeanMapping
         }
     }
 
+    /**
+     * Propagate changes from a bean to editor components.
+     *
+     * @param bean a value source
+     */
     public void setComponentValues( @Nullable final Object bean )
     {
         for ( final Map.Entry<PropertyDescriptor, PropertyMapping> entry : propertyMappings.entrySet() )
@@ -84,6 +92,7 @@ public class BeanMapping
 
     public void setPanel( @Nonnull final JComponent panel )
     {
+        checkState( panel == null );
         this.panel = checkNotNull( panel );
     }
 }
