@@ -9,51 +9,47 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.bean;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.beans.PropertyDescriptor;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-
+import org.formbuilder.BeanMapper;
 import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.util.Reflection;
 
-/**
- * @author aeremenok
- *         Date: Aug 3, 2010
- *         Time: 1:09:26 PM
- * @param <B>
- */
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyDescriptor;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+/** @author aeremenok Date: Aug 3, 2010 Time: 1:09:26 PM */
 @NotThreadSafe
 public abstract class PropertyNameBeanMapper<B>
-        extends AbstractBeanMapper<B>
+        implements BeanMapper<B>
 {
-    private Class<B> beanClass;
-    private MappingRules currentMappingRules;
-    private boolean doValidation;
+// ------------------------------ FIELDS ------------------------------
     private BeanMapping currentBeanMapping;
+    private BeanMappingContext<B> currentMappingContext;
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface BeanMapper ---------------------
 
     @Override
-    public BeanMapping map( @Nonnull final Class<B> beanClass,
-                            @Nonnull final MappingRules mappingRules,
-                            final boolean doValidation )
+    public BeanMapping map( @Nonnull final BeanMappingContext<B> context )
     {
-        this.beanClass = beanClass;
-        this.currentMappingRules = mappingRules;
-        this.doValidation = doValidation;
-        this.currentBeanMapping = new BeanMapping();
+        this.currentMappingContext = context;
 
-        this.currentBeanMapping.setPanel( mapBean() );
+        JPanel wrapper = new JPanel( new BorderLayout() );
+        this.currentBeanMapping = new BeanMapping( wrapper );
+        wrapper.add( mapBean() );
+
         return this.currentBeanMapping;
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @Nonnull
     protected JComponent editor( @Nonnull final String propertyName )
@@ -61,12 +57,12 @@ public abstract class PropertyNameBeanMapper<B>
             MappingException
     {
         // todo error messages
-        final MappingRules mappingRules = checkNotNull( currentMappingRules );
         final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
+        final BeanMappingContext<B> context = checkNotNull( currentMappingContext );
 
-        final PropertyDescriptor descriptor = Reflection.getDescriptor( beanClass, propertyName );
+        final PropertyDescriptor descriptor = Reflection.getDescriptor( context.getBeanClass(), propertyName );
 
-        return createEditor( descriptor, mappingRules, beanMapping, doValidation );
+        return context.getEditor( descriptor, beanMapping );
     }
 
     @Nonnull
@@ -75,8 +71,10 @@ public abstract class PropertyNameBeanMapper<B>
             MappingException
     {
         final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
-        final PropertyDescriptor descriptor = Reflection.getDescriptor( beanClass, propertyName );
-        return createLabel( beanMapping, descriptor );
+        final BeanMappingContext<B> context = checkNotNull( currentMappingContext );
+
+        final PropertyDescriptor descriptor = Reflection.getDescriptor( context.getBeanClass(), propertyName );
+        return context.getLabel( descriptor, beanMapping );
     }
 
     protected abstract JComponent mapBean();

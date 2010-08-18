@@ -24,13 +24,13 @@ import javax.swing.*;
  */
 public class PropertyMapping
 {
-    private final JComponent component;
+    private final JComponent editor;
     private final TypeMapper mapper;
 
-    public PropertyMapping( @Nonnull final JComponent component,
+    public PropertyMapping( @Nonnull final JComponent editor,
                             @Nonnull final TypeMapper mapper )
     {
-        this.component = component;
+        this.editor = editor;
         this.mapper = mapper;
     }
 
@@ -38,12 +38,18 @@ public class PropertyMapping
     @Nullable
     public Object getValue()
     {
-        return mapper.getValue( component );
+        return mapper.getValue( editor );
     }
 
     @SuppressWarnings( {"unchecked"} )
     public void setValue( @Nullable final Object value )
     {
-        mapper.setValue( component, value );
+        mapper.setValue( editor, value );
+    }
+
+    @Nonnull
+    public JComponent getEditor()
+    {
+        return editor;
     }
 }

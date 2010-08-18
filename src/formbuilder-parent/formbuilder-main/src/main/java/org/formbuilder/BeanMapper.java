@@ -15,21 +15,16 @@
  */
 package org.formbuilder;
 
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.bean.BeanMappingContext;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
-
-/**
- * @author aeremenok 2010
- * @param <B>
- */
+/** @author aeremenok 2010 */
 @NotThreadSafe
 public interface BeanMapper<B>
 {
     @Nonnull
-    BeanMapping map( @Nonnull final Class<B> beanClass,
-                     @Nonnull final MappingRules mappingRules,
-                     final boolean doValidation );
+    BeanMapping map( @Nonnull final BeanMappingContext<B> context );
 }
