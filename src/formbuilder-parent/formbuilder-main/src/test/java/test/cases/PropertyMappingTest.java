@@ -20,7 +20,7 @@ import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.formbuilder.GetterMapper;
-import org.formbuilder.mapping.type.StringMapper;
+import org.formbuilder.mapping.typemapper.StringMapper;
 import org.testng.annotations.Test;
 
 import domain.Person;

@@ -24,7 +24,7 @@ import org.fest.swing.fixture.JListFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
-import org.formbuilder.mapping.type.CollectionToJListMapper;
+import org.formbuilder.mapping.typemapper.CollectionToJListMapper;
 import org.testng.annotations.Test;
 
 import domain.Account;
