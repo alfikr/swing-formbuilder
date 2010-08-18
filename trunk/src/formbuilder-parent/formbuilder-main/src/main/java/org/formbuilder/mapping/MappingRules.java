@@ -14,10 +14,10 @@ package org.formbuilder.mapping;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.exception.InvalidPropertyMappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
-import org.formbuilder.mapping.type.BooleanToCheckboxMapper;
-import org.formbuilder.mapping.type.DateToSpinnerMapper;
-import org.formbuilder.mapping.type.NumberToSpinnerMapper;
-import org.formbuilder.mapping.type.StringToTextFieldMapper;
+import org.formbuilder.mapping.typemapper.BooleanToCheckboxMapper;
+import org.formbuilder.mapping.typemapper.DateToSpinnerMapper;
+import org.formbuilder.mapping.typemapper.NumberToSpinnerMapper;
+import org.formbuilder.mapping.typemapper.StringToTextFieldMapper;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;
@@ -56,11 +56,11 @@ public class MappingRules
     }
 
     /**
-     * Register a type mapper for a property with given name. Default mappers will remain for other properties of the
-     * same type.
+     * Register a typemapper mapper for a property with given name. Default mappers will remain for other properties of the
+     * same typemapper.
      *
      * @param propertyName property name
-     * @param mapper       type mapper to register
+     * @param mapper       typemapper mapper to register
      * @see MappingRules#addMapper(TypeMapper)
      * @see MappingRules#getMapper(PropertyDescriptor)
      */
@@ -72,9 +72,9 @@ public class MappingRules
     }
 
     /**
-     * Register a type mapper for all properties of type, specified by {@link TypeMapper#getValueClass()}.
+     * Register a typemapper mapper for all properties of typemapper, specified by {@link TypeMapper#getValueClass()}.
      *
-     * @param mapper type mapper to register
+     * @param mapper typemapper mapper to register
      * @see MappingRules#addMapper(String, TypeMapper)
      * @see MappingRules#getMapper(PropertyDescriptor)
      */
@@ -84,14 +84,14 @@ public class MappingRules
     }
 
     /**
-     * Pick a type mapper for a given property.
+     * Pick a typemapper mapper for a given property.
      *
      * @param descriptor property introspection info
      * @return a mapper, which {@link TypeMapper#getValueClass()} is either the same as or the subclass of {@link
-     *         PropertyDescriptor#getReadMethod()} type
+     *         PropertyDescriptor#getReadMethod()} typemapper
      *
      * @throws InvalidPropertyMappingException
-     *                               found type mapper, that returns wrong {@link TypeMapper#getValueClass()}
+     *                               found typemapper mapper, that returns wrong {@link TypeMapper#getValueClass()}
      * @throws UnmappedTypeException no mappers found for a given proper
      * @see MappingRules#addMapper(TypeMapper)
      * @see MappingRules#addMapper(String, TypeMapper)

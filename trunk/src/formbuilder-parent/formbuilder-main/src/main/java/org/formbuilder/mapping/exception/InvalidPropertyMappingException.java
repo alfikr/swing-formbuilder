@@ -40,7 +40,7 @@ public class InvalidPropertyMappingException
     private static String message( final PropertyDescriptor descriptor,
                                    final TypeMapper mapper )
     {
-        return "Property " + descriptor.getName() + " of type " + descriptor.getPropertyType() + " cannot be mapped using " + mapper + " since it maps " + mapper
+        return "Property " + descriptor.getName() + " of typemapper " + descriptor.getPropertyType() + " cannot be mapped using " + mapper + " since it maps " + mapper
                 .getValueClass();
     }
 

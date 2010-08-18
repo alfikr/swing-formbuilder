@@ -21,10 +21,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JComponent;
 
 /**
- * Wraps the editor panel and holds the ediable bean instance
+ * Wraps the editor panel and holds the ediable beanmapper instance
  *
  * @author aeremenok 2010
- * @param <B> bean type
+ * @param <B> beanmapper typemapper
  */
 @NotThreadSafe
 public interface Form<B>
@@ -34,15 +34,15 @@ public interface Form<B>
     JComponent asComponent();
 
     /**
-     * Converts values from the editor components to bean properties
+     * Converts values from the editor components to beanmapper properties
      *
-     * @return changed bean instance
+     * @return changed beanmapper instance
      */
     @Nullable
     B getValue();
 
     /**
-     * Converts values from bean properties to the editor components
+     * Converts values from beanmapper properties to the editor components
      *
      * @param bean a value source
      */

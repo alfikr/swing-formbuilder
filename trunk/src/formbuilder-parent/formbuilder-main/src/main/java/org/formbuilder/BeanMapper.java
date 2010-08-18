@@ -16,7 +16,7 @@
 package org.formbuilder;
 
 import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.bean.BeanMappingContext;
+import org.formbuilder.mapping.BeanMappingContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;

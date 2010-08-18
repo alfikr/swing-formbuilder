@@ -13,9 +13,10 @@
 /**
  *
  */
-package org.formbuilder.mapping;
+package org.formbuilder.mapping.form;
 
 import org.formbuilder.Form;
+import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;
@@ -26,7 +27,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
- * A {@link Form} that allocates a new instance of bean each time it is requested for a changed value.
+ * A {@link Form} that allocates a new instance of beanmapper each time it is requested for a changed value.
  *
  * @author aeremenok 2010
  */
@@ -50,7 +51,7 @@ public class BeanRelpicatingForm<B>
         return beanMapping.getPanel();
     }
 
-    /** @return a new bean instance with changed values */
+    /** @return a new beanmapper instance with changed values */
     @Nonnull
     @Override
     public B getValue()
@@ -61,7 +62,7 @@ public class BeanRelpicatingForm<B>
     }
 
     /**
-     * Propagates changes to mapping, but doesn't remember a given bean instance.
+     * Propagates changes to mapping, but doesn't remember a given beanmapper instance.
      *
      * @param bean a value source
      */

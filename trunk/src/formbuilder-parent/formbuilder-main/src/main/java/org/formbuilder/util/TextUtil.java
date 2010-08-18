@@ -49,7 +49,7 @@ public class TextUtil
      *
      * @param delimiter  a separator to use
      * @param violations validation results
-     * @param <B>        bean type
+     * @param <B>        beanmapper typemapper
      * @return violation messages, separated with delimiter
      *
      * @see ToMessage

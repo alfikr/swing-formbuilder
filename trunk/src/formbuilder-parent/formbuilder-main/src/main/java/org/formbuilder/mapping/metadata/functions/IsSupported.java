@@ -12,11 +12,10 @@
 
 package org.formbuilder.mapping.metadata.functions;
 
-import java.beans.PropertyDescriptor;
+import com.google.common.base.Predicate;
 
 import javax.annotation.Nonnull;
-
-import com.google.common.base.Predicate;
+import java.beans.PropertyDescriptor;
 
 /**
  * @author aeremenok
@@ -26,7 +25,7 @@ import com.google.common.base.Predicate;
 public enum IsSupported
         implements Predicate<PropertyDescriptor>
 {
-    INSTANCE;
+    P;
 
     @Override
     public boolean apply( @Nonnull final PropertyDescriptor descriptor )

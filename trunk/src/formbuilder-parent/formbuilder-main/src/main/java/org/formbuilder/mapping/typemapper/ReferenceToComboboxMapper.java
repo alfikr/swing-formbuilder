@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package org.formbuilder.mapping.type;
+package org.formbuilder.mapping.typemapper;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

@@ -10,15 +10,12 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package org.formbuilder.mapping.type;
-
-import java.util.Date;
+package org.formbuilder.mapping.typemapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
+import javax.swing.JCheckBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -29,32 +26,32 @@ import org.formbuilder.validation.ValidationMarker;
 
 /**
  * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 11:57:47
+ *         Date: 30.07.2010
+ *         Time: 13:38:16
  */
 @NotThreadSafe
-public class DateToSpinnerMapper
-        implements TypeMapper<JSpinner, Date>
+public class BooleanToCheckboxMapper
+        implements TypeMapper<JCheckBox, Boolean>
 {
     @Override
-    public void bindChangeListener( @Nonnull final JSpinner editorComponent,
-                                    @Nonnull final ValueChangeListener<Date> dateValueChangeListener )
+    public void bindChangeListener( @Nonnull final JCheckBox editorComponent,
+                                    @Nonnull final ValueChangeListener<Boolean> booleanValueChangeListener )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                dateValueChangeListener.onChange();
+                booleanValueChangeListener.onChange();
             }
         } );
     }
 
     @Nonnull
     @Override
-    public JSpinner createEditorComponent()
+    public JCheckBox createEditorComponent()
     {
-        return new JSpinner( new SpinnerDateModel() );
+        return new JCheckBox();
     }
 
     @Nonnull
@@ -64,28 +61,23 @@ public class DateToSpinnerMapper
         return BackgroundMarker.INSTANCE;
     }
 
-    @Nullable
     @Override
-    public Date getValue( @Nonnull final JSpinner editorComponent )
+    public Boolean getValue( @Nonnull final JCheckBox editorComponent )
     {
-        return (Date) editorComponent.getValue();
+        return editorComponent.isSelected();
     }
 
     @Nonnull
     @Override
-    public Class<Date> getValueClass()
+    public Class<Boolean> getValueClass()
     {
-        return Date.class;
+        return Boolean.class;
     }
 
     @Override
-    public void setValue( @Nonnull final JSpinner editorComponent,
-                          @Nullable Date value )
+    public void setValue( @Nonnull final JCheckBox editorComponent,
+                          @Nullable final Boolean value )
     {
-        if ( value == null )
-        {
-            value = new Date( 0 );
-        }
-        editorComponent.setValue( value );
+        editorComponent.setSelected( Boolean.TRUE.equals( value ) );
     }
 }
