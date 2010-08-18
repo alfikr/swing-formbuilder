@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import javax.swing.*;
 
 /**
- * Holds an editor and a type mapper, that provides access to it.
+ * Holds an editor and a typemapper mapper, that provides access to it.
  *
  * @author eav Date: 31.07.2010 Time: 17:19:34
  */

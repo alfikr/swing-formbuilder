@@ -24,7 +24,7 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Maps bean properties to their editors.
+ * Maps beanmapper properties to their editors.
  *
  * @author aeremenok Date: 28.07.2010 Time: 13:47:07
  */
@@ -86,7 +86,7 @@ public class BeanMapping
     }
 
     /**
-     * Propagate changes from editor components to a bean
+     * Propagate changes from editor components to a beanmapper
      *
      * @param bean a value destination
      */
@@ -103,7 +103,7 @@ public class BeanMapping
     }
 
     /**
-     * Propagate changes from a bean to editor components.
+     * Propagate changes from a beanmapper to editor components.
      *
      * @param bean a value source
      */

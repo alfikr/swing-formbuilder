@@ -31,7 +31,7 @@ public interface ValidationMarker
      *
      * @param editor     an editor component to decorate
      * @param violations results of validation
-     * @param <B>        bean type
+     * @param <B>        beanmapper typemapper
      */
     <B> void markViolations( @Nonnull final JComponent editor,
                              @Nonnull final Set<ConstraintViolation<B>> violations );

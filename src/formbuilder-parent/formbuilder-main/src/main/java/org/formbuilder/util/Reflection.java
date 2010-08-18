@@ -85,13 +85,13 @@ public class Reflection
         }
 
         final Class boxed = primitiveToBox.get( mayBePrimitive );
-        return checkNotNull( boxed, "Cannot box primitive type " + mayBePrimitive );
+        return checkNotNull( boxed, "Cannot box primitive typemapper " + mayBePrimitive );
     }
 
     /**
      * @param beanClass a class to make new proxy
      * @param handler   a method interceptor
-     * @param <T>       bean type
+     * @param <T>       beanmapper typemapper
      * @return a proxy, that uses a given handler
      */
     @Nonnull
@@ -201,11 +201,11 @@ public class Reflection
     }
 
     /**
-     * Get a value of a given property of a given bean
+     * Get a value of a given property of a given beanmapper
      *
      * @param descriptor property descriptor
      * @param bean       value holder
-     * @return a property value or an empty value for this property type if bean is null
+     * @return a property value or an empty value for this property typemapper if beanmapper is null
      *
      * @see Reflection#emptyValue(Method)
      * @see Reflection#setValue(Object, Object, PropertyDescriptor)
@@ -233,9 +233,9 @@ public class Reflection
     /**
      * Swallow reflection exceptions
      *
-     * @param aClass bean class
-     * @param <T>    bean type
-     * @return a newly allocated instance of given type
+     * @param aClass beanmapper class
+     * @param <T>    beanmapper typemapper
+     * @return a newly allocated instance of given typemapper
      *
      * @see Class#newInstance()
      */
@@ -257,7 +257,7 @@ public class Reflection
     }
 
     /**
-     * Set a value of a given property of a given bean
+     * Set a value of a given property of a given beanmapper
      *
      * @param bean               value holder
      * @param propertyValue      a value to set

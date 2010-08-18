@@ -10,13 +10,15 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package org.formbuilder.mapping.type;
+package org.formbuilder.mapping.typemapper;
+
+import java.util.Date;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -28,22 +30,22 @@ import org.formbuilder.validation.ValidationMarker;
 /**
  * @author aeremenok
  *         Date: 28.07.2010
- *         Time: 11:55:54
+ *         Time: 11:57:47
  */
 @NotThreadSafe
-public class NumberToSpinnerMapper
-        implements TypeMapper<JSpinner, Number>
+public class DateToSpinnerMapper
+        implements TypeMapper<JSpinner, Date>
 {
     @Override
     public void bindChangeListener( @Nonnull final JSpinner editorComponent,
-                                    @Nullable final ValueChangeListener<Number> numberChangeListener )
+                                    @Nonnull final ValueChangeListener<Date> dateValueChangeListener )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                numberChangeListener.onChange();
+                dateValueChangeListener.onChange();
             }
         } );
     }
@@ -52,7 +54,7 @@ public class NumberToSpinnerMapper
     @Override
     public JSpinner createEditorComponent()
     {
-        return new JSpinner( new SpinnerNumberModel() );
+        return new JSpinner( new SpinnerDateModel() );
     }
 
     @Nonnull
@@ -64,25 +66,25 @@ public class NumberToSpinnerMapper
 
     @Nullable
     @Override
-    public Number getValue( @Nonnull final JSpinner editorComponent )
+    public Date getValue( @Nonnull final JSpinner editorComponent )
     {
-        return (Number) editorComponent.getValue();
+        return (Date) editorComponent.getValue();
     }
 
     @Nonnull
     @Override
-    public Class<Number> getValueClass()
+    public Class<Date> getValueClass()
     {
-        return Number.class;
+        return Date.class;
     }
 
     @Override
     public void setValue( @Nonnull final JSpinner editorComponent,
-                          @Nullable Number value )
+                          @Nullable Date value )
     {
         if ( value == null )
         {
-            value = 0;
+            value = new Date( 0 );
         }
         editorComponent.setValue( value );
     }

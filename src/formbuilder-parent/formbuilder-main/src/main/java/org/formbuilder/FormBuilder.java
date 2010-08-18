@@ -16,17 +16,17 @@
 package org.formbuilder;
 
 import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.BeanRelpicatingForm;
+import org.formbuilder.mapping.BeanMappingContext;
+import org.formbuilder.mapping.form.BeanRelpicatingForm;
 import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.bean.BeanMappingContext;
-import org.formbuilder.mapping.bean.GridBagMapper;
-import org.formbuilder.mapping.bean.PropertyNameBeanMapper;
-import org.formbuilder.mapping.bean.SampleBeanMapper;
+import org.formbuilder.mapping.beanmapper.GridBagMapper;
+import org.formbuilder.mapping.beanmapper.PropertyNameBeanMapper;
+import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.exception.MappingException;
-import org.formbuilder.mapping.type.BooleanToCheckboxMapper;
-import org.formbuilder.mapping.type.DateToSpinnerMapper;
-import org.formbuilder.mapping.type.NumberToSpinnerMapper;
-import org.formbuilder.mapping.type.StringToTextFieldMapper;
+import org.formbuilder.mapping.typemapper.BooleanToCheckboxMapper;
+import org.formbuilder.mapping.typemapper.DateToSpinnerMapper;
+import org.formbuilder.mapping.typemapper.NumberToSpinnerMapper;
+import org.formbuilder.mapping.typemapper.StringToTextFieldMapper;
 import org.formbuilder.validation.ValidateChangedValue;
 import org.formbuilder.validation.ValidationMarker;
 
@@ -75,8 +75,8 @@ public class FormBuilder<B>
     /**
      * Starts building of the form for the given class.
      *
-     * @param <T>       bean type
-     * @param beanClass bean class object
+     * @param <T>       beanmapper typemapper
+     * @param beanClass beanmapper class object
      * @return builder instance, configured for the given class
      */
     @Nonnull
@@ -117,15 +117,15 @@ public class FormBuilder<B>
     }
 
     /**
-     * Binds types of bean properties to custom editor components.<br> By default, {@link StringToTextFieldMapper},
+     * Binds types of beanmapper properties to custom editor components.<br> By default, {@link StringToTextFieldMapper},
      * {@link NumberToSpinnerMapper}, {@link DateToSpinnerMapper} and {@link BooleanToCheckboxMapper} are already
      * registered.<br> <br> Primitive and wrapper types are considered the same way. For example, if you pass a mapper
      * of the {@link Integer} class, it will also be used for mapping of <code>int</code> properties. <br> <br> During
-     * the mapping, if a mapper for some property type cannot be found, an attempt to find a mapper for its supertype is
+     * the mapping, if a mapper for some property typemapper cannot be found, an attempt to find a mapper for its supertype is
      * performed. If it is failed, {@link MappingException} is raised, and by default, the propery is skipped. That
      * means, for example, that {@link NumberToSpinnerMapper} suits for int, long, {@link BigDecimal}, etc...
      *
-     * @param typeMappers mappers for each custom type
+     * @param typeMappers mappers for each custom typemapper
      * @return this builder
      *
      * @see MappingRules
@@ -179,7 +179,7 @@ public class FormBuilder<B>
      *                           .buildForm();
      * </pre>
      *
-     * @param propertyName   the name of bean property
+     * @param propertyName   the name of beanmapper property
      * @param propertyMapper the mapper to use for it
      * @return this builder
      *

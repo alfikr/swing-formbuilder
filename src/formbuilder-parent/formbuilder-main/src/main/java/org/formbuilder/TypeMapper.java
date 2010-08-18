@@ -26,11 +26,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
 
 /**
- * Maps the values of a given type to the given editors.
+ * Maps the values of a given typemapper to the given editors.
  *
  * @author aeremenok 2010
- * @param <C> editor component type
- * @param <V> property value type
+ * @param <C> editor component typemapper
+ * @param <V> property value typemapper
  */
 @NotThreadSafe
 public interface TypeMapper<C extends JComponent, V>

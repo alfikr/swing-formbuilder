@@ -9,8 +9,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.metadata.sort;
+
+import com.google.common.collect.Ordering;
+import org.formbuilder.mapping.metadata.MetaData;
+import org.formbuilder.mapping.metadata.MetaDataUser;
+import org.formbuilder.mapping.metadata.functions.AddOrder;
+import org.formbuilder.mapping.metadata.functions.IsSupported;
+import org.formbuilder.mapping.metadata.functions.IsVisible;
+
+import javax.annotation.Nonnull;
+import java.beans.BeanInfo;
+import java.beans.PropertyDescriptor;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.google.common.base.Predicates.and;
 import static com.google.common.collect.ImmutableList.of;
@@ -18,26 +30,7 @@ import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static org.formbuilder.util.Reflection.getBeanInfo;
 
-import java.beans.BeanInfo;
-import java.beans.PropertyDescriptor;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-import org.formbuilder.mapping.metadata.MetaData;
-import org.formbuilder.mapping.metadata.MetaDataUser;
-import org.formbuilder.mapping.metadata.functions.AddOrder;
-import org.formbuilder.mapping.metadata.functions.IsSupported;
-import org.formbuilder.mapping.metadata.functions.IsVisible;
-
-import com.google.common.collect.Ordering;
-
-/**
- * @author aeremenok
- *         Date: 02.08.2010
- *         Time: 17:07:41
- */
+/** @author aeremenok Date: 02.08.2010 Time: 17:07:41 */
 public class PropertySorter
         extends MetaDataUser
         implements Comparator<OrderedPropertyDescriptor>
@@ -53,7 +46,7 @@ public class PropertySorter
         final BeanInfo beanInfo = getBeanInfo( beanClass );
         final Iterable<PropertyDescriptor> descriptors = of( beanInfo.getPropertyDescriptors() );
         final Iterable<PropertyDescriptor> supportedAndVisible = filter( descriptors,
-                and( IsSupported.INSTANCE, new IsVisible( metaData ) ) );
+                and( IsSupported.P, new IsVisible( metaData ) ) );
         final Iterable<OrderedPropertyDescriptor> withOrder = transform( supportedAndVisible,
                 new AddOrder( metaData ) );
         return Ordering.from( this ).sortedCopy( withOrder );
