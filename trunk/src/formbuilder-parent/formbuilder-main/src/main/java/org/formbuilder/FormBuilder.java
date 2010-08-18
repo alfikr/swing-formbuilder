@@ -18,6 +18,7 @@ package org.formbuilder;
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanRelpicatingForm;
 import org.formbuilder.mapping.MappingRules;
+import org.formbuilder.mapping.bean.BeanMappingContext;
 import org.formbuilder.mapping.bean.GridBagMapper;
 import org.formbuilder.mapping.bean.PropertyNameBeanMapper;
 import org.formbuilder.mapping.bean.SampleBeanMapper;
@@ -38,8 +39,7 @@ import java.math.BigDecimal;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * The entry point to form building. Collects configuration and builds {@link Form}s using it. <br>
- * <h1>Usage:</h1>
+ * The entry point to form building. Collects configuration and builds {@link Form}s using it. <br> <h1>Usage:</h1>
  * <p/>
  * <pre>
  * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).with( new SampleBeanMapper&lt;Person&gt;()
@@ -57,7 +57,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * </pre>
  *
  * @author aeremenok 2010
- * @param <B> type of bean, which is mapped to forms
  */
 @NotThreadSafe
 public class FormBuilder<B>
@@ -95,7 +94,8 @@ public class FormBuilder<B>
     @Nonnull
     public Form<B> buildForm()
     { // todo pass a copy of mapping rules
-        final BeanMapping mapping = beanMapper.map( beanClass, mappingRules, doValidation );
+        final BeanMappingContext<B> context = new BeanMappingContext<B>( beanClass, mappingRules, doValidation );
+        final BeanMapping mapping = beanMapper.map( context );
         return new BeanRelpicatingForm<B>( mapping, beanClass );
     }
 
@@ -104,6 +104,7 @@ public class FormBuilder<B>
      *
      * @param doValidation true if the form should perform validation after changing the editor components
      * @return this builder
+     *
      * @see Validator
      * @see ValidationMarker
      * @see ValidateChangedValue
@@ -116,20 +117,17 @@ public class FormBuilder<B>
     }
 
     /**
-     * Binds types of bean properties to custom editor components.<br>
-     * By default, {@link StringToTextFieldMapper}, {@link NumberToSpinnerMapper}, {@link DateToSpinnerMapper} and
-     * {@link BooleanToCheckboxMapper} are already registered.<br>
-     * <br>
-     * Primitive and wrapper types are considered the same way. For example, if you pass a mapper of the {@link Integer}
-     * class, it will also be used for mapping of <code>int</code> properties. <br>
-     * <br>
-     * During the mapping, if a mapper for some property type cannot be found, an attempt to find a mapper for its
-     * supertype is performed. If it is failed, {@link MappingException} is raised, and by default, the propery is
-     * skipped. That means, for example, that {@link NumberToSpinnerMapper} suits for int, long, {@link BigDecimal},
-     * etc...
+     * Binds types of bean properties to custom editor components.<br> By default, {@link StringToTextFieldMapper},
+     * {@link NumberToSpinnerMapper}, {@link DateToSpinnerMapper} and {@link BooleanToCheckboxMapper} are already
+     * registered.<br> <br> Primitive and wrapper types are considered the same way. For example, if you pass a mapper
+     * of the {@link Integer} class, it will also be used for mapping of <code>int</code> properties. <br> <br> During
+     * the mapping, if a mapper for some property type cannot be found, an attempt to find a mapper for its supertype is
+     * performed. If it is failed, {@link MappingException} is raised, and by default, the propery is skipped. That
+     * means, for example, that {@link NumberToSpinnerMapper} suits for int, long, {@link BigDecimal}, etc...
      *
      * @param typeMappers mappers for each custom type
      * @return this builder
+     *
      * @see MappingRules
      */
     @Nonnull
@@ -144,8 +142,8 @@ public class FormBuilder<B>
 
     /**
      * Allows to perform a <u>checked</u> mapping for properties, specified by user. For example, the following code
-     * orders to use a <code>StringToTextAreaMapper</code> for property description, while other {@link String} properties
-     * are mapped by default:
+     * orders to use a <code>StringToTextAreaMapper</code> for property description, while other {@link String}
+     * properties are mapped by default:
      * <p/>
      * <pre>
      * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper&lt;Person&gt;()
@@ -160,6 +158,7 @@ public class FormBuilder<B>
      *
      * @param getterMapper an implementation of {@link GetterMapper}, where the user can specify property bindings
      * @return this builder
+     *
      * @see MappingRules
      */
     @Nonnull
@@ -170,18 +169,20 @@ public class FormBuilder<B>
     }
 
     /**
-     * Allows to perform an <u>unchecked</u> mapping for a property, specified by user. For example, the
-     * following code orders to use a <code>StringToTextAreaMapper</code> for property description, while other
-     * {@link String} properties are mapped by default:
+     * Allows to perform an <u>unchecked</u> mapping for a property, specified by user. For example, the following code
+     * orders to use a <code>StringToTextAreaMapper</code> for property description, while other {@link String}
+     * properties are mapped by default:
      * <p/>
      * <pre>
-     * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForProperty( &quot;description&quot;, new StringToTextAreaMapper() )
+     * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForProperty( &quot;description&quot;, new
+     * StringToTextAreaMapper() )
      *                           .buildForm();
      * </pre>
      *
      * @param propertyName   the name of bean property
      * @param propertyMapper the mapper to use for it
      * @return this builder
+     *
      * @see MappingRules
      */
     @Nonnull
@@ -197,6 +198,7 @@ public class FormBuilder<B>
      *
      * @param beanMapper the custom mapper to use
      * @return this builder
+     *
      * @see BeanMapper
      * @see GridBagMapper
      * @see SampleBeanMapper

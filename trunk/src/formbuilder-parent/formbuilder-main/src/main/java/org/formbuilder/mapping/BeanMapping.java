@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Maps bean properties to their editors.
@@ -31,9 +30,29 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class BeanMapping
 {
+// ------------------------------ FIELDS ------------------------------
+
     private final Map<PropertyDescriptor, PropertyMapping> propertyMappings = new HashMap<PropertyDescriptor, PropertyMapping>();
+    private final Map<PropertyDescriptor, JLabel> labels = new HashMap<PropertyDescriptor, JLabel>();
     @Nonnull
-    private JComponent panel;
+    private final JComponent panel;
+
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    public BeanMapping( @Nonnull final JComponent panel )
+    {
+        this.panel = checkNotNull( panel );
+    }
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
+    @Nonnull
+    public JComponent getPanel()
+    {
+        return panel;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
 
     public void addEditor( @Nonnull final PropertyDescriptor descriptor,
                            @Nonnull final JComponent editor,
@@ -46,14 +65,24 @@ public class BeanMapping
     public void addLabel( @Nonnull final PropertyDescriptor descriptor,
                           @Nonnull final JLabel label )
     {
-        // todo should we control labels?
-//        labels.put( descriptor, label );
+        labels.put( descriptor, label );
     }
 
-    @Nonnull
-    public JComponent getPanel()
+    @Nullable
+    public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor )
     {
-        return panel;
+        final PropertyMapping mapping = propertyMappings.get( descriptor );
+        if ( mapping == null )
+        {
+            return null;
+        }
+        return mapping.getEditor();
+    }
+
+    @Nullable
+    public JLabel getLabel( @Nonnull final PropertyDescriptor descriptor )
+    {
+        return labels.get( descriptor );
     }
 
     /**
@@ -88,11 +117,5 @@ public class BeanMapping
             final Object propertyValue = Reflection.getValue( propertyDescriptor, bean );
             propertyMapping.setValue( propertyValue );
         }
-    }
-
-    public void setPanel( @Nonnull final JComponent panel )
-    {
-        checkState( panel == null );
-        this.panel = checkNotNull( panel );
     }
 }

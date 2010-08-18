@@ -15,62 +15,68 @@
  */
 package org.formbuilder.mapping.bean;
 
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
-
-import java.beans.PropertyDescriptor;
-import java.util.List;
+import org.formbuilder.BeanMapper;
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.exception.MappingException;
+import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
+import org.formbuilder.util.GridBagPanel;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.exception.MappingException;
-import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
-import org.formbuilder.mapping.metadata.sort.PropertySorter;
-import org.formbuilder.util.GridBagPanel;
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
 
-/**
- * @author aeremenok 2010
- * @param <B>
- */
+/** @author aeremenok 2010 */
 @NotThreadSafe
 public class GridBagMapper<B>
-        extends AbstractBeanMapper<B>
+        implements BeanMapper<B>
 {
-    private final PropertySorter sorter = new PropertySorter( metaData );
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface BeanMapper ---------------------
 
     @Nonnull
     @Override
-    public BeanMapping map( @Nonnull final Class<B> beanClass,
-                            @Nonnull final MappingRules mappingRules,
-                            final boolean doValidation )
+    public BeanMapping map( @Nonnull final BeanMappingContext<B> context )
     {
         checkState( isEventDispatchThread() );
 
         final GridBagPanel gridBagPanel = new GridBagPanel();
 
-        final BeanMapping beanMapping = new BeanMapping();
-        beanMapping.setPanel( gridBagPanel );
+        final BeanMapping beanMapping = new BeanMapping( gridBagPanel );
 
         int row = 0;
-        final List<OrderedPropertyDescriptor> sorted = sorter.activeSortedDescriptors( beanClass );
+        final List<OrderedPropertyDescriptor> sorted = context.getActiveSortedDescriptors();
         for ( final OrderedPropertyDescriptor orderedPropertyDescriptor : sorted )
         {
             final PropertyDescriptor descriptor = orderedPropertyDescriptor.getDescriptor();
             try
             {
-                gridBagPanel.add( createEditor( descriptor, mappingRules, beanMapping, doValidation ), row, 1 );
-                gridBagPanel.add( createLabel( beanMapping, descriptor ), row, 0 );
+                final JComponent editor = context.getEditor( descriptor, beanMapping );
+                final JLabel label = context.getLabel( descriptor, beanMapping );
+
+                gridBagPanel.add( editor, row, 1 );
+                gridBagPanel.add( label, row, 0 );
+
+                row++;
             }
             catch ( final MappingException e )
             {
                 handleMappingException( e );
             }
-            row++;
         }
 
         return beanMapping;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    protected void handleMappingException( @Nonnull final MappingException e )
+    {
+        // skip wrong property
     }
 }

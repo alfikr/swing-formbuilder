@@ -15,35 +15,31 @@
  */
 package org.formbuilder.mapping.bean;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import org.formbuilder.BeanMapper;
+import org.formbuilder.mapping.BeanMapping;
+import org.formbuilder.mapping.exception.MappingException;
+import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
-import org.formbuilder.mapping.BeanMapping;
-import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.exception.MappingException;
-import org.formbuilder.util.Reflection;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
 
-/**
- * @author aeremenok 2010
- * @param <B>
- */
+/** @author aeremenok 2010 */
 @NotThreadSafe
 public abstract class SampleBeanMapper<B>
-        extends AbstractBeanMapper<B>
+        implements BeanMapper<B>
 {
+// ------------------------------ FIELDS ------------------------------
     private Method lastCalledMethod;
-    private MappingRules currentMappingRules;
-    private boolean doValidation;
     private BeanMapping currentBeanMapping;
     private final InvocationHandler invocationHandler = new InvocationHandler()
     {
@@ -58,21 +54,28 @@ public abstract class SampleBeanMapper<B>
             return Reflection.emptyValue( method );
         }
     };
+    private BeanMappingContext<B> currentMappingContext;
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface BeanMapper ---------------------
 
     @Nonnull
     @Override
-    public BeanMapping map( @Nonnull final Class<B> beanClass,
-                            @Nonnull final MappingRules mappingRules,
-                            final boolean doValidation )
+    public BeanMapping map( @Nonnull final BeanMappingContext<B> context )
     {
-        this.currentMappingRules = mappingRules;
-        this.doValidation = doValidation;
-        this.currentBeanMapping = new BeanMapping();
+        this.currentMappingContext = context;
 
-        final B beanSample = Reflection.createProxy( beanClass, invocationHandler );
-        this.currentBeanMapping.setPanel( mapBean( beanSample ) );
+        JPanel wrapper = new JPanel( new BorderLayout() );
+        this.currentBeanMapping = new BeanMapping( wrapper );
+
+        final B beanSample = Reflection.createProxy( context.getBeanClass(), invocationHandler );
+        wrapper.add( mapBean( beanSample ) );
+
         return this.currentBeanMapping;
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @Nonnull
     protected JComponent editor( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
@@ -80,11 +83,12 @@ public abstract class SampleBeanMapper<B>
             MappingException
     {
         // todo error messages
-        final MappingRules mappingRules = checkNotNull( currentMappingRules );
-        final Method readMethod = checkNotNull( lastCalledMethod );
+        final BeanMappingContext<B> context = checkNotNull( currentMappingContext );
         final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
+        final Method readMethod = checkNotNull( lastCalledMethod );
 
-        return createEditor( Reflection.getDescriptor( readMethod ), mappingRules, beanMapping, doValidation );
+        final PropertyDescriptor descriptor = Reflection.getDescriptor( readMethod );
+        return context.getEditor( descriptor, beanMapping );
     }
 
     @Nonnull
@@ -92,9 +96,10 @@ public abstract class SampleBeanMapper<B>
             throws
             MappingException
     {
+        final BeanMappingContext<B> context = checkNotNull( currentMappingContext );
         final Method readMethod = checkNotNull( lastCalledMethod );
         final BeanMapping beanMapping = checkNotNull( currentBeanMapping );
-        return createLabel( beanMapping, Reflection.getDescriptor( readMethod ) );
+        return context.getLabel( Reflection.getDescriptor( readMethod ), beanMapping );
     }
 
     @Nonnull
