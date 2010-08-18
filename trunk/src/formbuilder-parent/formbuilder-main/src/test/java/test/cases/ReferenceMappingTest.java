@@ -21,7 +21,7 @@ import org.fest.swing.fixture.JComboBoxFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
-import org.formbuilder.mapping.type.ReferenceToComboboxMapper;
+import org.formbuilder.mapping.typemapper.ReferenceToComboboxMapper;
 import org.testng.annotations.Test;
 
 import domain.Person;

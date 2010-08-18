@@ -15,32 +15,25 @@
  */
 package test;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Date;
-
-import javax.swing.Box;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
+import com.toedter.calendar.JDateChooser;
+import domain.Person;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.formbuilder.GetterMapper;
 import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.bean.SampleBeanMapper;
+import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
+import org.formbuilder.mapping.beanmapper.SampleContext;
 import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.validation.BackgroundMarker;
 import org.formbuilder.validation.ValidationMarker;
-
 import test.cases.PropertyMappingTest.StringToTextAreaMapper;
 
-import com.toedter.calendar.JDateChooser;
+import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
 
-import domain.Person;
-
-/**
- * @author aeremenok 2010
- */
+/** @author aeremenok 2010 */
 @SuppressWarnings( "unused" )
 public class Example
 {
@@ -64,11 +57,12 @@ public class Example
         final Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            protected JComponent mapBean( final Person beanSample )
+            protected JComponent mapBean( final Person sample,
+                                          final SampleContext<Person> c )
             {
                 final Box box = Box.createHorizontalBox();
-                box.add( label( beanSample.getName() ) );
-                box.add( editor( beanSample.getName() ) );
+                box.add( c.label( sample.getName() ) );
+                box.add( c.editor( sample.getName() ) );
                 return box;
             }
         } ).buildForm();

@@ -9,31 +9,24 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.cases;
 
-import static org.testng.Assert.fail;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
-import org.formbuilder.mapping.bean.PropertyNameBeanMapper;
-import org.formbuilder.mapping.bean.SampleBeanMapper;
+import org.formbuilder.mapping.beanmapper.PropertyContext;
+import org.formbuilder.mapping.beanmapper.PropertyNameBeanMapper;
+import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
+import org.formbuilder.mapping.beanmapper.SampleContext;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import javax.swing.*;
+import java.awt.*;
 
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 16:22:16
- */
+import static org.testng.Assert.fail;
+
+/** @author aeremenok Date: 30.07.2010 Time: 16:22:16 */
 public class CustomMapperTest
         extends FormTest
 {
@@ -44,11 +37,11 @@ public class CustomMapperTest
         final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean()
+            public JComponent mapBean( final PropertyContext<Person> context )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
-                panel.add( label( "name" ), BorderLayout.NORTH );
-                panel.add( editor( "name" ), BorderLayout.CENTER );
+                panel.add( context.label( "name" ), BorderLayout.NORTH );
+                panel.add( context.editor( "name" ), BorderLayout.CENTER );
                 return panel;
             }
         } ) );
@@ -77,11 +70,12 @@ public class CustomMapperTest
         final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean( final Person beanTemplate )
+            public JComponent mapBean( final Person sample,
+                                       final SampleContext<Person> context )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
-                panel.add( label( beanTemplate.getName() ), BorderLayout.NORTH );
-                panel.add( editor( beanTemplate.getName() ), BorderLayout.CENTER );
+                panel.add( context.label( sample.getName() ), BorderLayout.NORTH );
+                panel.add( context.editor( sample.getName() ), BorderLayout.CENTER );
                 return panel;
             }
         } ) );
