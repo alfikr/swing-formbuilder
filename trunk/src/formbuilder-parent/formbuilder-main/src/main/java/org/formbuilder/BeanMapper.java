@@ -21,10 +21,18 @@ import org.formbuilder.mapping.BeanMappingContext;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-/** @author aeremenok 2010 */
+/**
+ * Creates the panel and perform the layout of editors on it.
+ *
+ * @author aeremenok 2010
+ */
 @NotThreadSafe
 public interface BeanMapper<B>
 {
+    /**
+     * @param context provides the data to assist editor creation
+     * @return a mapping, that contains a panel with editor components , and their registry
+     */
     @Nonnull
     BeanMapping map( @Nonnull final BeanMappingContext<B> context );
 }
