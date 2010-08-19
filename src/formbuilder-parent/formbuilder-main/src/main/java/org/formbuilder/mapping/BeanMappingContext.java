@@ -18,8 +18,8 @@ public class BeanMappingContext<B>
     protected final Class<B> beanClass;
     protected final MappingRules mappingRules;
     protected final ComponentFactory componentFactory;
-    protected final boolean doValidation;
     protected final PropertySorter sorter;
+    protected final ChangeObservation changeObservation;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -37,7 +37,7 @@ public class BeanMappingContext<B>
     {
         this.beanClass = beanClass;
         this.mappingRules = mappingRules;
-        this.doValidation = doValidation;
+        this.changeObservation = new ChangeObservation( doValidation );
 
         this.componentFactory = new ComponentFactory( metaData );
         this.sorter = new PropertySorter( metaData );
@@ -63,14 +63,14 @@ public class BeanMappingContext<B>
     public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor,
                                  @Nonnull final BeanMapping beanMapping )
     {
-        JComponent editor = beanMapping.getEditor( descriptor );
-        if ( editor == null )
+        JComponent editorComponent = beanMapping.getEditorComponent( descriptor );
+        if ( editorComponent == null )
         {
             final TypeMapper mapper = mappingRules.getMapper( descriptor );
-            editor = componentFactory.createEditor( descriptor, mapper, doValidation );
-            beanMapping.addEditor( descriptor, editor, mapper );
+            editorComponent = componentFactory.createEditor( descriptor, mapper );
+            changeObservation.observe( beanMapping.addEditor( descriptor, editorComponent, mapper ) );
         }
-        return editor;
+        return editorComponent;
     }
 
     @Nonnull
@@ -80,8 +80,7 @@ public class BeanMappingContext<B>
         JLabel label = beanMapping.getLabel( descriptor );
         if ( label == null )
         {
-            final TypeMapper mapper = mappingRules.getMapper( descriptor );
-            label = componentFactory.createLabel( descriptor, mapper, doValidation );
+            label = componentFactory.createLabel( descriptor );
             beanMapping.addLabel( descriptor, label );
         }
         return label;

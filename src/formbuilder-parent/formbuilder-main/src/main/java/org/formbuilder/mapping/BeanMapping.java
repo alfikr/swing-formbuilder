@@ -31,8 +31,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class BeanMapping
 {
 // ------------------------------ FIELDS ------------------------------
-
-    private final Map<PropertyDescriptor, PropertyMapping> propertyMappings = new HashMap<PropertyDescriptor, PropertyMapping>();
+    private final Map<PropertyDescriptor, PropertyEditor> propertyEditors = new HashMap<PropertyDescriptor, PropertyEditor>();
     private final Map<PropertyDescriptor, JLabel> labels = new HashMap<PropertyDescriptor, JLabel>();
     @Nonnull
     private final JComponent panel;
@@ -54,11 +53,14 @@ public class BeanMapping
 
 // -------------------------- OTHER METHODS --------------------------
 
-    public void addEditor( @Nonnull final PropertyDescriptor descriptor,
-                           @Nonnull final JComponent editor,
-                           @Nonnull final TypeMapper mapper )
+    @SuppressWarnings( {"unchecked"} )
+    public PropertyEditor addEditor( @Nonnull final PropertyDescriptor descriptor,
+                                     @Nonnull final JComponent editorComponent,
+                                     @Nonnull final TypeMapper mapper )
     {
-        propertyMappings.put( descriptor, new PropertyMapping( editor, mapper ) );
+        final PropertyEditor propertyEditor = new PropertyEditor( editorComponent, mapper, descriptor, this );
+        propertyEditors.put( descriptor, propertyEditor );
+        return propertyEditor;
     }
 
     @SuppressWarnings( "unused" )
@@ -69,14 +71,14 @@ public class BeanMapping
     }
 
     @Nullable
-    public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor )
+    public JComponent getEditorComponent( @Nonnull final PropertyDescriptor descriptor )
     {
-        final PropertyMapping mapping = propertyMappings.get( descriptor );
-        if ( mapping == null )
+        final PropertyEditor propertyEditor = propertyEditors.get( descriptor );
+        if ( propertyEditor == null )
         {
             return null;
         }
-        return mapping.getEditor();
+        return propertyEditor.getEditorComponent();
     }
 
     @Nullable
@@ -92,12 +94,12 @@ public class BeanMapping
      */
     public void setBeanValues( @Nonnull final Object bean )
     {
-        for ( final Map.Entry<PropertyDescriptor, PropertyMapping> entry : propertyMappings.entrySet() )
+        for ( final Map.Entry<PropertyDescriptor, PropertyEditor> entry : propertyEditors.entrySet() )
         {
-            final PropertyMapping propertyMapping = entry.getValue();
+            final PropertyEditor propertyEditor = entry.getValue();
             final PropertyDescriptor propertyDescriptor = entry.getKey();
 
-            final Object propertyValue = propertyMapping.getValue();
+            final Object propertyValue = propertyEditor.getValue();
             Reflection.setValue( bean, propertyValue, propertyDescriptor );
         }
     }
@@ -107,15 +109,16 @@ public class BeanMapping
      *
      * @param bean a value source
      */
+    @SuppressWarnings( {"unchecked"} )
     public void setComponentValues( @Nullable final Object bean )
     {
-        for ( final Map.Entry<PropertyDescriptor, PropertyMapping> entry : propertyMappings.entrySet() )
+        for ( final Map.Entry<PropertyDescriptor, PropertyEditor> entry : propertyEditors.entrySet() )
         {
-            final PropertyMapping propertyMapping = entry.getValue();
+            final PropertyEditor propertyEditor = entry.getValue();
             final PropertyDescriptor propertyDescriptor = entry.getKey();
 
             final Object propertyValue = Reflection.getValue( propertyDescriptor, bean );
-            propertyMapping.setValue( propertyValue );
+            propertyEditor.setValue( propertyValue );
         }
     }
 }

@@ -37,10 +37,12 @@ public class BackgroundMarker
     public static final BackgroundMarker INSTANCE = new BackgroundMarker();
 
     @Override
-    public <B> void markViolations( @Nonnull final JComponent editor,
-                                    @Nonnull final Set<ConstraintViolation<B>> violations )
+    public <B, C extends JComponent, V> void markViolations( @Nonnull final ValidationContext<B, C, V> validationContext )
     {
         checkState( isEventDispatchThread() );
+
+        final Set<ConstraintViolation<B>> violations = validationContext.getViolations();
+        final C editor = validationContext.getEditorComponent();
 
         if ( violations.isEmpty() )
         {

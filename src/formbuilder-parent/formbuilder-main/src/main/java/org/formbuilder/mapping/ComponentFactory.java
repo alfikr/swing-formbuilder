@@ -1,11 +1,8 @@
 package org.formbuilder.mapping;
 
 import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.EmptyChangeListener;
-import org.formbuilder.mapping.change.ValueChangeListener;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.MetaData;
-import org.formbuilder.validation.ValidateChangedValue;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -17,7 +14,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ComponentFactory
 {
 // ------------------------------ FIELDS ------------------------------
-
     protected final MetaData metaData;
 
 // --------------------------- CONSTRUCTORS ---------------------------
@@ -32,17 +28,13 @@ public class ComponentFactory
     @SuppressWarnings( {"unchecked"} )
     @Nonnull
     public JComponent createEditor( @Nonnull final PropertyDescriptor descriptor,
-                                    @Nonnull final TypeMapper mapper,
-                                    final boolean doValidation )
+                                    @Nonnull final TypeMapper mapper )
             throws
             MappingException
     {
         final JComponent editor = checkNotNull( mapper.createEditorComponent() );
         editor.setEnabled( isEditable( descriptor ) );
         editor.setName( descriptor.getName() );
-
-        mapper.bindChangeListener( editor, createValueChangeListener( descriptor, mapper, editor, doValidation ) );
-
         return editor;
     }
 
@@ -53,19 +45,7 @@ public class ComponentFactory
     }
 
     @Nonnull
-    @SuppressWarnings( {"unchecked"} )
-    protected <V> ValueChangeListener<V> createValueChangeListener( @Nonnull final PropertyDescriptor descriptor,
-                                                                    @Nonnull final TypeMapper<?, ? extends V> mapper,
-                                                                    @Nonnull final JComponent editor,
-                                                                    final boolean doValidation )
-    {
-        return doValidation ? new ValidateChangedValue( mapper, editor, descriptor ) : EmptyChangeListener.INSTANCE;
-    }
-
-    @Nonnull
-    public JLabel createLabel( @Nonnull final PropertyDescriptor descriptor,
-                               @Nonnull final TypeMapper mapper,
-                               @Nonnull final boolean doValidation )
+    public JLabel createLabel( @Nonnull final PropertyDescriptor descriptor )
     {
         final JLabel label = new JLabel( metaData.getTitle( descriptor ) );
         label.setName( descriptor.getName() );

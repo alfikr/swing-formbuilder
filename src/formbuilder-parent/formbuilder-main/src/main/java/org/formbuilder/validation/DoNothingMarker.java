@@ -14,9 +14,7 @@ package org.formbuilder.validation;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.swing.*;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.Set;
 
 /**
  * Ignores the constraint violations
@@ -31,8 +29,7 @@ public class DoNothingMarker
     public static final DoNothingMarker INSTANCE = new DoNothingMarker();
 
     @Override
-    public <B> void markViolations( @Nonnull final JComponent editor,
-                                    @Nonnull final Set<ConstraintViolation<B>> violations )
+    public <B, C extends JComponent, V> void markViolations( @Nonnull final ValidationContext<B, C, V> validationContext )
     {
     }
 }

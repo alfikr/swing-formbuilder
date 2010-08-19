@@ -32,7 +32,7 @@ public interface ValidationMarker
      * @param editor     an editor component to decorate
      * @param violations results of validation
      * @param <B>        beanmapper typemapper
+     * @param validationContext
      */
-    <B> void markViolations( @Nonnull final JComponent editor,
-                             @Nonnull final Set<ConstraintViolation<B>> violations );
+    <B, C extends JComponent, V> void markViolations( @Nonnull ValidationContext<B, C, V> validationContext );
 }
