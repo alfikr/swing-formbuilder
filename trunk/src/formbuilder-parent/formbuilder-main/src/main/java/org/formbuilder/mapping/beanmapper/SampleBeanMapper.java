@@ -16,7 +16,6 @@
 package org.formbuilder.mapping.beanmapper;
 
 import org.formbuilder.BeanMapper;
-import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanMappingContext;
 import org.formbuilder.util.MethodRecorder;
 import org.formbuilder.util.Reflection;
@@ -24,7 +23,6 @@ import org.formbuilder.util.Reflection;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
-import java.awt.*;
 
 /** @author aeremenok 2010 */
 @NotThreadSafe
@@ -37,18 +35,12 @@ public abstract class SampleBeanMapper<B>
 
     @Nonnull
     @Override
-    public BeanMapping map( @Nonnull final BeanMappingContext<B> context )
+    public JComponent map( @Nonnull final BeanMappingContext<B> context )
     {
-        final JPanel wrapper = new JPanel( new BorderLayout() );
-        final BeanMapping beanMapping = new BeanMapping( wrapper );
-
         final MethodRecorder methodRecorder = new MethodRecorder();
-        final SampleContext<B> sampleContext = new SampleContext<B>( context, beanMapping, methodRecorder );
+        final SampleContext<B> sampleContext = new SampleContext<B>( context, methodRecorder );
         final B beanSample = Reflection.createProxy( context.getBeanClass(), methodRecorder );
-
-        wrapper.add( mapBean( beanSample, sampleContext ) );
-
-        return beanMapping;
+        return mapBean( beanSample, sampleContext );
     }
 
 // -------------------------- OTHER METHODS --------------------------

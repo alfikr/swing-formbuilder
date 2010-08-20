@@ -14,15 +14,12 @@ public class PropertyNameContext<B>
 {
 // ------------------------------ FIELDS ------------------------------
     private final BeanMappingContext<B> beanMappingContext;
-    private final BeanMapping beanMapping;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
-    public PropertyNameContext( @Nonnull final BeanMappingContext<B> beanMappingContext,
-                                @Nonnull final BeanMapping beanMapping )
+    public PropertyNameContext( @Nonnull final BeanMappingContext<B> beanMappingContext )
     {
         this.beanMappingContext = beanMappingContext;
-        this.beanMapping = beanMapping;
     }
 
 // -------------------------- OTHER METHODS --------------------------
@@ -32,7 +29,7 @@ public class PropertyNameContext<B>
             throws
             MappingException
     {
-        return beanMappingContext.getEditor( getDescriptor( propertyName ), beanMapping );
+        return beanMappingContext.getEditor( getDescriptor( propertyName ) );
     }
 
     protected PropertyDescriptor getDescriptor( final String propertyName )
@@ -46,6 +43,6 @@ public class PropertyNameContext<B>
             throws
             MappingException
     {
-        return beanMappingContext.getLabel( getDescriptor( propertyName ), beanMapping );
+        return beanMappingContext.getLabel( getDescriptor( propertyName ) );
     }
 }

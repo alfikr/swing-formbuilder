@@ -21,8 +21,6 @@ import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Maps beanmapper properties to their editors.
  *
@@ -33,23 +31,6 @@ public class BeanMapping
 // ------------------------------ FIELDS ------------------------------
     private final Map<PropertyDescriptor, PropertyEditor> propertyEditors = new HashMap<PropertyDescriptor, PropertyEditor>();
     private final Map<PropertyDescriptor, JLabel> labels = new HashMap<PropertyDescriptor, JLabel>();
-    @Nonnull
-    private final JComponent panel;
-
-// --------------------------- CONSTRUCTORS ---------------------------
-
-    public BeanMapping( @Nonnull final JComponent panel )
-    {
-        this.panel = checkNotNull( panel );
-    }
-
-// --------------------- GETTER / SETTER METHODS ---------------------
-
-    @Nonnull
-    public JComponent getPanel()
-    {
-        return panel;
-    }
 
 // -------------------------- OTHER METHODS --------------------------
 

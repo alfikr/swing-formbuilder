@@ -12,13 +12,11 @@
 package org.formbuilder.mapping.beanmapper;
 
 import org.formbuilder.BeanMapper;
-import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanMappingContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
-import java.awt.*;
 
 /** @author aeremenok Date: Aug 3, 2010 Time: 1:09:26 PM */
 @NotThreadSafe
@@ -30,16 +28,9 @@ public abstract class PropertyNameBeanMapper<B>
 // --------------------- Interface BeanMapper ---------------------
 
     @Override
-    public BeanMapping map( @Nonnull final BeanMappingContext<B> context )
+    public JComponent map( @Nonnull final BeanMappingContext<B> context )
     {
-        final JPanel wrapper = new JPanel( new BorderLayout() );
-
-        final BeanMapping beanMapping = new BeanMapping( wrapper );
-        final PropertyNameContext<B> propertyNameContext = new PropertyNameContext<B>( context, beanMapping );
-
-        wrapper.add( mapBean( propertyNameContext ) );
-
-        return beanMapping;
+        return mapBean( new PropertyNameContext<B>( context ) );
     }
 
 // -------------------------- OTHER METHODS --------------------------

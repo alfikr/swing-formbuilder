@@ -21,21 +21,25 @@ public class BeanMappingContext<B>
     protected final ComponentFactory componentFactory;
     protected final PropertySorter sorter;
     protected final ChangeObservation changeObservation;
+    protected final BeanMapping beanMapping;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
-    public BeanMappingContext( final Class<B> beanClass,
+    public BeanMappingContext( final BeanMapping beanMapping,
+                               final Class<B> beanClass,
                                final MappingRules mappingRules,
                                final boolean doValidation )
-    { // todo inject metadata
-        this( beanClass, mappingRules, doValidation, new CombinedMetaData() );
+    { // todo inject metadata?
+        this( beanMapping, beanClass, mappingRules, doValidation, new CombinedMetaData() );
     }
 
-    public BeanMappingContext( final Class<B> beanClass,
+    public BeanMappingContext( final BeanMapping beanMapping,
+                               final Class<B> beanClass,
                                final MappingRules mappingRules,
                                final boolean doValidation,
                                final MetaData metaData )
     {
+        this.beanMapping = beanMapping;
         this.beanClass = beanClass;
         this.mappingRules = mappingRules;
         this.changeObservation = new ChangeObservation( doValidation );
@@ -61,8 +65,7 @@ public class BeanMappingContext<B>
     }
 
     @Nonnull
-    public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor,
-                                 @Nonnull final BeanMapping beanMapping )
+    public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor )
     {
         JComponent editorComponent = beanMapping.getEditorComponent( descriptor );
         if ( editorComponent == null )
@@ -75,8 +78,7 @@ public class BeanMappingContext<B>
     }
 
     @Nonnull
-    public JLabel getLabel( @Nonnull final PropertyDescriptor descriptor,
-                            @Nonnull final BeanMapping beanMapping )
+    public JLabel getLabel( @Nonnull final PropertyDescriptor descriptor )
     {
         JLabel label = beanMapping.getLabel( descriptor );
         if ( label == null )

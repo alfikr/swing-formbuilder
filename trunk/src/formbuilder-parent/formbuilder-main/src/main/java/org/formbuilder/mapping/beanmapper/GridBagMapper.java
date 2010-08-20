@@ -16,7 +16,6 @@
 package org.formbuilder.mapping.beanmapper;
 
 import org.formbuilder.BeanMapper;
-import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanMappingContext;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
@@ -42,13 +41,11 @@ public class GridBagMapper<B>
 
     @Nonnull
     @Override
-    public BeanMapping map( @Nonnull final BeanMappingContext<B> context )
+    public JComponent map( @Nonnull final BeanMappingContext<B> context )
     {
         checkState( isEventDispatchThread() );
 
         final GridBagPanel gridBagPanel = new GridBagPanel();
-
-        final BeanMapping beanMapping = new BeanMapping( gridBagPanel );
 
         int row = 0;
         final List<OrderedPropertyDescriptor> sorted = context.getActiveSortedDescriptors();
@@ -57,8 +54,8 @@ public class GridBagMapper<B>
             final PropertyDescriptor descriptor = orderedPropertyDescriptor.getDescriptor();
             try
             {
-                final JComponent editor = context.getEditor( descriptor, beanMapping );
-                final JLabel label = context.getLabel( descriptor, beanMapping );
+                final JComponent editor = context.getEditor( descriptor );
+                final JLabel label = context.getLabel( descriptor );
 
                 gridBagPanel.add( editor, row, 1 );
                 gridBagPanel.add( label, row, 0 );
@@ -71,7 +68,7 @@ public class GridBagMapper<B>
             }
         }
 
-        return beanMapping;
+        return gridBagPanel;
     }
 
 // -------------------------- OTHER METHODS --------------------------

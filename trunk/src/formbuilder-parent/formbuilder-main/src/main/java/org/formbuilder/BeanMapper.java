@@ -15,11 +15,11 @@
  */
 package org.formbuilder;
 
-import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanMappingContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
 
 /**
  * Creates the panel and perform the layout of editors on it.
@@ -34,5 +34,5 @@ public interface BeanMapper<B>
      * @return a mapping, that contains a panel with editor components , and their registry
      */
     @Nonnull
-    BeanMapping map( @Nonnull final BeanMappingContext<B> context );
+    JComponent map( @Nonnull final BeanMappingContext<B> context );
 }
