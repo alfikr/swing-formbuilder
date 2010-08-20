@@ -1,5 +1,6 @@
 package org.formbuilder.mapping;
 
+import org.formbuilder.BeanMapper;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ChangeObservation;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
@@ -9,10 +10,16 @@ import org.formbuilder.mapping.metadata.sort.PropertySorter;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;
 import java.util.List;
 
-/** @author aeremenok Date: Aug 18, 2010 Time: 1:57:48 PM */
+/**
+ * Provides the data needed to assist the editor creation when {@link BeanMapper#map(BeanMappingContext)} is called.
+ *
+ * @author aeremenok Date: Aug 18, 2010 Time: 1:57:48 PM
+ * @see BeanMapper
+ */
 public class BeanMappingContext<B>
 {
 // ------------------------------ FIELDS ------------------------------
@@ -50,6 +57,7 @@ public class BeanMappingContext<B>
 
 // --------------------- GETTER / SETTER METHODS ---------------------
 
+    /** @return a class, which mapping is assisted */
     @Nonnull
     public Class<B> getBeanClass()
     {
@@ -58,12 +66,26 @@ public class BeanMappingContext<B>
 
 // -------------------------- OTHER METHODS --------------------------
 
+    /**
+     * @return property descriptors of a bean class, decorated with order property and sorted according to it
+     *
+     * @see OrderedPropertyDescriptor
+     * @see BeanInfo#getPropertyDescriptors()
+     * @see MetaData#getOrder(PropertyDescriptor)
+     */
     @Nonnull
     public List<OrderedPropertyDescriptor> getActiveSortedDescriptors()
     {
         return sorter.activeSortedDescriptors( beanClass );
     }
 
+    /**
+     * Returns an editor component for a given property. If this method is called first time, the {@link TypeMapper} for
+     * a property is asked to create a new editor component. After that, the component is saved in the local cache.
+     *
+     * @param descriptor a bean property
+     * @return an editor component for a given property
+     */
     @Nonnull
     public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor )
     {
@@ -77,6 +99,15 @@ public class BeanMappingContext<B>
         return editorComponent;
     }
 
+    /**
+     * Returns an editor component for a given property. If this method is called first time, the label is created.
+     * After that, the label is saved in the local cache.
+     *
+     * @param descriptor a bean property
+     * @return a label, that contains a title for a given property
+     *
+     * @see MetaData#getTitle(PropertyDescriptor)
+     */
     @Nonnull
     public JLabel getLabel( @Nonnull final PropertyDescriptor descriptor )
     {

@@ -6,7 +6,11 @@ import org.formbuilder.mapping.PropertyEditor;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-/** @author aeremenok Date: 19.08.2010 Time: 17:57:30 */
+/**
+ * Asks a type mapper to handle the changes of editor component using an appropriate change handler
+ *
+ * @author aeremenok Date: 19.08.2010 Time: 17:57:30
+ */
 public class ChangeObservation
 {
     private final boolean doValidation;

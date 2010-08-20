@@ -9,22 +9,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.metadata.functions;
 
-import java.beans.PropertyDescriptor;
-
-import javax.annotation.Nonnull;
-
+import com.google.common.base.Predicate;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.MetaDataUser;
 
-import com.google.common.base.Predicate;
+import javax.annotation.Nonnull;
+import java.beans.PropertyDescriptor;
 
 /**
- * @author aeremenok
- *         Date: 02.08.2010
- *         Time: 16:56:56
+ * Returns true iff {@link MetaData#isHidden(PropertyDescriptor)} returns false.
+ *
+ * @author aeremenok Date: 02.08.2010 Time: 16:56:56
  */
 public class IsVisible
         extends MetaDataUser

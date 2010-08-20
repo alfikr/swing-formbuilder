@@ -57,7 +57,7 @@ public interface TypeMapper<C extends JComponent, V>
     @Nullable
     V getValue( @Nonnull C editorComponent );
 
-    /** @return value class, which should be mapped using this mapper */
+    /** @return value class, which should be processed using this mapper */
     @Nonnull
     Class<V> getValueClass();
 

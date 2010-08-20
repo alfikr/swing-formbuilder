@@ -11,10 +11,25 @@
  */
 package org.formbuilder.mapping.change;
 
+import org.formbuilder.TypeMapper;
 import org.formbuilder.validation.ValidationMarker;
 
-/** @author aeremenok Date: 29.07.2010 Time: 17:18:45 */
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
+
+/**
+ * Should be used to propagate the changes from the editor component to mapping
+ *
+ * @author aeremenok Date: 29.07.2010 Time: 17:18:45
+ * @see TypeMapper#handleChanges(JComponent, ChangeHandler)
+ */
+@NotThreadSafe
 public interface ChangeHandler<V>
 {
+    /**
+     * Should be called when the editor component changed its value
+     *
+     * @param validationMarkers callbacks, that process the validation results, after the value change is validated
+     */
     void onChange( final ValidationMarker... validationMarkers );
 }
