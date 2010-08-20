@@ -1,6 +1,7 @@
 package org.formbuilder.mapping;
 
 import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeObservation;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;

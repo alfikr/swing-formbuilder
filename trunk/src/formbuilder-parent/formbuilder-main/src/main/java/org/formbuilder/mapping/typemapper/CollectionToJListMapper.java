@@ -9,40 +9,29 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.AbstractListModel;
-import javax.swing.JList;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.DoNothingMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 14:08:34
- * @param <R>
- * @param <CT>
- */
+/** @author aeremenok Date: 30.07.2010 Time: 14:08:34 */
 @NotThreadSafe
 public abstract class CollectionToJListMapper<R, CT extends Collection>
         implements TypeMapper<JList, CT>
 {
     @Override
-    public void bindChangeListener( @Nonnull final JList editorComponent,
-                                    @Nonnull final ValueChangeListener<CT> iValueChangeListener )
+    public void handleChanges( @Nonnull final JList editorComponent,
+                                    @Nonnull final ChangeHandler<CT> changeHandler )
     {
         editorComponent.getSelectionModel().addListSelectionListener( new ListSelectionListener()
         {
@@ -51,7 +40,7 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
             {
                 if ( !e.getValueIsAdjusting() )
                 {
-                    iValueChangeListener.onChange();
+                    changeHandler.onChange();
                 }
             }
         } );
@@ -62,13 +51,6 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
     public JList createEditorComponent()
     {
         return new JList( new ImmutableListModel<R>( getSuitableData() ) );
-    }
-
-    @Nonnull
-    @Override
-    public ValidationMarker getValidationMarker()
-    {
-        return DoNothingMarker.INSTANCE;
     }
 
     @Nullable

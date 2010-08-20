@@ -23,9 +23,8 @@ import org.formbuilder.GetterMapper;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleContext;
-import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.mapping.change.ChangeHandler;
 import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
 import test.cases.PropertyMappingTest.StringToTextAreaMapper;
 
 import javax.swing.*;
@@ -101,15 +100,15 @@ public class Example
             implements TypeMapper<JDateChooser, Date>
     {
         @Override
-        public void bindChangeListener( final JDateChooser editorComponent,
-                                        final ValueChangeListener<Date> changeListener )
+        public void handleChanges( final JDateChooser editorComponent,
+                                        final ChangeHandler<Date> changeHandler )
         {
             editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
             {
                 @Override
                 public void propertyChange( final PropertyChangeEvent evt )
                 {
-                    changeListener.onChange();
+                    changeHandler.onChange( BackgroundMarker.INSTANCE );
                 }
             } );
         }
@@ -118,12 +117,6 @@ public class Example
         public JDateChooser createEditorComponent()
         {
             return new JDateChooser();
-        }
-
-        @Override
-        public ValidationMarker getValidationMarker()
-        {
-            return BackgroundMarker.INSTANCE;
         }
 
         @Override

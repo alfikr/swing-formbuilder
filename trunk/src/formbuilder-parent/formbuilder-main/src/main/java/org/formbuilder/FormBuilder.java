@@ -27,7 +27,7 @@ import org.formbuilder.mapping.typemapper.BooleanToCheckboxMapper;
 import org.formbuilder.mapping.typemapper.DateToSpinnerMapper;
 import org.formbuilder.mapping.typemapper.NumberToSpinnerMapper;
 import org.formbuilder.mapping.typemapper.StringToTextFieldMapper;
-import org.formbuilder.validation.ValidateChangedValue;
+import org.formbuilder.validation.ValidateOnChange;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
@@ -107,7 +107,7 @@ public class FormBuilder<B>
      *
      * @see Validator
      * @see ValidationMarker
-     * @see ValidateChangedValue
+     * @see ValidateOnChange
      */
     @Nonnull
     public FormBuilder<B> doValidation( final boolean doValidation )

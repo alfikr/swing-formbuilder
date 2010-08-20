@@ -9,41 +9,34 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.validation.BackgroundMarker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-/**
- * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 11:55:54
- */
+/** @author aeremenok Date: 28.07.2010 Time: 11:55:54 */
 @NotThreadSafe
 public class NumberToSpinnerMapper
         implements TypeMapper<JSpinner, Number>
 {
     @Override
-    public void bindChangeListener( @Nonnull final JSpinner editorComponent,
-                                    @Nullable final ValueChangeListener<Number> numberChangeListener )
+    public void handleChanges( @Nonnull final JSpinner editorComponent,
+                               @Nullable final ChangeHandler<Number> changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                numberChangeListener.onChange();
+                changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
         } );
     }
@@ -53,13 +46,6 @@ public class NumberToSpinnerMapper
     public JSpinner createEditorComponent()
     {
         return new JSpinner( new SpinnerNumberModel() );
-    }
-
-    @Nonnull
-    @Override
-    public ValidationMarker getValidationMarker()
-    {
-        return BackgroundMarker.INSTANCE;
     }
 
     @Nullable

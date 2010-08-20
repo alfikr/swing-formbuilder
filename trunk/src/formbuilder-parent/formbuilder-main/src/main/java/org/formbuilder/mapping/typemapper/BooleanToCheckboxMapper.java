@@ -9,40 +9,34 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.validation.BackgroundMarker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JCheckBox;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 13:38:16
- */
+/** @author aeremenok Date: 30.07.2010 Time: 13:38:16 */
 @NotThreadSafe
 public class BooleanToCheckboxMapper
         implements TypeMapper<JCheckBox, Boolean>
 {
     @Override
-    public void bindChangeListener( @Nonnull final JCheckBox editorComponent,
-                                    @Nonnull final ValueChangeListener<Boolean> booleanValueChangeListener )
+    public void handleChanges( @Nonnull final JCheckBox editorComponent,
+                                    @Nonnull final ChangeHandler<Boolean> changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                booleanValueChangeListener.onChange();
+                changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
         } );
     }
@@ -52,13 +46,6 @@ public class BooleanToCheckboxMapper
     public JCheckBox createEditorComponent()
     {
         return new JCheckBox();
-    }
-
-    @Nonnull
-    @Override
-    public ValidationMarker getValidationMarker()
-    {
-        return BackgroundMarker.INSTANCE;
     }
 
     @Override

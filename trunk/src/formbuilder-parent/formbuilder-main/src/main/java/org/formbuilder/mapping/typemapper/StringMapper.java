@@ -9,8 +9,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
+
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.validation.BackgroundMarker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,51 +22,35 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-/**
- * @author eav
- *         Date: Aug 2, 2010
- *         Time: 11:54:19 PM
- * @param <C>
- */
+/** @author eav Date: Aug 2, 2010 Time: 11:54:19 PM */
 @NotThreadSafe
 public abstract class StringMapper<C extends JTextComponent>
         implements TypeMapper<C, String>
 {
     @Override
-    public void bindChangeListener( @Nonnull final C editorComponent,
-                                    @Nonnull final ValueChangeListener<String> stringValueChangeListener )
+    public void handleChanges( @Nonnull final C editorComponent,
+                                    @Nonnull final ChangeHandler<String> changeHandler )
     {
         editorComponent.getDocument().addDocumentListener( new DocumentListener()
         {
             @Override
             public void changedUpdate( final DocumentEvent e )
             {
-                stringValueChangeListener.onChange();
+                changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
 
             @Override
             public void insertUpdate( final DocumentEvent e )
             {
-                stringValueChangeListener.onChange();
+                changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
 
             @Override
             public void removeUpdate( final DocumentEvent e )
             {
-                stringValueChangeListener.onChange();
+                changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
         } );
-    }
-
-    @Override
-    public ValidationMarker getValidationMarker()
-    {
-        return BackgroundMarker.INSTANCE;
     }
 
     @Override
