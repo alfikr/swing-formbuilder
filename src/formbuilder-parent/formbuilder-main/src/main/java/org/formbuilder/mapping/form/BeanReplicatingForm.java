@@ -34,21 +34,31 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
 public class BeanReplicatingForm<B>
         implements Form<B>
 {
+// ------------------------------ FIELDS ------------------------------
+    private final JComponent panel;
     private final BeanMapping beanMapping;
     private final Class<B> beanClass;
 
-    public BeanReplicatingForm( @Nonnull final BeanMapping beanMapping,
-                                @Nonnull final Class<B> beanClass )
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    public BeanReplicatingForm( @Nonnull final JComponent panel,
+                                @Nonnull final Class<B> beanClass,
+                                @Nonnull final BeanMapping beanMapping )
     {
+        this.panel = panel;
         this.beanMapping = beanMapping;
         this.beanClass = beanClass;
     }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface Form ---------------------
 
     @Nonnull
     @Override
     public JComponent asComponent()
     {
-        return beanMapping.getPanel();
+        return panel;
     }
 
     /** @return a new beanmapper instance with changed values */

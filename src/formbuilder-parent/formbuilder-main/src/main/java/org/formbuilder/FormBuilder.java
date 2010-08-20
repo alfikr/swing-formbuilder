@@ -32,6 +32,7 @@ import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
 import javax.validation.Validator;
 import java.awt.*;
 import java.math.BigDecimal;
@@ -94,9 +95,13 @@ public class FormBuilder<B>
     @Nonnull
     public Form<B> buildForm()
     { // todo pass a copy of mapping rules
-        final BeanMappingContext<B> context = new BeanMappingContext<B>( beanClass, mappingRules, doValidation );
-        final BeanMapping mapping = beanMapper.map( context );
-        return new BeanReplicatingForm<B>( mapping, beanClass );
+        final BeanMapping beanMapping = new BeanMapping();
+        final BeanMappingContext<B> context = new BeanMappingContext<B>( beanMapping,
+                beanClass,
+                mappingRules,
+                doValidation );
+        final JComponent panel = beanMapper.map( context );
+        return new BeanReplicatingForm<B>( panel, beanClass, beanMapping );
     }
 
     /**
@@ -117,13 +122,14 @@ public class FormBuilder<B>
     }
 
     /**
-     * Binds types of beanmapper properties to custom editor components.<br> By default, {@link StringToTextFieldMapper},
-     * {@link NumberToSpinnerMapper}, {@link DateToSpinnerMapper} and {@link BooleanToCheckboxMapper} are already
-     * registered.<br> <br> Primitive and wrapper types are considered the same way. For example, if you pass a mapper
-     * of the {@link Integer} class, it will also be used for mapping of <code>int</code> properties. <br> <br> During
-     * the mapping, if a mapper for some property typemapper cannot be found, an attempt to find a mapper for its supertype is
-     * performed. If it is failed, {@link MappingException} is raised, and by default, the propery is skipped. That
-     * means, for example, that {@link NumberToSpinnerMapper} suits for int, long, {@link BigDecimal}, etc...
+     * Binds types of beanmapper properties to custom editor components.<br> By default, {@link
+     * StringToTextFieldMapper}, {@link NumberToSpinnerMapper}, {@link DateToSpinnerMapper} and {@link
+     * BooleanToCheckboxMapper} are already registered.<br> <br> Primitive and wrapper types are considered the same
+     * way. For example, if you pass a mapper of the {@link Integer} class, it will also be used for mapping of
+     * <code>int</code> properties. <br> <br> During the mapping, if a mapper for some property typemapper cannot be
+     * found, an attempt to find a mapper for its supertype is performed. If it is failed, {@link MappingException} is
+     * raised, and by default, the propery is skipped. That means, for example, that {@link NumberToSpinnerMapper} suits
+     * for int, long, {@link BigDecimal}, etc...
      *
      * @param typeMappers mappers for each custom typemapper
      * @return this builder

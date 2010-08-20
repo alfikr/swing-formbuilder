@@ -1,6 +1,5 @@
 package org.formbuilder.mapping.beanmapper;
 
-import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanMappingContext;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.util.MethodRecorder;
@@ -19,17 +18,14 @@ public class SampleContext<B>
 {
 // ------------------------------ FIELDS ------------------------------
     private final BeanMappingContext<B> beanMappingContext;
-    private final BeanMapping beanMapping;
     private final MethodRecorder methodRecorder;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
     public SampleContext( @Nonnull final BeanMappingContext<B> beanMappingContext,
-                          @Nonnull final BeanMapping beanMapping,
                           @Nonnull final MethodRecorder methodRecorder )
     {
         this.beanMappingContext = beanMappingContext;
-        this.beanMapping = beanMapping;
         this.methodRecorder = methodRecorder;
     }
 
@@ -40,16 +36,7 @@ public class SampleContext<B>
             throws
             MappingException
     {
-
-        return beanMappingContext.getEditor( getDescriptor(), beanMapping );
-    }
-
-    @Nonnull
-    public JLabel label( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
-            throws
-            MappingException
-    {
-        return beanMappingContext.getLabel( getDescriptor(), beanMapping );
+        return beanMappingContext.getEditor( getDescriptor() );
     }
 
     @Nonnull
@@ -58,5 +45,13 @@ public class SampleContext<B>
         // todo error messages
         final Method readMethod = checkNotNull( methodRecorder.getLastCalledMethod() );
         return Reflection.getDescriptor( readMethod );
+    }
+
+    @Nonnull
+    public JLabel label( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
+            throws
+            MappingException
+    {
+        return beanMappingContext.getLabel( getDescriptor() );
     }
 }
