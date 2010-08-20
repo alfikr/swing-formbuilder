@@ -35,14 +35,14 @@ public abstract class PropertyNameBeanMapper<B>
         final JPanel wrapper = new JPanel( new BorderLayout() );
 
         final BeanMapping beanMapping = new BeanMapping( wrapper );
-        final PropertyContext<B> propertyContext = new PropertyContext<B>( context, beanMapping );
+        final PropertyNameContext<B> propertyNameContext = new PropertyNameContext<B>( context, beanMapping );
 
-        wrapper.add( mapBean( propertyContext ) );
+        wrapper.add( mapBean( propertyNameContext ) );
 
         return beanMapping;
     }
 
 // -------------------------- OTHER METHODS --------------------------
 
-    protected abstract JComponent mapBean( final PropertyContext<B> context );
+    protected abstract JComponent mapBean( final PropertyNameContext<B> context );
 }

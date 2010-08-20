@@ -31,13 +31,13 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  *
  * @author aeremenok 2010
  */
-public class BeanRelpicatingForm<B>
+public class BeanReplicatingForm<B>
         implements Form<B>
 {
     private final BeanMapping beanMapping;
     private final Class<B> beanClass;
 
-    public BeanRelpicatingForm( @Nonnull final BeanMapping beanMapping,
+    public BeanReplicatingForm( @Nonnull final BeanMapping beanMapping,
                                 @Nonnull final Class<B> beanClass )
     {
         this.beanMapping = beanMapping;
