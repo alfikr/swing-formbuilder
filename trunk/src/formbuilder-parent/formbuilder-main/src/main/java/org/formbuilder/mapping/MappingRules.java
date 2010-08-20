@@ -29,14 +29,14 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 
 /**
- * Detects which {@link TypeMapper} should be used for each property.
+ * Detects which {@link TypeMapper} should be used for each property. todo make immutable
  *
  * @author aeremenok Date: 28.07.2010 Time: 11:39:46
  */
 public class MappingRules
 {
     protected final Map<Class, TypeMapper> typeToMapper = new HashMap<Class, TypeMapper>();
-    protected final Map<String, TypeMapper> propertyToMapper = new HashMap<String, TypeMapper>();
+    protected final Map<String, TypeMapper> propertyNameToMapper = new HashMap<String, TypeMapper>();
 
     public MappingRules()
     {
@@ -46,18 +46,18 @@ public class MappingRules
                 new DateToSpinnerMapper() ) );
     }
 
-    public MappingRules( Iterable<? extends TypeMapper> mappers )
+    public MappingRules( final Iterable<? extends TypeMapper> mappers )
     {
         super();
-        for ( TypeMapper mapper : mappers )
+        for ( final TypeMapper mapper : mappers )
         {
             addMapper( mapper );
         }
     }
 
     /**
-     * Register a typemapper mapper for a property with given name. Default mappers will remain for other properties of the
-     * same typemapper.
+     * Register a typemapper mapper for a property with given name. Default mappers will remain for other properties of
+     * the same typemapper.
      *
      * @param propertyName property name
      * @param mapper       typemapper mapper to register
@@ -68,7 +68,7 @@ public class MappingRules
                            @Nonnull final TypeMapper mapper )
     {
         // todo early call checkType
-        propertyToMapper.put( propertyName, mapper );
+        propertyNameToMapper.put( propertyName, mapper );
     }
 
     /**
@@ -102,7 +102,7 @@ public class MappingRules
             InvalidPropertyMappingException,
             UnmappedTypeException
     {
-        TypeMapper mapper = propertyToMapper.get( descriptor.getName() );
+        TypeMapper mapper = propertyNameToMapper.get( descriptor.getName() );
         if ( mapper != null )
         {
             return checkType( mapper, descriptor );

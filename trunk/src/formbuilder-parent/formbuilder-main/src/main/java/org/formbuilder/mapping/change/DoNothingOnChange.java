@@ -13,7 +13,11 @@ package org.formbuilder.mapping.change;
 
 import org.formbuilder.validation.ValidationMarker;
 
-/** @author eav Date: Aug 3, 2010 Time: 12:05:47 AM */
+/**
+ * Used when the validation is tured off, and there is no need of processing the value changes.
+ *
+ * @author eav Date: Aug 3, 2010 Time: 12:05:47 AM
+ */
 public class DoNothingOnChange<V>
         implements ChangeHandler<V>
 {

@@ -31,7 +31,7 @@ public interface BeanMapper<B>
 {
     /**
      * @param context provides the data to assist editor creation
-     * @return a mapping, that contains a panel with editor components , and their registry
+     * @return a panel with editor components
      */
     @Nonnull
     JComponent map( @Nonnull final BeanMappingContext<B> context );

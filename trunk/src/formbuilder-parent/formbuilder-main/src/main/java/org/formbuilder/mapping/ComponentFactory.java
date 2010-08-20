@@ -10,7 +10,11 @@ import java.beans.PropertyDescriptor;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/** @author aeremenok Date: Aug 18, 2010 Time: 1:52:39 PM */
+/**
+ * Creates and adjusts new components.
+ *
+ * @author aeremenok Date: Aug 18, 2010 Time: 1:52:39 PM
+ */
 public class ComponentFactory
 {
 // ------------------------------ FIELDS ------------------------------
@@ -37,7 +41,7 @@ public class ComponentFactory
         editor.setName( descriptor.getName() );
         return editor;
     }
-
+    
     protected boolean isEditable( @Nonnull final PropertyDescriptor descriptor )
     {
         final boolean hasWriteMethod = descriptor.getWriteMethod() != null;

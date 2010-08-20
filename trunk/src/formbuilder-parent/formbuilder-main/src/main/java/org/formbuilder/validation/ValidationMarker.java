@@ -14,9 +14,7 @@ package org.formbuilder.validation;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.Set;
 
 /**
  * Marks an editor field as valid/invalid according to constraint violations, emitted by {@link Validator}
@@ -29,10 +27,7 @@ public interface ValidationMarker
     /**
      * Do the component decoration.
      *
-     * @param editor     an editor component to decorate
-     * @param violations results of validation
-     * @param <B>        beanmapper typemapper
-     * @param validationContext
+     * @param validationEvent provides validation results and components that can be markes
      */
-    <B, C extends JComponent, V> void markViolations( @Nonnull ValidationContext<B, C, V> validationContext );
+    <B, C extends JComponent, V> void markViolations( @Nonnull ValidationEvent<B, C, V> validationEvent );
 }

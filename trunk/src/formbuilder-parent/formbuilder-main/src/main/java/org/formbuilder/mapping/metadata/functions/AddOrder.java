@@ -9,24 +9,22 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.metadata.functions;
 
-import java.beans.PropertyDescriptor;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.google.common.base.Function;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.MetaDataUser;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 
-import com.google.common.base.Function;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.beans.PropertyDescriptor;
 
 /**
- * @author aeremenok
- *         Date: 02.08.2010
- *         Time: 16:58:40
+ * Decorates a property descriptor with its order or Integer.MAX_VALUE if order isn't specified.
+ *
+ * @author aeremenok Date: 02.08.2010 Time: 16:58:40
+ * @see MetaData#getOrder(PropertyDescriptor)
  */
 public class AddOrder
         extends MetaDataUser

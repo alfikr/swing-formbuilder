@@ -30,7 +30,12 @@ import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static org.formbuilder.util.Reflection.getBeanInfo;
 
-/** @author aeremenok Date: 02.08.2010 Time: 17:07:41 */
+/**
+ * Sorts bean properties according to their "order" attribute
+ *
+ * @author aeremenok Date: 02.08.2010 Time: 17:07:41
+ * @see MetaData#getOrder(PropertyDescriptor)
+ */
 public class PropertySorter
         extends MetaDataUser
         implements Comparator<OrderedPropertyDescriptor>
@@ -40,6 +45,16 @@ public class PropertySorter
         super( metaData );
     }
 
+    /**
+     * Filters out those bean properties, that cannot be read, or that are forbidden by specifying "hidden" metadata
+     * attribute. Then sorts them by comparing their "order" attributes, or names in case the orders are equal.
+     *
+     * @param beanClass a bean class to analyze
+     * @return filtered and sorted bean properties, decorated with their orders
+     *
+     * @see BeanInfo#getPropertyDescriptors()
+     * @see MetaData#isHidden(PropertyDescriptor)
+     */
     @Nonnull
     public List<OrderedPropertyDescriptor> activeSortedDescriptors( @Nonnull final Class beanClass )
     {

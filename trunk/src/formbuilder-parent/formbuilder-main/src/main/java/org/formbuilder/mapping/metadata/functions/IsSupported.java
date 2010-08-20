@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
 
 /**
+ * Returns true iff the property is readable and is not a "class" property
  * @author aeremenok
  *         Date: 02.08.2010
  *         Time: 16:41:44

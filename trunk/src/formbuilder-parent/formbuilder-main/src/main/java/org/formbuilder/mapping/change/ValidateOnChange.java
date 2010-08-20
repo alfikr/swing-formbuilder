@@ -12,8 +12,7 @@
 package org.formbuilder.mapping.change;
 
 import org.formbuilder.mapping.PropertyEditor;
-import org.formbuilder.mapping.change.ChangeHandler;
-import org.formbuilder.validation.ValidationContext;
+import org.formbuilder.validation.ValidationEvent;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
@@ -55,7 +54,7 @@ public class ValidateOnChange<B, C extends JComponent, V>
             final V newValue = propertyEditor.getValue();
             final Set<ConstraintViolation<B>> violations = doValidation( validator, newValue );
 
-            final ValidationContext<B, C, V> validationContext = new ValidationContext<B, C, V>( propertyEditor,
+            final ValidationEvent<B, C, V> validationEvent = new ValidationEvent<B, C, V>( propertyEditor,
                     violations,
                     newValue );
 
@@ -64,7 +63,7 @@ public class ValidateOnChange<B, C extends JComponent, V>
             {
                 if ( validationMarker != null )
                 {
-                    validationMarker.markViolations( validationContext );
+                    validationMarker.markViolations( validationEvent );
                 }
             }
         }

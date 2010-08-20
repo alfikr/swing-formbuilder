@@ -18,19 +18,29 @@ package org.formbuilder.mapping.beanmapper;
 import org.formbuilder.BeanMapper;
 import org.formbuilder.mapping.BeanMappingContext;
 import org.formbuilder.mapping.exception.MappingException;
+import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 import org.formbuilder.util.GridBagPanel;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyDescriptor;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
 import static javax.swing.SwingUtilities.isEventDispatchThread;
 
-/** @author aeremenok 2010 */
+/**
+ * Creates a {@link JPanel} with {@link GridBagLayout}. Each property label and editor are located in separate row in
+ * order, specified by "order" attribute. For example, if orders aren't specified, properties are sorted by names:<br>
+ * <table><tr><td> Age </td><td> 24 </td></tr><tr><td> Id </td><td> eav </td></tr></tr><tr><td> Smoker </td><td> false
+ * </td></tr></table>
+ *
+ * @author aeremenok 2010
+ * @see MetaData#getOrder(PropertyDescriptor)
+ */
 @NotThreadSafe
 public class GridBagMapper<B>
         implements BeanMapper<B>
