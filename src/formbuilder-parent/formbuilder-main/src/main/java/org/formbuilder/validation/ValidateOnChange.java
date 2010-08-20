@@ -12,7 +12,7 @@
 package org.formbuilder.validation;
 
 import org.formbuilder.mapping.PropertyEditor;
-import org.formbuilder.mapping.change.ValueChangeListener;
+import org.formbuilder.mapping.change.ChangeHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,29 +23,52 @@ import javax.validation.Validator;
 import java.beans.PropertyDescriptor;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkState;
+import static javax.swing.SwingUtilities.isEventDispatchThread;
+
 /** @author aeremenok Date: 30.07.2010 Time: 17:26:09 */
-public class ValidateChangedValue<B, C extends JComponent, V>
-        implements ValueChangeListener
+public class ValidateOnChange<B, C extends JComponent, V>
+        implements ChangeHandler
 {
+// ------------------------------ FIELDS ------------------------------
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     private final PropertyEditor<C, V> propertyEditor;
 
-    public ValidateChangedValue( @Nonnull final PropertyEditor<C, V> propertyEditor )
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    public ValidateOnChange( @Nonnull final PropertyEditor<C, V> propertyEditor )
     {
         this.propertyEditor = propertyEditor;
     }
 
-    @SuppressWarnings( {"unchecked"} )
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface ChangeHandler ---------------------
+
     @Override
-    public void onChange()
+    public void onChange( final ValidationMarker... validationMarkers )
     {
-        final V newValue = propertyEditor.getValue();
+        if ( validationMarkers.length > 0 )
+        {
+            final V newValue = propertyEditor.getValue();
+            final Set<ConstraintViolation<B>> violations = doValidation( validator, newValue );
 
-        final Set<ConstraintViolation<B>> violations = doValidation( validator, newValue );
+            final ValidationContext<B, C, V> validationContext = new ValidationContext<B, C, V>( propertyEditor,
+                    violations,
+                    newValue );
 
-        final ValidationContext validationContext = new ValidationContext( propertyEditor, violations, newValue );
-        propertyEditor.getMapper().getValidationMarker().markViolations( validationContext );
+            checkState( isEventDispatchThread() );
+            for ( final ValidationMarker validationMarker : validationMarkers )
+            {
+                if ( validationMarker != null )
+                {
+                    validationMarker.markViolations( validationContext );
+                }
+            }
+        }
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @Nonnull
     @SuppressWarnings( {"unchecked"} )

@@ -9,43 +9,35 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
 
-import java.util.Date;
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.validation.BackgroundMarker;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.Date;
 
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-/**
- * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 11:57:47
- */
+/** @author aeremenok Date: 28.07.2010 Time: 11:57:47 */
 @NotThreadSafe
 public class DateToSpinnerMapper
         implements TypeMapper<JSpinner, Date>
 {
     @Override
-    public void bindChangeListener( @Nonnull final JSpinner editorComponent,
-                                    @Nonnull final ValueChangeListener<Date> dateValueChangeListener )
+    public void handleChanges( @Nonnull final JSpinner editorComponent,
+                                    @Nonnull final ChangeHandler<Date> changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
             @Override
             public void stateChanged( final ChangeEvent e )
             {
-                dateValueChangeListener.onChange();
+                changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
         } );
     }
@@ -55,13 +47,6 @@ public class DateToSpinnerMapper
     public JSpinner createEditorComponent()
     {
         return new JSpinner( new SpinnerDateModel() );
-    }
-
-    @Nonnull
-    @Override
-    public ValidationMarker getValidationMarker()
-    {
-        return BackgroundMarker.INSTANCE;
     }
 
     @Nullable

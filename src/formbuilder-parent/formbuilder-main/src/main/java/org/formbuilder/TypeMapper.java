@@ -15,9 +15,7 @@
  */
 package org.formbuilder;
 
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.BackgroundMarker;
-import org.formbuilder.validation.DoNothingMarker;
+import org.formbuilder.mapping.change.ChangeHandler;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
@@ -29,8 +27,6 @@ import javax.swing.*;
  * Maps the values of a given typemapper to the given editors.
  *
  * @author aeremenok 2010
- * @param <C> editor component typemapper
- * @param <V> property value typemapper
  */
 @NotThreadSafe
 public interface TypeMapper<C extends JComponent, V>
@@ -40,11 +36,11 @@ public interface TypeMapper<C extends JComponent, V>
      * changes.
      *
      * @param editorComponent an editor, which state should be observed
-     * @param changeListener  you should call {@link ValueChangeListener#onChange()} when editorComponent changes its
-     *                        state
+     * @param changeHandler   you should call {@link ChangeHandler#onChange(ValidationMarker...)} when editorComponent
+     *                        changes its state
      */
-    void bindChangeListener( @Nonnull C editorComponent,
-                             @Nonnull ValueChangeListener<V> changeListener );
+    void handleChanges( @Nonnull C editorComponent,
+                        @Nonnull ChangeHandler<V> changeHandler );
 
     /**
      * A factory method for editors.
@@ -55,25 +51,13 @@ public interface TypeMapper<C extends JComponent, V>
     C createEditorComponent();
 
     /**
-     * @return a strategy of marking editors according to validation results. If the validation isn't needed, you can
-     *         return a {@link DoNothingMarker}
-     * @see ValidationMarker
-     * @see BackgroundMarker
-     * @see DoNothingMarker
-     */
-    @Nonnull
-    ValidationMarker getValidationMarker();
-
-    /**
      * @param editorComponent an editor to extract its value
      * @return editor's value
      */
     @Nullable
     V getValue( @Nonnull C editorComponent );
 
-    /**
-     * @return value class, which should be mapped using this mapper
-     */
+    /** @return value class, which should be mapped using this mapper */
     @Nonnull
     Class<V> getValueClass();
 

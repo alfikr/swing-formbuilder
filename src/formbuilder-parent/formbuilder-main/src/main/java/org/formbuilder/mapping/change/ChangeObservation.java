@@ -1,9 +1,8 @@
-package org.formbuilder.mapping;
+package org.formbuilder.mapping.change;
 
 import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.EmptyChangeListener;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.ValidateChangedValue;
+import org.formbuilder.mapping.PropertyEditor;
+import org.formbuilder.validation.ValidateOnChange;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -23,13 +22,13 @@ public class ChangeObservation
     {
         final JComponent editorComponent = propertyEditor.getEditorComponent();
         final TypeMapper mapper = propertyEditor.getMapper();
-        mapper.bindChangeListener( editorComponent, createValueChangeListener( propertyEditor ) );
+        mapper.handleChanges( editorComponent, createValueChangeListener( propertyEditor ) );
     }
 
     @Nonnull
     @SuppressWarnings( {"unchecked"} )
-    protected <V> ValueChangeListener<V> createValueChangeListener( final PropertyEditor propertyEditor )
+    protected <V> ChangeHandler<V> createValueChangeListener( final PropertyEditor propertyEditor )
     {
-        return doValidation ? new ValidateChangedValue( propertyEditor ) : EmptyChangeListener.INSTANCE;
+        return doValidation ? new ValidateOnChange( propertyEditor ) : EmptyChangeHandler.INSTANCE;
     }
 }

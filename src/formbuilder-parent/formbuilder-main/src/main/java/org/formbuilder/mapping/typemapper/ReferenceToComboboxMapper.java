@@ -9,37 +9,28 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
 
+import org.formbuilder.TypeMapper;
+import org.formbuilder.mapping.change.ChangeHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collection;
 import java.util.Vector;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JComboBox;
-
-import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.change.ValueChangeListener;
-import org.formbuilder.validation.DoNothingMarker;
-import org.formbuilder.validation.ValidationMarker;
-
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 13:41:29
- * @param <R>
- */
+/** @author aeremenok Date: 30.07.2010 Time: 13:41:29 */
 @NotThreadSafe
 public abstract class ReferenceToComboboxMapper<R>
         implements TypeMapper<JComboBox, R>
 {
     @Override
-    public void bindChangeListener( @Nonnull final JComboBox editorComponent,
-                                    @Nonnull final ValueChangeListener<R> rValueChangeListener )
+    public void handleChanges( @Nonnull final JComboBox editorComponent,
+                               @Nonnull final ChangeHandler<R> changeHandler )
     {
         editorComponent.addItemListener( new ItemListener()
         {
@@ -48,7 +39,7 @@ public abstract class ReferenceToComboboxMapper<R>
             {
                 if ( e.getStateChange() == ItemEvent.SELECTED )
                 {
-                    rValueChangeListener.onChange();
+                    changeHandler.onChange();
                 }
             }
         } );
@@ -59,13 +50,6 @@ public abstract class ReferenceToComboboxMapper<R>
     public JComboBox createEditorComponent()
     {
         return new JComboBox( new Vector<R>( getSuitableData() ) );
-    }
-
-    @Nonnull
-    @Override
-    public ValidationMarker getValidationMarker()
-    {
-        return DoNothingMarker.INSTANCE;
     }
 
     @Nullable
