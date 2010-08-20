@@ -15,7 +15,7 @@ import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
-import org.formbuilder.mapping.beanmapper.PropertyContext;
+import org.formbuilder.mapping.beanmapper.PropertyNameContext;
 import org.formbuilder.mapping.beanmapper.PropertyNameBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleContext;
@@ -37,7 +37,7 @@ public class CustomMapperTest
         final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean( final PropertyContext<Person> context )
+            public JComponent mapBean( final PropertyNameContext<Person> context )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
                 panel.add( context.label( "name" ), BorderLayout.NORTH );

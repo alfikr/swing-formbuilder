@@ -2,7 +2,6 @@ package org.formbuilder.mapping.change;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.PropertyEditor;
-import org.formbuilder.validation.ValidateOnChange;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -29,6 +28,6 @@ public class ChangeObservation
     @SuppressWarnings( {"unchecked"} )
     protected <V> ChangeHandler<V> createValueChangeListener( final PropertyEditor propertyEditor )
     {
-        return doValidation ? new ValidateOnChange( propertyEditor ) : EmptyChangeHandler.INSTANCE;
+        return doValidation ? new ValidateOnChange( propertyEditor ) : DoNothingOnChange.INSTANCE;
     }
 }

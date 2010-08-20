@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.beans.PropertyDescriptor;
 
 /** @author aeremenok Date: Aug 18, 2010 Time: 4:32:57 PM */
-public class PropertyContext<B>
+public class PropertyNameContext<B>
 {
 // ------------------------------ FIELDS ------------------------------
     private final BeanMappingContext<B> beanMappingContext;
@@ -18,8 +18,8 @@ public class PropertyContext<B>
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
-    public PropertyContext( @Nonnull final BeanMappingContext<B> beanMappingContext,
-                            @Nonnull final BeanMapping beanMapping )
+    public PropertyNameContext( @Nonnull final BeanMappingContext<B> beanMappingContext,
+                                @Nonnull final BeanMapping beanMapping )
     {
         this.beanMappingContext = beanMappingContext;
         this.beanMapping = beanMapping;
@@ -32,8 +32,7 @@ public class PropertyContext<B>
             throws
             MappingException
     {
-        final PropertyDescriptor descriptor = getDescriptor( propertyName );
-        return beanMappingContext.getEditor( descriptor, beanMapping );
+        return beanMappingContext.getEditor( getDescriptor( propertyName ), beanMapping );
     }
 
     protected PropertyDescriptor getDescriptor( final String propertyName )
@@ -47,7 +46,6 @@ public class PropertyContext<B>
             throws
             MappingException
     {
-        final PropertyDescriptor descriptor = getDescriptor( propertyName );
-        return beanMappingContext.getLabel( descriptor, beanMapping );
+        return beanMappingContext.getLabel( getDescriptor( propertyName ), beanMapping );
     }
 }

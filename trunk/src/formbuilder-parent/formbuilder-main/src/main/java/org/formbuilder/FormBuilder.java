@@ -17,7 +17,8 @@ package org.formbuilder;
 
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.mapping.BeanMappingContext;
-import org.formbuilder.mapping.form.BeanRelpicatingForm;
+import org.formbuilder.mapping.change.ValidateOnChange;
+import org.formbuilder.mapping.form.BeanReplicatingForm;
 import org.formbuilder.mapping.MappingRules;
 import org.formbuilder.mapping.beanmapper.GridBagMapper;
 import org.formbuilder.mapping.beanmapper.PropertyNameBeanMapper;
@@ -27,7 +28,6 @@ import org.formbuilder.mapping.typemapper.BooleanToCheckboxMapper;
 import org.formbuilder.mapping.typemapper.DateToSpinnerMapper;
 import org.formbuilder.mapping.typemapper.NumberToSpinnerMapper;
 import org.formbuilder.mapping.typemapper.StringToTextFieldMapper;
-import org.formbuilder.validation.ValidateOnChange;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
@@ -96,7 +96,7 @@ public class FormBuilder<B>
     { // todo pass a copy of mapping rules
         final BeanMappingContext<B> context = new BeanMappingContext<B>( beanClass, mappingRules, doValidation );
         final BeanMapping mapping = beanMapper.map( context );
-        return new BeanRelpicatingForm<B>( mapping, beanClass );
+        return new BeanReplicatingForm<B>( mapping, beanClass );
     }
 
     /**

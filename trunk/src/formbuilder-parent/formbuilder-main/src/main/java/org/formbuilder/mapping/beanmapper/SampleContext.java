@@ -41,8 +41,7 @@ public class SampleContext<B>
             MappingException
     {
 
-        final PropertyDescriptor descriptor = getDescriptor();
-        return beanMappingContext.getEditor( descriptor, beanMapping );
+        return beanMappingContext.getEditor( getDescriptor(), beanMapping );
     }
 
     @Nonnull
@@ -50,8 +49,7 @@ public class SampleContext<B>
             throws
             MappingException
     {
-        final PropertyDescriptor descriptor = getDescriptor();
-        return beanMappingContext.getLabel( descriptor, beanMapping );
+        return beanMappingContext.getLabel( getDescriptor(), beanMapping );
     }
 
     @Nonnull
