@@ -11,22 +11,15 @@
  */
 package test.env;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
-import java.util.Date;
-import java.util.concurrent.Callable;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.edt.GuiTask;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 
-import domain.Person;
+import javax.swing.*;
+import java.awt.*;
+import java.util.concurrent.Callable;
 
 /**
  * @author aeremenok
@@ -81,16 +74,6 @@ public class FormEnvironment
                 return formBuilder.buildForm();
             }
         } );
-    }
-
-    public Person createPerson()
-    {
-        final Person oldValue = new Person();
-        oldValue.setName( "jonh smith" );
-        oldValue.setAge( 24 );
-        oldValue.setBirthDate( new Date( 1 ) );
-        oldValue.setGender( true );
-        return oldValue;
     }
 
     public <B> void setValueInEDT( final Form<B> form,
