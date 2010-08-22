@@ -23,7 +23,11 @@ import java.awt.event.ItemListener;
 import java.util.Collection;
 import java.util.Vector;
 
-/** @author aeremenok Date: 30.07.2010 Time: 13:41:29 */
+/**
+ * Maps properties, which reference some object to {@link JComboBox}
+ *
+ * @author aeremenok Date: 30.07.2010 Time: 13:41:29
+ */
 @NotThreadSafe
 public abstract class ReferenceToComboboxMapper<R>
         implements TypeMapper<JComboBox, R>
@@ -67,6 +71,7 @@ public abstract class ReferenceToComboboxMapper<R>
         editorComponent.setSelectedItem( value );
     }
 
+    /** @return provide a collection of possible reference values */
     @Nonnull
     protected abstract Collection<R> getSuitableData();
 }

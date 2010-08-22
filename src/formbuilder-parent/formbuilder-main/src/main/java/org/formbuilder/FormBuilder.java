@@ -24,11 +24,14 @@ import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.change.ValidateOnChange;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.form.BeanReplicatingForm;
+import org.formbuilder.mapping.typemapper.GetterConfig;
 import org.formbuilder.mapping.typemapper.GetterMapper;
 import org.formbuilder.mapping.typemapper.impl.BooleanToCheckboxMapper;
 import org.formbuilder.mapping.typemapper.impl.DateToSpinnerMapper;
 import org.formbuilder.mapping.typemapper.impl.NumberToSpinnerMapper;
 import org.formbuilder.mapping.typemapper.impl.StringToTextFieldMapper;
+import org.formbuilder.util.MethodRecorder;
+import org.formbuilder.util.Reflection;
 import org.formbuilder.validation.ValidationMarker;
 
 import javax.annotation.Nonnull;
@@ -156,7 +159,7 @@ public class FormBuilder<B>
      *                       &#064;Override
      *                       protected void mapGetters( final Person beanSample )
      *                       {
-     *                           mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+     *                           use( beanSample.getDescription(), new StringToTextAreaMapper() );
      *                       }
      *                   } ).buildForm();
      * </pre>
@@ -168,7 +171,9 @@ public class FormBuilder<B>
     @Nonnull
     public FormBuilder<B> useForGetters( @Nonnull final GetterMapper<B> getterMapper )
     {
-        getterMapper.mapGettersToRules( beanClass, mappingRules );
+        final MethodRecorder methodRecorder = new MethodRecorder();
+        final GetterConfig config = new GetterConfig( mappingRules, methodRecorder );
+        getterMapper.mapGetters( Reflection.createProxy( beanClass, methodRecorder ), config );
         return this;
     }
 

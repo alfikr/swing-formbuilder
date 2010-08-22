@@ -23,7 +23,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.Date;
 
-/** @author aeremenok Date: 28.07.2010 Time: 11:57:47 */
+/**
+ * Maps properties of type {@link Date} to {@link JSpinner} with {@link SpinnerDateModel}
+ *
+ * @author aeremenok Date: 28.07.2010 Time: 11:57:47
+ */
 @NotThreadSafe
 public class DateToSpinnerMapper
         implements TypeMapper<JSpinner, Date>

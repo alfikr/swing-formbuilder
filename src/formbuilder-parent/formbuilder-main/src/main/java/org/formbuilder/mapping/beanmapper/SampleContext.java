@@ -38,7 +38,8 @@ public class SampleContext<B>
 // -------------------------- OTHER METHODS --------------------------
 
     /**
-     * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored
+     * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored. Instead the
+     *                                getter call is recorded by a cglib proxy to determine the property.
      * @return an editor component for a property, one instance per property
      * @throws GetterNotFoundException     the method, which was called on a sample bean is not a read method for any
      *                                     property
