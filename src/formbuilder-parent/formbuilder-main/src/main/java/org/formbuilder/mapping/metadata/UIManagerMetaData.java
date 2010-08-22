@@ -16,7 +16,16 @@ import javax.annotation.Nullable;
 import javax.swing.*;
 import java.beans.PropertyDescriptor;
 
-/** @author eav Date: 31.07.2010 Time: 12:18:28 */
+/**
+ * Reads property attributes from {@link UIManager#getDefaults()}. The attribute key looks this way:
+ * "BeanType.propertyName.attribute". For example:
+ * <p/>
+ * <pre>
+ * UIManager.getDefaults().put("Person.name.order", 1);
+ * </pre>
+ *
+ * @author eav Date: 31.07.2010 Time: 12:18:28
+ */
 public class UIManagerMetaData
         implements MetaData
 {

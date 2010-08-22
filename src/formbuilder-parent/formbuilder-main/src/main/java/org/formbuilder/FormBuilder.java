@@ -24,6 +24,8 @@ import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.change.ValidateOnChange;
 import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.form.BeanReplicatingForm;
+import org.formbuilder.mapping.metadata.CombinedMetaData;
+import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.typemapper.GetterConfig;
 import org.formbuilder.mapping.typemapper.GetterMapper;
 import org.formbuilder.mapping.typemapper.impl.BooleanToCheckboxMapper;
@@ -70,6 +72,8 @@ public class FormBuilder<B>
     private final MappingRules mappingRules = new MappingRules();
     @Nonnull
     private BeanMapper<B> beanMapper = new GridBagMapper<B>();
+    @Nonnull
+    private MetaData metaData = new CombinedMetaData();
     private boolean doValidation = true;
 
     private FormBuilder( final Class<B> beanClass )
@@ -80,8 +84,8 @@ public class FormBuilder<B>
     /**
      * Starts building of the form for the given class.
      *
-     * @param <T>       beanmapper typemapper
-     * @param beanClass beanmapper class object
+     * @param <T>       bean type
+     * @param beanClass bean class object
      * @return builder instance, configured for the given class
      */
     @Nonnull
@@ -103,7 +107,8 @@ public class FormBuilder<B>
         final BeanMappingContext<B> context = new BeanMappingContext<B>( beanMapping,
                 beanClass,
                 mappingRules,
-                doValidation );
+                doValidation,
+                metaData );
         final JComponent panel = beanMapper.map( context );
         return new BeanReplicatingForm<B>( panel, beanClass, beanMapping );
     }
@@ -134,7 +139,7 @@ public class FormBuilder<B>
      * raised, and by default, the propery is skipped. That means, for example, that {@link NumberToSpinnerMapper} suits
      * for int, long, {@link BigDecimal}, etc...
      *
-     * @param typeMappers mappers for each custom typemapper
+     * @param typeMappers mappers for each custom type
      * @return this builder
      * @see MappingRules
      */
@@ -183,9 +188,8 @@ public class FormBuilder<B>
      * properties are mapped by default:
      * <p/>
      * <pre>
-     * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForProperty( &quot;description&quot;, new
-     * StringToTextAreaMapper() )
-     *                           .buildForm();
+     * Form&lt;Person&gt; form = FormBuilder.map( Person.class )
+     *          .useForProperty( &quot;description&quot;, new StringToTextAreaMapper() ).buildForm();
      * </pre>
      *
      * @param propertyName   the name of beanmapper property
@@ -215,6 +219,18 @@ public class FormBuilder<B>
     public FormBuilder<B> with( @Nonnull final BeanMapper<B> beanMapper )
     {
         this.beanMapper = checkNotNull( beanMapper );
+        return this;
+    }
+
+    /**
+     * Allows a to provide a custom way to extract property attributes
+     * @param metaData attribute extractor
+     * @return this builder
+     */
+    @Nonnull
+    public FormBuilder<B> ask( @Nonnull MetaData metaData )
+    {
+        this.metaData = checkNotNull( metaData );
         return this;
     }
 }

@@ -21,11 +21,21 @@ import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 
-/** @author eav Date: 31.07.2010 Time: 12:18:03 */
+/**
+ * Reads attributes of properties, which are specified using annotations
+ *
+ * @author eav Date: 31.07.2010 Time: 12:18:03
+ */
 public class AnnotationMetaData
         implements MetaData
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @see UIOrder
+     */
     @Override
+    @Nullable
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
         final UIOrder uiOrder = getAnnotation( descriptor, UIOrder.class );
@@ -36,6 +46,11 @@ public class AnnotationMetaData
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see UITitle
+     */
     @Override
     @Nullable
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
@@ -48,12 +63,22 @@ public class AnnotationMetaData
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see UIHidden
+     */
     @Override
     public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIHidden.class ) != null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see UIReadOnly
+     */
     @Override
     public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {

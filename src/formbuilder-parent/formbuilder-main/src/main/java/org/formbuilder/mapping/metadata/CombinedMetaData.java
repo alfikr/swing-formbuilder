@@ -17,7 +17,11 @@ import java.beans.PropertyDescriptor;
 
 import static org.formbuilder.util.TextUtil.capitalize;
 
-/** @author eav Date: 31.07.2010 Time: 17:04:02 */
+/**
+ * Performs the attribute lookup in UIManagerMetaData, then in AnnotationMetaData, if the attibute cannot be found.
+ *
+ * @author eav Date: 31.07.2010 Time: 17:04:02
+ */
 public class CombinedMetaData
         implements MetaData
 {
@@ -28,28 +32,28 @@ public class CombinedMetaData
     @Override
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
-        return nvl( annotationMetaData.getOrder( descriptor ), uiManagerMetaData.getOrder( descriptor ) );
+        return nvl( uiManagerMetaData.getOrder( descriptor ), annotationMetaData.getOrder( descriptor ) );
     }
 
     @Nonnull
     @Override
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
-        return nvl( annotationMetaData.getTitle( descriptor ),
-                uiManagerMetaData.getTitle( descriptor ),
+        return nvl( uiManagerMetaData.getTitle( descriptor ),
+                annotationMetaData.getTitle( descriptor ),
                 capitalize( descriptor.getDisplayName() ) );
     }
 
     @Override
     public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
-        return annotationMetaData.isHidden( descriptor ) || uiManagerMetaData.isHidden( descriptor );
+        return uiManagerMetaData.isHidden( descriptor ) || annotationMetaData.isHidden( descriptor );
     }
 
     @Override
     public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
-        return annotationMetaData.isReadOnly( descriptor ) || uiManagerMetaData.isReadOnly( descriptor );
+        return uiManagerMetaData.isReadOnly( descriptor ) || annotationMetaData.isReadOnly( descriptor );
     }
 
     @Nullable
