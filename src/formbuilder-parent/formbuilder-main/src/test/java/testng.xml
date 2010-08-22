@@ -15,6 +15,7 @@
 <suite name="main suite" thread-count="1" parallel="false">
     <test name="main">
         <packages>
+            <!-- todo test for exceptions -->
             <package name="test.cases"/>
         </packages>
     </test>

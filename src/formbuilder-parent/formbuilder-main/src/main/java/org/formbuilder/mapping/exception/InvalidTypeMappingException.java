@@ -12,24 +12,23 @@
 
 package org.formbuilder.mapping.exception;
 
-import java.beans.PropertyDescriptor;
+import org.formbuilder.TypeMapper;
 
 import javax.annotation.Nonnull;
-
-import org.formbuilder.TypeMapper;
+import java.beans.PropertyDescriptor;
 
 /**
  * @author aeremenok
  *         Date: 30.07.2010
  *         Time: 17:12:15
  */
-public class InvalidPropertyMappingException
+public class InvalidTypeMappingException
         extends MappingException
 {
     private final Class expectedType;
     private final TypeMapper mapper;
 
-    public InvalidPropertyMappingException( @Nonnull final PropertyDescriptor descriptor,
+    public InvalidTypeMappingException( @Nonnull final PropertyDescriptor descriptor,
                                             @Nonnull final TypeMapper mapper )
     {
         super( message( descriptor, mapper ), descriptor );

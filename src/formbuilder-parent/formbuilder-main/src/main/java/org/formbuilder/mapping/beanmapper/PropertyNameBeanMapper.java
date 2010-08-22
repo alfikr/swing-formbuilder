@@ -18,7 +18,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
 
-/** @author aeremenok Date: Aug 3, 2010 Time: 1:09:26 PM */
+/**
+ * Allows user to provide his own component, and gives the ability to inject labels and editor components by specifying
+ * the property names.
+ *
+ * @author aeremenok Date: Aug 3, 2010 Time: 1:09:26 PM
+ */
+// todo is a middleman?
 @NotThreadSafe
 public abstract class PropertyNameBeanMapper<B>
         implements BeanMapper<B>
@@ -35,5 +41,9 @@ public abstract class PropertyNameBeanMapper<B>
 
 // -------------------------- OTHER METHODS --------------------------
 
+    /**
+     * @param context provides editor components and labels for property names
+     * @return user's custom form component
+     */
     protected abstract JComponent mapBean( final PropertyNameContext<B> context );
 }

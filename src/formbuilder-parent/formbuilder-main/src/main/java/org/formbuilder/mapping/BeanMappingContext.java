@@ -3,6 +3,8 @@ package org.formbuilder.mapping;
 import org.formbuilder.BeanMapper;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ChangeObservation;
+import org.formbuilder.mapping.exception.InvalidTypeMappingException;
+import org.formbuilder.mapping.exception.UnmappedTypeException;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
@@ -57,7 +59,9 @@ public class BeanMappingContext<B>
 
 // --------------------- GETTER / SETTER METHODS ---------------------
 
-    /** @return a class, which mapping is assisted */
+    /**
+     * @return a class, which mapping is assisted
+     */
     @Nonnull
     public Class<B> getBeanClass()
     {
@@ -68,7 +72,6 @@ public class BeanMappingContext<B>
 
     /**
      * @return property descriptors of a bean class, decorated with order property and sorted according to it
-     *
      * @see OrderedPropertyDescriptor
      * @see BeanInfo#getPropertyDescriptors()
      * @see MetaData#getOrder(PropertyDescriptor)
@@ -85,9 +88,14 @@ public class BeanMappingContext<B>
      *
      * @param descriptor a bean property
      * @return an editor component for a given property
+     * @throws InvalidTypeMappingException the type mapper, assigned for a given property has wrong type
+     * @throws UnmappedTypeException       cannot find a type mapper for a given property
      */
     @Nonnull
     public JComponent getEditor( @Nonnull final PropertyDescriptor descriptor )
+            throws
+            InvalidTypeMappingException,
+            UnmappedTypeException
     {
         JComponent editorComponent = beanMapping.getEditorComponent( descriptor );
         if ( editorComponent == null )
@@ -105,7 +113,6 @@ public class BeanMappingContext<B>
      *
      * @param descriptor a bean property
      * @return a label, that contains a title for a given property
-     *
      * @see MetaData#getTitle(PropertyDescriptor)
      */
     @Nonnull

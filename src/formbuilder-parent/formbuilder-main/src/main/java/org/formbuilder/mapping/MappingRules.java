@@ -12,7 +12,7 @@
 package org.formbuilder.mapping;
 
 import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.exception.InvalidPropertyMappingException;
+import org.formbuilder.mapping.exception.InvalidTypeMappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
 import org.formbuilder.mapping.typemapper.BooleanToCheckboxMapper;
 import org.formbuilder.mapping.typemapper.DateToSpinnerMapper;
@@ -89,17 +89,15 @@ public class MappingRules
      * @param descriptor property introspection info
      * @return a mapper, which {@link TypeMapper#getValueClass()} is either the same as or the subclass of {@link
      *         PropertyDescriptor#getReadMethod()} typemapper
-     *
-     * @throws InvalidPropertyMappingException
-     *                               found typemapper mapper, that returns wrong {@link TypeMapper#getValueClass()}
-     * @throws UnmappedTypeException no mappers found for a given proper
+     * @throws InvalidTypeMappingException found typemapper mapper, that returns wrong {@link TypeMapper#getValueClass()}
+     * @throws UnmappedTypeException       no mappers found for a given property
      * @see MappingRules#addMapper(TypeMapper)
      * @see MappingRules#addMapper(String, TypeMapper)
      */
     @Nonnull
     public TypeMapper getMapper( @Nonnull final PropertyDescriptor descriptor )
             throws
-            InvalidPropertyMappingException,
+            InvalidTypeMappingException,
             UnmappedTypeException
     {
         TypeMapper mapper = propertyNameToMapper.get( descriptor.getName() );
@@ -129,12 +127,12 @@ public class MappingRules
     protected TypeMapper checkType( @Nonnull final TypeMapper mapper,
                                     @Nonnull final PropertyDescriptor descriptor )
             throws
-            InvalidPropertyMappingException
+            InvalidTypeMappingException
     {
         final Class<?> boxed = Reflection.box( descriptor.getPropertyType() );
         if ( !boxed.isAssignableFrom( mapper.getValueClass() ) )
         {
-            throw new InvalidPropertyMappingException( descriptor, mapper );
+            throw new InvalidTypeMappingException( descriptor, mapper );
         }
         return mapper;
     }

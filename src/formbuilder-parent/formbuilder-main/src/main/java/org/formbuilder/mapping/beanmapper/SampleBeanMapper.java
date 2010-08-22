@@ -24,7 +24,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.swing.*;
 
-/** @author aeremenok 2010 */
+/**
+ * Allows user to provide his own component, and gives the ability to inject labels and editor components by calling
+ * getters of the sample bean instance
+ *
+ * @author aeremenok 2010
+ */
+// todo is a middleman?
 @NotThreadSafe
 public abstract class SampleBeanMapper<B>
         implements BeanMapper<B>
@@ -45,6 +51,11 @@ public abstract class SampleBeanMapper<B>
 
 // -------------------------- OTHER METHODS --------------------------
 
+    /**
+     * @param sample  a cglib-proxy, which records method calls
+     * @param context provides editor components and labels for called getters of sample
+     * @return user's custom form component
+     */
     @Nonnull
     protected abstract JComponent mapBean( @Nonnull final B sample,
                                            @Nonnull final SampleContext<B> context );
