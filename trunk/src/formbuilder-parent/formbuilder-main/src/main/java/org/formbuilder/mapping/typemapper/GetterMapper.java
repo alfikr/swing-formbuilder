@@ -11,25 +11,21 @@
  */
 package org.formbuilder.mapping.typemapper;
 
-import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.util.MethodRecorder;
-import org.formbuilder.util.Reflection;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-/** @author aeremenok Date: 30.07.2010 Time: 17:54:35 */
+/**
+ * Should be implemented to register type mappers by calling getters on a sample bean instance
+ *
+ * @author aeremenok Date: 30.07.2010 Time: 17:54:35
+ */
 @NotThreadSafe
-public abstract class GetterMapper<B>
+public interface GetterMapper<B>
 {
-    protected abstract void mapGetters( @Nonnull B beanSample,
-                                        @Nonnull GetterMapperContext context );
-
-    public final void mapGettersToRules( @Nonnull final Class<B> beanClass,
-                                         @Nonnull final MappingRules mappingRules )
-    {
-        final MethodRecorder methodRecorder = new MethodRecorder();
-        final GetterMapperContext context = new GetterMapperContext( mappingRules, methodRecorder );
-        mapGetters( Reflection.createProxy( beanClass, methodRecorder ), context );
-    }
+    /**
+     * @param beanSample a cglib-proxy, which records getter invocations
+     * @param config     a type mapper registry frot-end
+     */
+    void mapGetters( @Nonnull B beanSample,
+                     @Nonnull GetterConfig config );
 }

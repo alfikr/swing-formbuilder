@@ -16,8 +16,8 @@ import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
+import org.formbuilder.mapping.typemapper.GetterConfig;
 import org.formbuilder.mapping.typemapper.GetterMapper;
-import org.formbuilder.mapping.typemapper.GetterMapperContext;
 import org.formbuilder.mapping.typemapper.impl.StringMapper;
 import org.testng.annotations.Test;
 
@@ -35,9 +35,9 @@ public class PropertyMappingTest
                 {
                     @Override
                     public void mapGetters( final Person beanSample,
-                                            final GetterMapperContext context )
+                                            final GetterConfig config )
                     {
-                        context.mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+                        config.use( beanSample.getDescription(), new StringToTextAreaMapper() );
                     }
                 } );
         final Form<Person> form = env.buildFormInEDT( formBuilder );

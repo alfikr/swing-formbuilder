@@ -22,7 +22,11 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/** @author aeremenok Date: 30.07.2010 Time: 13:38:16 */
+/**
+ * Maps properties of type {@link Boolean} to {@link JCheckBox}
+ *
+ * @author aeremenok Date: 30.07.2010 Time: 13:38:16
+ */
 @NotThreadSafe
 public class BooleanToCheckboxMapper
         implements TypeMapper<JCheckBox, Boolean>

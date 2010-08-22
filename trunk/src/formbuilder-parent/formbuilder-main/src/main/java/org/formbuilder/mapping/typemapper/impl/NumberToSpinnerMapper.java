@@ -22,7 +22,11 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/** @author aeremenok Date: 28.07.2010 Time: 11:55:54 */
+/**
+ * Maps properties of type {@link Number} and its subtypes to {@link JSpinner} with {@link SpinnerNumberModel}
+ *
+ * @author aeremenok Date: 28.07.2010 Time: 11:55:54
+ */
 @NotThreadSafe
 public class NumberToSpinnerMapper
         implements TypeMapper<JSpinner, Number>

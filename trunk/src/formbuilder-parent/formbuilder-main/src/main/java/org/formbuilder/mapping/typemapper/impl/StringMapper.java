@@ -22,7 +22,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-/** @author eav Date: Aug 2, 2010 Time: 11:54:19 PM */
+/**
+ * Maps properties of type {@link String} to subclasses of {@link JTextComponent}
+ *
+ * @author eav Date: Aug 2, 2010 Time: 11:54:19 PM
+ */
 @NotThreadSafe
 public abstract class StringMapper<C extends JTextComponent>
         implements TypeMapper<C, String>

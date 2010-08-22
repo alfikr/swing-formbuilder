@@ -13,6 +13,7 @@ package org.formbuilder.mapping.typemapper.impl;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.util.ImmutableListModel;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +25,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/** @author aeremenok Date: 30.07.2010 Time: 14:08:34 */
+/**
+ * Maps properties of type {@link Collection} and its subclasses to {@link JList}. Its value is changed by selecting the
+ * list elements.
+ *
+ * @author aeremenok Date: 30.07.2010 Time: 14:08:34
+ */
 @NotThreadSafe
 public abstract class CollectionToJListMapper<R, CT extends Collection>
         implements TypeMapper<JList, CT>
@@ -91,41 +97,16 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
         editorComponent.setSelectedIndices( ixs );
     }
 
+    /** @return data to pass into JList. From these entries a user will be able to select */
     @Nonnull
     protected abstract Collection<R> getSuitableData();
 
+    /**
+     * Convert a list of selected values to a collection of a proper type
+     *
+     * @param selectedValues selected value list
+     * @return collection of a proper type
+     */
     @Nullable
     protected abstract CT refine( @Nonnull List<R> selectedValues );
-
-    public static class ImmutableListModel<R>
-            extends AbstractListModel
-    {
-        private final List<R> data;
-
-        public ImmutableListModel( @Nonnull final Collection<R> data )
-        {
-            if ( data instanceof List )
-            {
-                this.data = (List<R>) data;
-            }
-            else
-            {
-                this.data = new ArrayList<R>( data );
-            }
-        }
-
-        @Override
-        public R getElementAt( final int index )
-        {
-            return data.get( index );
-        }
-
-        @Override
-        public int getSize()
-        {
-            return data == null ? 0 : data.size();
-        }
-
-        public int indexOf( @Nullable final R o ) {return data.indexOf( o );}
-    }
 }

@@ -23,8 +23,8 @@ import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleContext;
 import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.mapping.typemapper.GetterConfig;
 import org.formbuilder.mapping.typemapper.GetterMapper;
-import org.formbuilder.mapping.typemapper.GetterMapperContext;
 import org.formbuilder.validation.BackgroundMarker;
 import test.cases.PropertyMappingTest.StringToTextAreaMapper;
 
@@ -85,10 +85,10 @@ public class Example
         final Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
             @Override
-            protected void mapGetters( final Person beanSample,
-                                       final GetterMapperContext context )
+            public void mapGetters( final Person beanSample,
+                                    final GetterConfig config )
             {
-                context.mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+                config.use( beanSample.getDescription(), new StringToTextAreaMapper() );
             }
         } ).buildForm();
     }
