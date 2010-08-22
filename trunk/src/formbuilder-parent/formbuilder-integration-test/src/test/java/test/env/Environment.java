@@ -15,16 +15,14 @@
  */
 package test.env;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.URL;
-
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.LoggerFactory;
 import org.testng.ITest;
 
-/**
- * @author eav 2010
- */
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.URL;
+
+/** @author eav 2010 */
 public class Environment
         implements UncaughtExceptionHandler
 {

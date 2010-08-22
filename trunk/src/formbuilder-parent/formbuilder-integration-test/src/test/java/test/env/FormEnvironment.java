@@ -21,11 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.Callable;
 
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 16:08:40
- */
+/** @author aeremenok Date: 30.07.2010 Time: 16:08:40 */
 public class FormEnvironment
         extends ComponentEnvironment<JPanel>
 {

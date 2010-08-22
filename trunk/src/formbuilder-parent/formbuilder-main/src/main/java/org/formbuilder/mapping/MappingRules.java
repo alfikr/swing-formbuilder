@@ -14,10 +14,10 @@ package org.formbuilder.mapping;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.exception.InvalidTypeMappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
-import org.formbuilder.mapping.typemapper.BooleanToCheckboxMapper;
-import org.formbuilder.mapping.typemapper.DateToSpinnerMapper;
-import org.formbuilder.mapping.typemapper.NumberToSpinnerMapper;
-import org.formbuilder.mapping.typemapper.StringToTextFieldMapper;
+import org.formbuilder.mapping.typemapper.impl.BooleanToCheckboxMapper;
+import org.formbuilder.mapping.typemapper.impl.DateToSpinnerMapper;
+import org.formbuilder.mapping.typemapper.impl.NumberToSpinnerMapper;
+import org.formbuilder.mapping.typemapper.impl.StringToTextFieldMapper;
 import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;

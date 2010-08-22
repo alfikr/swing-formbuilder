@@ -156,7 +156,6 @@ public class Reflection
      * @param beanClass    where to search
      * @param propertyName a name of property
      * @return property descriptor
-     *
      * @throws PropertyNotFoundException no property with such name
      * @see PropertyDescriptor#getName()
      */
@@ -181,7 +180,6 @@ public class Reflection
      *
      * @param readMethod a getter method
      * @return property descriptor
-     *
      * @throws GetterNotFoundException no property with such getter
      * @see PropertyDescriptor#getReadMethod()
      */
@@ -206,7 +204,6 @@ public class Reflection
      * @param descriptor property descriptor
      * @param bean       value holder
      * @return a property value or an empty value for this property typemapper if beanmapper is null
-     *
      * @see Reflection#emptyValue(Method)
      * @see Reflection#setValue(Object, Object, PropertyDescriptor)
      */
@@ -236,7 +233,6 @@ public class Reflection
      * @param aClass beanmapper class
      * @param <T>    beanmapper typemapper
      * @return a newly allocated instance of given typemapper
-     *
      * @see Class#newInstance()
      */
     @Nonnull

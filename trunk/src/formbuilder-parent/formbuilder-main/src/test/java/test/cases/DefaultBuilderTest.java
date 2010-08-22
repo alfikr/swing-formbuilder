@@ -26,9 +26,7 @@ import java.awt.*;
 
 import static org.testng.Assert.assertEquals;
 
-/**
- * @author aeremenok 2010
- */
+/** @author aeremenok 2010 */
 public class DefaultBuilderTest
         extends FormTest
 {

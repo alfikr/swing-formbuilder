@@ -51,7 +51,6 @@ public class PropertySorter
      *
      * @param beanClass a bean class to analyze
      * @return filtered and sorted bean properties, decorated with their orders
-     *
      * @see BeanInfo#getPropertyDescriptors()
      * @see MetaData#isHidden(PropertyDescriptor)
      */

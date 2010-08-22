@@ -9,17 +9,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.exception;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Method;
 
-/**
- * @author aeremenok
- *         Date: Aug 3, 2010
- *         Time: 12:06:57 PM
- */
+/** @author aeremenok Date: Aug 3, 2010 Time: 12:06:57 PM */
 public class GetterNotFoundException
         extends MappingException
 {

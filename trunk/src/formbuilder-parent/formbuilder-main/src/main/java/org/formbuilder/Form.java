@@ -18,7 +18,7 @@ package org.formbuilder;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JComponent;
+import javax.swing.*;
 
 /**
  * Wraps the editor panel and holds the ediable beanmapper instance

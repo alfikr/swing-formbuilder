@@ -27,7 +27,12 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkState;
 import static javax.swing.SwingUtilities.isEventDispatchThread;
 
-/** @author aeremenok Date: 30.07.2010 Time: 17:26:09 */
+/**
+ * Performs jsr303 validation of a changed property
+ *
+ * @author aeremenok Date: 30.07.2010 Time: 17:26:09
+ * @see Validator#validateValue(Class, String, Object, Class[])
+ */
 public class ValidateOnChange<B, C extends JComponent, V>
         implements ChangeHandler
 {
@@ -49,22 +54,24 @@ public class ValidateOnChange<B, C extends JComponent, V>
     @Override
     public void onChange( final ValidationMarker... validationMarkers )
     {
-        if ( validationMarkers.length > 0 )
+        if ( validationMarkers == null || validationMarkers.length == 0 )
         {
-            final V newValue = propertyEditor.getValue();
-            final Set<ConstraintViolation<B>> violations = doValidation( validator, newValue );
+            return;
+        }
 
-            final ValidationEvent<B, C, V> validationEvent = new ValidationEvent<B, C, V>( propertyEditor,
-                    violations,
-                    newValue );
+        final V newValue = propertyEditor.getValue();
+        final Set<ConstraintViolation<B>> violations = doValidation( validator, newValue );
 
-            checkState( isEventDispatchThread() );
-            for ( final ValidationMarker validationMarker : validationMarkers )
+        final ValidationEvent<B, C, V> validationEvent = new ValidationEvent<B, C, V>( propertyEditor,
+                violations,
+                newValue );
+
+        checkState( isEventDispatchThread() );
+        for ( final ValidationMarker validationMarker : validationMarkers )
+        {
+            if ( validationMarker != null )
             {
-                if ( validationMarker != null )
-                {
-                    validationMarker.markViolations( validationEvent );
-                }
+                validationMarker.markViolations( validationEvent );
             }
         }
     }

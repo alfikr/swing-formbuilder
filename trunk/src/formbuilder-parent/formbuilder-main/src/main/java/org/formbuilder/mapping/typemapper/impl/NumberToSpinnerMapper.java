@@ -9,7 +9,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package org.formbuilder.mapping.typemapper;
+package org.formbuilder.mapping.typemapper.impl;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ChangeHandler;
@@ -22,14 +22,14 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/** @author aeremenok Date: 30.07.2010 Time: 13:38:16 */
+/** @author aeremenok Date: 28.07.2010 Time: 11:55:54 */
 @NotThreadSafe
-public class BooleanToCheckboxMapper
-        implements TypeMapper<JCheckBox, Boolean>
+public class NumberToSpinnerMapper
+        implements TypeMapper<JSpinner, Number>
 {
     @Override
-    public void handleChanges( @Nonnull final JCheckBox editorComponent,
-                                    @Nonnull final ChangeHandler<Boolean> changeHandler )
+    public void handleChanges( @Nonnull final JSpinner editorComponent,
+                               @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
@@ -43,28 +43,33 @@ public class BooleanToCheckboxMapper
 
     @Nonnull
     @Override
-    public JCheckBox createEditorComponent()
+    public JSpinner createEditorComponent()
     {
-        return new JCheckBox();
+        return new JSpinner( new SpinnerNumberModel() );
     }
 
+    @Nullable
     @Override
-    public Boolean getValue( @Nonnull final JCheckBox editorComponent )
+    public Number getValue( @Nonnull final JSpinner editorComponent )
     {
-        return editorComponent.isSelected();
+        return (Number) editorComponent.getValue();
     }
 
     @Nonnull
     @Override
-    public Class<Boolean> getValueClass()
+    public Class<Number> getValueClass()
     {
-        return Boolean.class;
+        return Number.class;
     }
 
     @Override
-    public void setValue( @Nonnull final JCheckBox editorComponent,
-                          @Nullable final Boolean value )
+    public void setValue( @Nonnull final JSpinner editorComponent,
+                          @Nullable Number value )
     {
-        editorComponent.setSelected( Boolean.TRUE.equals( value ) );
+        if ( value == null )
+        {
+            value = 0;
+        }
+        editorComponent.setValue( value );
     }
 }

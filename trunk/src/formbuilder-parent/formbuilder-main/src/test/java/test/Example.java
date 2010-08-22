@@ -19,11 +19,12 @@ import com.toedter.calendar.JDateChooser;
 import domain.Person;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
-import org.formbuilder.GetterMapper;
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleContext;
 import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.mapping.typemapper.GetterMapper;
+import org.formbuilder.mapping.typemapper.GetterMapperContext;
 import org.formbuilder.validation.BackgroundMarker;
 import test.cases.PropertyMappingTest.StringToTextAreaMapper;
 
@@ -84,9 +85,10 @@ public class Example
         final Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
             @Override
-            protected void mapGetters( final Person beanSample )
+            protected void mapGetters( final Person beanSample,
+                                       final GetterMapperContext context )
             {
-                mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+                context.mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
             }
         } ).buildForm();
     }
@@ -101,7 +103,7 @@ public class Example
     {
         @Override
         public void handleChanges( final JDateChooser editorComponent,
-                                        final ChangeHandler<Date> changeHandler )
+                                   final ChangeHandler changeHandler )
         {
             editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
             {

@@ -9,7 +9,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package org.formbuilder.mapping.typemapper;
+package org.formbuilder.mapping.typemapper.impl;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ChangeHandler;
@@ -29,7 +29,7 @@ public abstract class StringMapper<C extends JTextComponent>
 {
     @Override
     public void handleChanges( @Nonnull final C editorComponent,
-                                    @Nonnull final ChangeHandler<String> changeHandler )
+                               @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.getDocument().addDocumentListener( new DocumentListener()
         {

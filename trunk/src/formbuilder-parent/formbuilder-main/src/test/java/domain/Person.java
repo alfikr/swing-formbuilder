@@ -15,18 +15,15 @@
  */
 package domain;
 
-import java.util.Date;
-import java.util.Set;
-
-import javax.validation.constraints.Size;
-
 import org.formbuilder.annotations.UIHidden;
 import org.formbuilder.annotations.UIReadOnly;
 import org.formbuilder.annotations.UITitle;
 
-/**
- * @author aeremenok 2010
- */
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.Set;
+
+/** @author aeremenok 2010 */
 public class Person
 {
     private String name;

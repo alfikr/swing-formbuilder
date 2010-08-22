@@ -9,21 +9,15 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.metadata;
-
-import static org.formbuilder.util.TextUtil.capitalize;
-
-import java.beans.PropertyDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.beans.PropertyDescriptor;
 
-/**
- * @author eav
- *         Date: 31.07.2010
- *         Time: 17:04:02
- */
+import static org.formbuilder.util.TextUtil.capitalize;
+
+/** @author eav Date: 31.07.2010 Time: 17:04:02 */
 public class CombinedMetaData
         implements MetaData
 {

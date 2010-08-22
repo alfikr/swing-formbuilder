@@ -51,7 +51,6 @@ public class TextUtil
      * @param violations validation results
      * @param <B>        beanmapper typemapper
      * @return violation messages, separated with delimiter
-     *
      * @see ToMessage
      */
     @Nonnull

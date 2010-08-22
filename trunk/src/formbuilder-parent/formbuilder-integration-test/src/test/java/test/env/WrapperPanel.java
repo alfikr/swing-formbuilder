@@ -11,15 +11,10 @@
  */
 package test.env;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-/**
- * @author eav 2009
- */
+/** @author eav 2009 */
 public class WrapperPanel
         extends JPanel
 {

@@ -9,23 +9,17 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.cases;
 
-import javax.swing.UIManager;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JSpinnerFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import javax.swing.*;
 
-/**
- * @author eav
- *         Date: 31.07.2010
- *         Time: 21:05:55
- */
+/** @author eav Date: 31.07.2010 Time: 21:05:55 */
 public class OrderTest
         extends FormTest
 {
