@@ -27,6 +27,7 @@
     </properties>
     <!-- -->
     <build>
+        <directory>${java.io.tmpdir}/sfb/${project.artifactId}</directory>
         <pluginManagement>
             <plugins>
                 <plugin>

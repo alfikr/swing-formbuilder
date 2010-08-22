@@ -1,7 +1,6 @@
 package org.formbuilder.mapping;
 
 import org.formbuilder.TypeMapper;
-import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.MetaData;
 
 import javax.annotation.Nonnull;
@@ -33,15 +32,13 @@ public class ComponentFactory
     @Nonnull
     public JComponent createEditor( @Nonnull final PropertyDescriptor descriptor,
                                     @Nonnull final TypeMapper mapper )
-            throws
-            MappingException
     {
         final JComponent editor = checkNotNull( mapper.createEditorComponent() );
         editor.setEnabled( isEditable( descriptor ) );
         editor.setName( descriptor.getName() );
         return editor;
     }
-    
+
     protected boolean isEditable( @Nonnull final PropertyDescriptor descriptor )
     {
         final boolean hasWriteMethod = descriptor.getWriteMethod() != null;

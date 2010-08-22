@@ -15,19 +15,16 @@
  */
 package test.cases;
 
-import static org.testng.Assert.assertEquals;
-
-import java.awt.GridBagLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import javax.swing.*;
+import java.awt.*;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author aeremenok 2010
@@ -64,7 +61,7 @@ public class DefaultBuilderTest
         wrapperPanel.checkBox( "gender" ).requireSelected();
 
         screenshotSaver.saveScreenshot( env.getWrapperPanelFixture().target,
-                System.getProperty( "user.home" ) + "/sfb" );
+                System.getProperty( "java.io.tmpdir" ) + "/sfb" );
     }
 
     private void requireNewBeanCreated( final Form<Person> form,
