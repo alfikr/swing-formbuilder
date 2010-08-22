@@ -9,18 +9,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
-package org.formbuilder.mapping.typemapper;
+package org.formbuilder.mapping.typemapper.impl;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-/**
- * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 11:22:32
- */
+/** @author aeremenok Date: 28.07.2010 Time: 11:22:32 */
 @NotThreadSafe
 public class StringToTextFieldMapper
         extends StringMapper<JTextField>

@@ -18,8 +18,8 @@ import org.formbuilder.validation.ValidationMarker;
  *
  * @author eav Date: Aug 3, 2010 Time: 12:05:47 AM
  */
-public class DoNothingOnChange<V>
-        implements ChangeHandler<V>
+public class DoNothingOnChange
+        implements ChangeHandler
 {
     public static final DoNothingOnChange INSTANCE = new DoNothingOnChange();
 

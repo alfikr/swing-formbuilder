@@ -59,9 +59,7 @@ public class BeanMappingContext<B>
 
 // --------------------- GETTER / SETTER METHODS ---------------------
 
-    /**
-     * @return a class, which mapping is assisted
-     */
+    /** @return a class, which mapping is assisted */
     @Nonnull
     public Class<B> getBeanClass()
     {

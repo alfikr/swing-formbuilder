@@ -9,28 +9,22 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.cases;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotSame;
-import static org.testng.Assert.assertNull;
-
-import java.awt.Color;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import java.awt.*;
 
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 16:21:04
- */
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotSame;
+import static org.testng.Assert.assertNull;
+
+/** @author aeremenok Date: 30.07.2010 Time: 16:21:04 */
 public class ValidationTest
         extends FormTest
 {

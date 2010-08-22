@@ -30,7 +30,7 @@ public class ChangeObservation
 
     @Nonnull
     @SuppressWarnings( {"unchecked"} )
-    protected <V> ChangeHandler<V> createValueChangeListener( final PropertyEditor propertyEditor )
+    protected ChangeHandler createValueChangeListener( final PropertyEditor propertyEditor )
     {
         return doValidation ? new ValidateOnChange( propertyEditor ) : DoNothingOnChange.INSTANCE;
     }

@@ -9,27 +9,21 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.cases;
 
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.fest.swing.fixture.JTextComponentFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
-import org.formbuilder.GetterMapper;
-import org.formbuilder.mapping.typemapper.StringMapper;
+import org.formbuilder.mapping.typemapper.GetterMapper;
+import org.formbuilder.mapping.typemapper.GetterMapperContext;
+import org.formbuilder.mapping.typemapper.impl.StringMapper;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import javax.swing.*;
 
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 16:36:33
- */
+/** @author aeremenok Date: 30.07.2010 Time: 16:36:33 */
 public class PropertyMappingTest
         extends FormTest
 {
@@ -40,9 +34,10 @@ public class PropertyMappingTest
                 .useForGetters( new GetterMapper<Person>()
                 {
                     @Override
-                    public void mapGetters( final Person beanSample )
+                    public void mapGetters( final Person beanSample,
+                                            final GetterMapperContext context )
                     {
-                        mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+                        context.mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
                     }
                 } );
         final Form<Person> form = env.buildFormInEDT( formBuilder );
@@ -79,7 +74,7 @@ public class PropertyMappingTest
     }
 
     public static class StringToTextAreaMapper
-        extends StringMapper<JTextArea>
+            extends StringMapper<JTextArea>
     {
         @Override
         public JTextArea createEditorComponent()

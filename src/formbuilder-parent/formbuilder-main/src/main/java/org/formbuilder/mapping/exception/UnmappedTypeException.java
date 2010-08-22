@@ -9,18 +9,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.exception;
 
+import javax.annotation.Nonnull;
 import java.beans.PropertyDescriptor;
 
-import javax.annotation.Nonnull;
-
-/**
- * @author aeremenok
- *         Date: 28.07.2010
- *         Time: 12:31:28
- */
+/** @author aeremenok Date: 28.07.2010 Time: 12:31:28 */
 public class UnmappedTypeException
         extends MappingException
 {

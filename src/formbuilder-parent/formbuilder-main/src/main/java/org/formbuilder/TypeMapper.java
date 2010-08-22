@@ -40,7 +40,7 @@ public interface TypeMapper<C extends JComponent, V>
      *                        changes its state
      */
     void handleChanges( @Nonnull C editorComponent,
-                        @Nonnull ChangeHandler<V> changeHandler );
+                        @Nonnull ChangeHandler changeHandler );
 
     /**
      * A factory method for editors.

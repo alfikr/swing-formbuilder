@@ -9,21 +9,15 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.cases;
 
-import static org.testng.Assert.fail;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import static org.testng.Assert.fail;
 
-/**
- * @author eav
- *         Date: 31.07.2010
- *         Time: 20:48:24
- */
+/** @author eav Date: 31.07.2010 Time: 20:48:24 */
 public class HiddenTest
         extends FormTest
 {

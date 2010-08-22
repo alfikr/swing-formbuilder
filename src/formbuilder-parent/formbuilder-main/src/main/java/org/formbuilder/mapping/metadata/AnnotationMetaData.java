@@ -9,25 +9,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.metadata;
-
-import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.formbuilder.annotations.UIHidden;
 import org.formbuilder.annotations.UIOrder;
 import org.formbuilder.annotations.UIReadOnly;
 import org.formbuilder.annotations.UITitle;
 
-/**
- * @author eav
- *         Date: 31.07.2010
- *         Time: 12:18:03
- */
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+
+/** @author eav Date: 31.07.2010 Time: 12:18:03 */
 public class AnnotationMetaData
         implements MetaData
 {

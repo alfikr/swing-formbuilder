@@ -9,20 +9,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.metadata;
-
-import java.beans.PropertyDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.UIManager;
+import javax.swing.*;
+import java.beans.PropertyDescriptor;
 
-/**
- * @author eav
- *         Date: 31.07.2010
- *         Time: 12:18:28
- */
+/** @author eav Date: 31.07.2010 Time: 12:18:28 */
 public class UIManagerMetaData
         implements MetaData
 {

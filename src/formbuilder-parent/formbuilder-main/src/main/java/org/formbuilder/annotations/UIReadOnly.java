@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
  * Marks a property as read-only. Newly created editors with such properties are disabled.
  *
  * @author aeremenok Date: 30.07.2010 Time: 16:57:46
- * @see AnnotationMetaData#isReadOnly(PropertyDescriptor) 
+ * @see AnnotationMetaData#isReadOnly(PropertyDescriptor)
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )

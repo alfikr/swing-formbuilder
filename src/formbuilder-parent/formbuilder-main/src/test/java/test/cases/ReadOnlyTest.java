@@ -9,27 +9,18 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.cases;
 
-import java.awt.GridBagLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-
+import domain.Person;
 import org.fest.swing.fixture.JPanelFixture;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 import org.testng.annotations.Test;
 
-import domain.Person;
+import javax.swing.*;
+import java.awt.*;
 
-/**
- * @author eav
- *         Date: 31.07.2010
- *         Time: 12:03:33
- */
+/** @author eav Date: 31.07.2010 Time: 12:03:33 */
 public class ReadOnlyTest
         extends FormTest
 {

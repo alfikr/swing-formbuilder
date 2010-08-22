@@ -24,7 +24,7 @@ import javax.swing.*;
  * @see TypeMapper#handleChanges(JComponent, ChangeHandler)
  */
 @NotThreadSafe
-public interface ChangeHandler<V>
+public interface ChangeHandler
 {
     /**
      * Should be called when the editor component changed its value

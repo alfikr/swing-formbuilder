@@ -9,31 +9,21 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package test.env;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
-import java.util.Date;
-import java.util.concurrent.Callable;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
+import domain.Person;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.edt.GuiTask;
 import org.formbuilder.Form;
 import org.formbuilder.FormBuilder;
 
-import domain.Person;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Date;
+import java.util.concurrent.Callable;
 
-/**
- * @author aeremenok
- *         Date: 30.07.2010
- *         Time: 16:08:40
- */
+/** @author aeremenok Date: 30.07.2010 Time: 16:08:40 */
 public class FormEnvironment
         extends ComponentEnvironment<JPanel>
 {

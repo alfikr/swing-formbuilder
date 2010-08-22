@@ -15,9 +15,7 @@
  */
 package domain;
 
-/**
- * @author aeremenok 2010
- */
+/** @author aeremenok 2010 */
 public class Account
 {
     private String code;
