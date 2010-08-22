@@ -15,16 +15,36 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
 
-/** @author eav Date: 31.07.2010 Time: 12:17:38 */
+/**
+ * Provides attributes of bean properties.
+ *
+ * @author eav Date: 31.07.2010 Time: 12:17:38
+ */
 public interface MetaData
 {
+    /**
+     * @param descriptor a property
+     * @return position among another properties, where this property appears when the form is created
+     */
     @Nullable
     Integer getOrder( @Nonnull PropertyDescriptor descriptor );
 
+    /**
+     * @param descriptor a property
+     * @return a title, which will be displayed by JLabel for this property
+     */
     @Nullable
     String getTitle( @Nonnull PropertyDescriptor descriptor );
 
+    /**
+     * @param descriptor a property
+     * @return true if this property should not be displayed
+     */
     boolean isHidden( @Nonnull PropertyDescriptor descriptor );
 
+    /**
+     * @param descriptor a property
+     * @return true if this property should not be modified
+     */
     boolean isReadOnly( @Nonnull PropertyDescriptor descriptor );
 }

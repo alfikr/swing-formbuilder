@@ -5,7 +5,6 @@ import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.change.ChangeObservation;
 import org.formbuilder.mapping.exception.InvalidTypeMappingException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
-import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 import org.formbuilder.mapping.metadata.sort.PropertySorter;
@@ -33,14 +32,6 @@ public class BeanMappingContext<B>
     protected final BeanMapping beanMapping;
 
 // --------------------------- CONSTRUCTORS ---------------------------
-
-    public BeanMappingContext( final BeanMapping beanMapping,
-                               final Class<B> beanClass,
-                               final MappingRules mappingRules,
-                               final boolean doValidation )
-    { // todo inject metadata?
-        this( beanMapping, beanClass, mappingRules, doValidation, new CombinedMetaData() );
-    }
 
     public BeanMappingContext( final BeanMapping beanMapping,
                                final Class<B> beanClass,
