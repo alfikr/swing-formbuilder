@@ -17,15 +17,15 @@ You can include a following maven dependency:
 <dependency>
     <groupId>org.formbuilder</groupId>
     <artifactId>formbuilder-main</artifactId>
-    <version>0.9.0</version>
+    <version>1.0</version>
 </dependency>
 }}}
 
 Or directly download 
 
- * ==[http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/0.9.0/formbuilder-main-1.2.jar binaries]==
- * ==[http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/0.9.0/formbuilder-main-1.2-sources.jar sources]==
- * ==[http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/0.9.0/formbuilder-main-1.2-javadoc.jar javadoc]==
+ * ==[http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/1.0/formbuilder-main-1.0.jar binaries]==
+ * ==[http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/1.0/formbuilder-main-1.0-sources.jar sources]==
+ * ==[http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/org/taskmonitor/taskmonitor-main/1.0/formbuilder-main-1.0-javadoc.jar javadoc]==
 
 In such case, you will also need to add libraries, the formbuilder relies on:
  * ==[http://code.google.com/p/findbugs/ jsr305]==
