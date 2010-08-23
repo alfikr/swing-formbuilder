@@ -16,6 +16,7 @@ import java.beans.PropertyDescriptor;
  * Provides editor components and labels for property names.
  *
  * @author aeremenok Date: Aug 18, 2010 Time: 4:32:57 PM
+ * @param <B> bean type
  */
 public class PropertyNameContext<B>
 {

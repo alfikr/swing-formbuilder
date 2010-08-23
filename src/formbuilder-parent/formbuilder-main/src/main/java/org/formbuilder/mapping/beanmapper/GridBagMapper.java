@@ -39,6 +39,7 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  * </td></tr></table>
  *
  * @author aeremenok 2010
+ * @param <B> bean type
  * @see MetaData#getOrder(PropertyDescriptor)
  */
 @NotThreadSafe
@@ -83,7 +84,7 @@ public class GridBagMapper<B>
 
 // -------------------------- OTHER METHODS --------------------------
 
-    protected void handleMappingException( @Nonnull final MappingException e )
+    protected void handleMappingException( @SuppressWarnings( "unused" ) @Nonnull final MappingException e )
     {
         // skip wrong property
     }

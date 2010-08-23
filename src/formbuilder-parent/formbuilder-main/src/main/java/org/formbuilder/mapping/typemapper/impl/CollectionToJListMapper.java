@@ -30,9 +30,11 @@ import java.util.List;
  * list elements.
  *
  * @author aeremenok Date: 30.07.2010 Time: 14:08:34
+ * @param <CT> collection type
+ * @param <I> collection item type
  */
 @NotThreadSafe
-public abstract class CollectionToJListMapper<R, CT extends Collection>
+public abstract class CollectionToJListMapper<I, CT extends Collection>
         implements TypeMapper<JList, CT>
 {
     @Override
@@ -56,7 +58,7 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
     @Override
     public JList createEditorComponent()
     {
-        return new JList( new ImmutableListModel<R>( getSuitableData() ) );
+        return new JList( new ImmutableListModel<I>( getSuitableData() ) );
     }
 
     @Nullable
@@ -65,10 +67,10 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
     public CT getValue( @Nonnull final JList editorComponent )
     {
         final Object[] vs = editorComponent.getSelectedValues();
-        final List<R> selectedValueList = new ArrayList<R>( vs.length );
+        final List<I> selectedValueList = new ArrayList<I>( vs.length );
         for ( final Object v : vs )
         {
-            selectedValueList.add( (R) v );
+            selectedValueList.add( (I) v );
         }
         return refine( selectedValueList );
     }
@@ -84,13 +86,13 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
             return;
         }
 
-        final ImmutableListModel<R> model = (ImmutableListModel<R>) editorComponent.getModel();
+        final ImmutableListModel<I> model = (ImmutableListModel<I>) editorComponent.getModel();
 
         final int[] ixs = new int[value.size()];
         int i = 0;
         for ( final Object r : value )
         {
-            ixs[i] = model.indexOf( (R) r );
+            ixs[i] = model.indexOf( (I) r );
             i++;
         }
 
@@ -99,7 +101,7 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
 
     /** @return data to pass into JList. From these entries a user will be able to select */
     @Nonnull
-    protected abstract Collection<R> getSuitableData();
+    protected abstract Collection<I> getSuitableData();
 
     /**
      * Convert a list of selected values to a collection of a proper type
@@ -108,5 +110,5 @@ public abstract class CollectionToJListMapper<R, CT extends Collection>
      * @return collection of a proper type
      */
     @Nullable
-    protected abstract CT refine( @Nonnull List<R> selectedValues );
+    protected abstract CT refine( @Nonnull List<I> selectedValues );
 }

@@ -41,6 +41,7 @@ public class MappingRules
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
+    @SuppressWarnings( "unchecked" )
     public MappingRules()
     {
         this( asList( new StringToTextFieldMapper(),

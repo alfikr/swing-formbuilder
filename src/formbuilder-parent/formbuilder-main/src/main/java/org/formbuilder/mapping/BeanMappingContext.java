@@ -19,6 +19,7 @@ import java.util.List;
  * Provides the data needed to assist the editor creation when {@link BeanMapper#map(BeanMappingContext)} is called.
  *
  * @author aeremenok Date: Aug 18, 2010 Time: 1:57:48 PM
+ * @param <B> bean type
  * @see BeanMapper
  */
 public class BeanMappingContext<B>

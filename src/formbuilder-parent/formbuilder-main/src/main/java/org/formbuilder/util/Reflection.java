@@ -169,7 +169,7 @@ public class Reflection
     }
 
     /**
-     * Swallow {@link IntrospectionException}s on {@link Introspector#getBeanInfo()} call
+     * Swallow {@link IntrospectionException}s on {@link Introspector#getBeanInfo(Class)} call
      *
      * @param beanClass introspection source
      * @return bean info

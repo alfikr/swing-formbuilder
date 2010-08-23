@@ -23,6 +23,7 @@ import javax.swing.*;
  * the property names.
  *
  * @author aeremenok Date: Aug 3, 2010 Time: 1:09:26 PM
+ * @param <B> bean type
  */
 // todo is a middleman?
 @NotThreadSafe

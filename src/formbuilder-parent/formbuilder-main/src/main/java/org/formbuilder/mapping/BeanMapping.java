@@ -44,7 +44,6 @@ public class BeanMapping
         return propertyEditor;
     }
 
-    @SuppressWarnings( "unused" )
     public void addLabel( @Nonnull final PropertyDescriptor descriptor,
                           @Nonnull final JLabel label )
     {

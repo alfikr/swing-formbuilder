@@ -26,6 +26,7 @@ import javax.swing.text.JTextComponent;
  * Maps properties of type {@link String} to subclasses of {@link JTextComponent}
  *
  * @author eav Date: Aug 2, 2010 Time: 11:54:19 PM
+ * @param <C> editor component type
  */
 @NotThreadSafe
 public abstract class StringMapper<C extends JTextComponent>

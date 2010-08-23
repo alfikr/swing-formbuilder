@@ -28,7 +28,6 @@ public class ComponentFactory
 
 // -------------------------- OTHER METHODS --------------------------
 
-    @SuppressWarnings( {"unchecked"} )
     @Nonnull
     public JComponent createEditor( @Nonnull final PropertyDescriptor descriptor,
                                     @Nonnull final TypeMapper mapper )

@@ -31,6 +31,9 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  * Performs jsr303 validation of a changed property
  *
  * @author aeremenok Date: 30.07.2010 Time: 17:26:09
+ * @param <B> bean type
+ * @param <C> editor component type
+ * @param <V> value type
  * @see Validator#validateValue(Class, String, Object, Class[])
  */
 public class ValidateOnChange<B, C extends JComponent, V>

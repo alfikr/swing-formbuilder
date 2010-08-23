@@ -22,6 +22,8 @@ import java.beans.PropertyDescriptor;
  * Holds an editor cmponent and a mapper, that provides access to it.
  *
  * @author eav Date: 31.07.2010 Time: 17:19:34
+ * @param <C> editor component type
+ * @param <V> value type
  */
 public class PropertyEditor<C extends JComponent, V>
 {
