@@ -20,8 +20,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetterConfig
 {
+// ------------------------------ FIELDS ------------------------------
     private final MappingRules mappingRules;
     private final MethodRecorder methodRecorder;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public GetterConfig( @Nonnull final MappingRules mappingRules,
                          @Nonnull final MethodRecorder methodRecorder )
@@ -30,12 +33,15 @@ public class GetterConfig
         this.methodRecorder = methodRecorder;
     }
 
+// -------------------------- OTHER METHODS --------------------------
+
     /**
      * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored. Instead the
      *                                getter call is recorded by a cglib proxy to determine the property.
      * @param mapper                  will be used for a property, defined by a getter call
      * @param <T>                     property type
      * @return this config
+     *
      * @throws NoGetterProvidedException no method was called on a sample bean before calling this injection method
      * @throws GetterNotFoundException   the method, which was called on a sample bean is not a read method for any
      *                                   property

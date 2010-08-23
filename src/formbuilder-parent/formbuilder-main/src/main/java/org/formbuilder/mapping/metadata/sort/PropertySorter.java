@@ -40,10 +40,30 @@ public class PropertySorter
         extends MetaDataUser
         implements Comparator<OrderedPropertyDescriptor>
 {
+// --------------------------- CONSTRUCTORS ---------------------------
+
     public PropertySorter( @Nonnull final MetaData metaData )
     {
         super( metaData );
     }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface Comparator ---------------------
+
+    @Override
+    public int compare( @Nonnull final OrderedPropertyDescriptor o1,
+                        @Nonnull final OrderedPropertyDescriptor o2 )
+    {
+        final int compared = o1.getOrder() - o2.getOrder();
+        if ( compared == 0 )
+        {
+            return o1.getDescriptor().getName().compareTo( o2.getDescriptor().getName() );
+        }
+        return compared;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
 
     /**
      * Filters out those bean properties, that cannot be read, or that are forbidden by specifying "hidden" metadata
@@ -51,6 +71,7 @@ public class PropertySorter
      *
      * @param beanClass a bean class to analyze
      * @return filtered and sorted bean properties, decorated with their orders
+     *
      * @see BeanInfo#getPropertyDescriptors()
      * @see MetaData#isHidden(PropertyDescriptor)
      */
@@ -64,17 +85,5 @@ public class PropertySorter
         final Iterable<OrderedPropertyDescriptor> withOrder = transform( supportedAndVisible,
                 new AddOrder( metaData ) );
         return Ordering.from( this ).sortedCopy( withOrder );
-    }
-
-    @Override
-    public int compare( @Nonnull final OrderedPropertyDescriptor o1,
-                        @Nonnull final OrderedPropertyDescriptor o2 )
-    {
-        final int compared = o1.getOrder() - o2.getOrder();
-        if ( compared == 0 )
-        {
-            return o1.getDescriptor().getName().compareTo( o2.getDescriptor().getName() );
-        }
-        return compared;
     }
 }

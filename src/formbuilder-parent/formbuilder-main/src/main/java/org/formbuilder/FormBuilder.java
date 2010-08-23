@@ -52,11 +52,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).with( new SampleBeanMapper&lt;Person&gt;()
  *                   {
  *                       &#064;Override
- *                       protected JComponent mapBean( Person beanSample )
+ *                       protected JComponent mapBean( Person beanSample, SampleContext&lt;Person&gt; ctx )
  *                       {
  *                           Box box = Box.createHorizontalBox();
- *                           box.add( label( beanSample.getName() ) );
- *                           box.add( editor( beanSample.getName() ) );
+ *                           box.add( ctx.label( beanSample.getName() ) );
+ *                           box.add( ctx.editor( beanSample.getName() ) );
  *                           return box;
  *                       }
  *                   } ).buildForm();
@@ -68,6 +68,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @NotThreadSafe
 public class FormBuilder<B>
 {
+// ------------------------------ FIELDS ------------------------------
     private final Class<B> beanClass;
     private final MappingRules mappingRules = new MappingRules();
     @Nonnull
@@ -76,10 +77,7 @@ public class FormBuilder<B>
     private MetaData metaData = new CombinedMetaData();
     private boolean doValidation = true;
 
-    private FormBuilder( final Class<B> beanClass )
-    {
-        this.beanClass = beanClass;
-    }
+// -------------------------- STATIC METHODS --------------------------
 
     /**
      * Starts building of the form for the given class.
@@ -92,6 +90,28 @@ public class FormBuilder<B>
     public static <T> FormBuilder<T> map( @Nonnull final Class<T> beanClass )
     {
         return new FormBuilder<T>( checkNotNull( beanClass ) );
+    }
+
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    private FormBuilder( final Class<B> beanClass )
+    {
+        this.beanClass = beanClass;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    /**
+     * Allows a to provide a custom way to extract property attributes
+     *
+     * @param metaData attribute extractor
+     * @return this builder
+     */
+    @Nonnull
+    public FormBuilder<B> ask( @Nonnull final MetaData metaData )
+    {
+        this.metaData = checkNotNull( metaData );
+        return this;
     }
 
     /**
@@ -118,6 +138,7 @@ public class FormBuilder<B>
      *
      * @param doValidation true if the form should perform validation after changing the editor components
      * @return this builder
+     *
      * @see Validator
      * @see ValidationMarker
      * @see ValidateOnChange
@@ -141,6 +162,7 @@ public class FormBuilder<B>
      *
      * @param typeMappers mappers for each custom type
      * @return this builder
+     *
      * @see MappingRules
      */
     @Nonnull
@@ -162,15 +184,16 @@ public class FormBuilder<B>
      * Form&lt;Person&gt; form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper&lt;Person&gt;()
      *                   {
      *                       &#064;Override
-     *                       protected void mapGetters( final Person beanSample )
+     *                       protected void mapGetters( Person beanSample, GetterConfig config )
      *                       {
-     *                           use( beanSample.getDescription(), new StringToTextAreaMapper() );
+     *                           config.use( beanSample.getDescription(), new StringToTextAreaMapper() );
      *                       }
      *                   } ).buildForm();
      * </pre>
      *
      * @param getterMapper an implementation of {@link GetterMapper}, where the user can specify property bindings
      * @return this builder
+     *
      * @see MappingRules
      */
     @Nonnull
@@ -195,6 +218,7 @@ public class FormBuilder<B>
      * @param propertyName   the name of beanmapper property
      * @param propertyMapper the mapper to use for it
      * @return this builder
+     *
      * @see MappingRules
      */
     @Nonnull
@@ -210,6 +234,7 @@ public class FormBuilder<B>
      *
      * @param beanMapper the custom mapper to use
      * @return this builder
+     *
      * @see BeanMapper
      * @see GridBagMapper
      * @see SampleBeanMapper
@@ -219,18 +244,6 @@ public class FormBuilder<B>
     public FormBuilder<B> with( @Nonnull final BeanMapper<B> beanMapper )
     {
         this.beanMapper = checkNotNull( beanMapper );
-        return this;
-    }
-
-    /**
-     * Allows a to provide a custom way to extract property attributes
-     * @param metaData attribute extractor
-     * @return this builder
-     */
-    @Nonnull
-    public FormBuilder<B> ask( @Nonnull MetaData metaData )
-    {
-        this.metaData = checkNotNull( metaData );
         return this;
     }
 }

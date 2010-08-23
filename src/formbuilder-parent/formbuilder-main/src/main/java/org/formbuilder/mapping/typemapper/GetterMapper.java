@@ -26,6 +26,6 @@ public interface GetterMapper<B>
      * @param beanSample a cglib-proxy, which records getter invocations
      * @param config     a type mapper registry frot-end
      */
-    void mapGetters( @Nonnull B beanSample,
-                     @Nonnull GetterConfig config );
+    void mapGetters( @Nonnull final B beanSample,
+                     @Nonnull final GetterConfig config );
 }

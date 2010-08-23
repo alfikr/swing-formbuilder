@@ -21,7 +21,10 @@ import javax.annotation.Nonnull;
  */
 public abstract class MetaDataUser
 {
+// ------------------------------ FIELDS ------------------------------
     protected final MetaData metaData;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public MetaDataUser( @Nonnull final MetaData metaData )
     {

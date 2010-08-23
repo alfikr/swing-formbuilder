@@ -11,7 +11,10 @@ import java.util.List;
 public class ImmutableListModel<R>
         extends AbstractListModel
 {
+// ------------------------------ FIELDS ------------------------------
     private final List<R> data;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public ImmutableListModel( @Nonnull final Collection<R> data )
     {
@@ -25,17 +28,23 @@ public class ImmutableListModel<R>
         }
     }
 
-    @Override
-    public R getElementAt( final int index )
-    {
-        return data.get( index );
-    }
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface ListModel ---------------------
 
     @Override
     public int getSize()
     {
         return data == null ? 0 : data.size();
     }
+
+    @Override
+    public R getElementAt( final int index )
+    {
+        return data.get( index );
+    }
+
+// -------------------------- OTHER METHODS --------------------------
 
     public int indexOf( @Nullable final R o )
     {

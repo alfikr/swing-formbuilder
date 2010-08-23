@@ -24,8 +24,11 @@ import java.beans.PropertyDescriptor;
  */
 public class OrderedPropertyDescriptor
 {
+// ------------------------------ FIELDS ------------------------------
     private final int order;
     private final PropertyDescriptor descriptor;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public OrderedPropertyDescriptor( @Nonnull final PropertyDescriptor descriptor,
                                       final int order )
@@ -33,6 +36,8 @@ public class OrderedPropertyDescriptor
         this.order = order;
         this.descriptor = descriptor;
     }
+
+// --------------------- GETTER / SETTER METHODS ---------------------
 
     @Nonnull
     public PropertyDescriptor getDescriptor()

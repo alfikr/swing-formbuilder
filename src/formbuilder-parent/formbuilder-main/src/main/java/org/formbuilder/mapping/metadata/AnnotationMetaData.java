@@ -29,6 +29,10 @@ import java.lang.annotation.Annotation;
 public class AnnotationMetaData
         implements MetaData
 {
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface MetaData ---------------------
+
     /**
      * {@inheritDoc}
      *
@@ -84,6 +88,8 @@ public class AnnotationMetaData
     {
         return getAnnotation( descriptor, UIReadOnly.class ) != null;
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @Nullable
     protected <T extends Annotation> T getAnnotation( @Nonnull final PropertyDescriptor descriptor,

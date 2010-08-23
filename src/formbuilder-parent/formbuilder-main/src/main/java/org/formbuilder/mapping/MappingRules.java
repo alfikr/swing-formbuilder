@@ -35,8 +35,11 @@ import static java.util.Arrays.asList;
  */
 public class MappingRules
 {
+// ------------------------------ FIELDS ------------------------------
     protected final Map<Class, TypeMapper> typeToMapper = new HashMap<Class, TypeMapper>();
     protected final Map<String, TypeMapper> propertyNameToMapper = new HashMap<String, TypeMapper>();
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public MappingRules()
     {
@@ -56,6 +59,20 @@ public class MappingRules
     }
 
     /**
+     * Register a typemapper mapper for all properties of typemapper, specified by {@link TypeMapper#getValueClass()}.
+     *
+     * @param mapper typemapper mapper to register
+     * @see MappingRules#addMapper(String, TypeMapper)
+     * @see MappingRules#getMapper(PropertyDescriptor)
+     */
+    public void addMapper( @Nonnull final TypeMapper mapper )
+    {
+        typeToMapper.put( mapper.getValueClass(), mapper );
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    /**
      * Register a typemapper mapper for a property with given name. Default mappers will remain for other properties of
      * the same typemapper.
      *
@@ -72,23 +89,12 @@ public class MappingRules
     }
 
     /**
-     * Register a typemapper mapper for all properties of typemapper, specified by {@link TypeMapper#getValueClass()}.
-     *
-     * @param mapper typemapper mapper to register
-     * @see MappingRules#addMapper(String, TypeMapper)
-     * @see MappingRules#getMapper(PropertyDescriptor)
-     */
-    public void addMapper( @Nonnull final TypeMapper mapper )
-    {
-        typeToMapper.put( mapper.getValueClass(), mapper );
-    }
-
-    /**
      * Pick a typemapper mapper for a given property.
      *
      * @param descriptor property introspection info
      * @return a mapper, which {@link TypeMapper#getValueClass()} is either the same as or the subclass of {@link
      *         PropertyDescriptor#getReadMethod()} typemapper
+     *
      * @throws InvalidTypeMappingException found typemapper mapper, that returns wrong {@link TypeMapper#getValueClass()}
      * @throws UnmappedTypeException       no mappers found for a given property
      * @see MappingRules#addMapper(TypeMapper)
