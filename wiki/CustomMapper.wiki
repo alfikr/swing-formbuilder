@@ -16,7 +16,7 @@ Specify, which property type you map
             return Date.class;
         }
 }}}
-When a form is created, this TypeMapper is asked to create a new instance of editor component
+When a form is created, this `TypeMapper` is asked to create a new instance of editor component
 {{{
         @Override
         public JDateChooser createEditorComponent()
