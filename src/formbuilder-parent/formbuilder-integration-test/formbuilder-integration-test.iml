@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
-    <output url="file://C:/DOCUME~1/AEREME~1/LOCALS~1/Temp/sfb/formbuilder-integration-test/classes" />
-    <output-test url="file://C:/DOCUME~1/AEREME~1/LOCALS~1/Temp/sfb/formbuilder-integration-test/test-classes" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
@@ -28,6 +28,13 @@
     <orderEntry type="library" scope="TEST" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
+    <option name="_basePreferences">
+      <map>
+        <entry key="property.analysisEffortLevel" value="default" />
+        <entry key="property.minPriorityToReport" value="High" />
+        <entry key="property.toolWindowToFront" value="true" />
+      </map>
+    </option>
     <option name="_detectors">
       <map>
         <entry key="AppendingToAnObjectOutputStream" value="true" />

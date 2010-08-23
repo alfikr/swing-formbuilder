@@ -37,11 +37,11 @@ public class CustomMapperTest
         final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean( final PropertyNameContext<Person> context )
+            public JComponent mapBean( final PropertyNameContext<Person> ctx )
             {
                 final JPanel panel = new JPanel( new BorderLayout() );
-                panel.add( context.label( "name" ), BorderLayout.NORTH );
-                panel.add( context.editor( "name" ), BorderLayout.CENTER );
+                panel.add( ctx.label( "name" ), BorderLayout.NORTH );
+                panel.add( ctx.editor( "name" ), BorderLayout.CENTER );
                 return panel;
             }
         } ) );

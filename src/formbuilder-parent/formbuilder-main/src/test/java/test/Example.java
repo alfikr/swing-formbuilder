@@ -54,15 +54,15 @@ public class Example
 
     public void ex2()
     {
-        final Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
+        Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            protected JComponent mapBean( final Person sample,
-                                          final SampleContext<Person> c )
+            protected JComponent mapBean( Person sample,
+                                          SampleContext<Person> ctx )
             {
                 final Box box = Box.createHorizontalBox();
-                box.add( c.label( sample.getName() ) );
-                box.add( c.editor( sample.getName() ) );
+                box.add( ctx.label( sample.getName() ) );
+                box.add( ctx.editor( sample.getName() ) );
                 return box;
             }
         } ).buildForm();
@@ -82,11 +82,11 @@ public class Example
 
     public void ex5()
     {
-        final Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
+        Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
             @Override
-            public void mapGetters( final Person beanSample,
-                                    final GetterConfig config )
+            public void mapGetters( Person beanSample,
+                                    GetterConfig config )
             {
                 config.use( beanSample.getDescription(), new StringToTextAreaMapper() );
             }
