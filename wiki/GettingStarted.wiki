@@ -45,28 +45,29 @@ For example, `SampleBeanMapper` guides a panel creation using a dynamic proxy of
 Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            protected JComponent mapBean( final Person beanSample )
+            protected JComponent mapBean( Person sample,
+                                          SampleContext<Person> ctx )
             {
-                final Box box = Box.createVerticalBox();
-                box.add( label( beanSample.getName() ) );
-                box.add( editor( beanSample.getName() ) );
+                Box box = Box.createHorizontalBox();
+                box.add( ctx.label( sample.getName() ) );
+                box.add( ctx.editor( sample.getName() ) );
                 return box;
             }
         } ).buildForm();
 }}}
 If you don't want to include CGLIB dependency, use `PropertyNameBeanMapper` instead. It founds suitable components by property names. This is less magical, but more error-prone, since property names can be changed or misspelled.
 {{{
-Form<Person> form = FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
+final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
         {
             @Override
-            public JComponent mapBean()
+            public JComponent mapBean( PropertyNameContext<Person> ctx )
             {
-                final Box box = Box.createVerticalBox();
-                box.add( label( "name" ) );
-                box.add( editor( "name" ) );
+                JPanel panel = new JPanel( new BorderLayout() );
+                panel.add( ctx.label( "name" ), BorderLayout.NORTH );
+                panel.add( ctx.editor( "name" ), BorderLayout.CENTER );
                 return panel;
             }
-        } ).buildForm();
+        } ) );
 }}}
 
 =Custom type mapping=
@@ -85,12 +86,13 @@ Form<Person> form = FormBuilder.map( Person.class )
 }}}
 or in a more sophisticated, but type-safe way (CGLIB proxy-magic again):
 {{{
-Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
+        Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
             @Override
-            protected void mapGetters( final Person beanSample )
+            public void mapGetters( Person beanSample,
+                                    GetterConfig config )
             {
-                mapGetter( beanSample.getDescription(), new StringToTextAreaMapper() );
+                config.use( beanSample.getDescription(), new StringToTextAreaMapper() );
             }
         } ).buildForm();
 }}}
