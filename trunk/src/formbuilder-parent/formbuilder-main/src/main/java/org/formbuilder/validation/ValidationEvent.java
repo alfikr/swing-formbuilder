@@ -45,6 +45,7 @@ public class ValidationEvent<B, C extends JComponent, V>
 
     /**
      * @return constraint violations of a changed property value
+     *
      * @see Validator#validateValue(Class, String, Object, Class[])
      */
     @Nonnull
@@ -57,6 +58,7 @@ public class ValidationEvent<B, C extends JComponent, V>
 
     /**
      * @return a descriptor of a changed property
+     *
      * @see BeanInfo#getPropertyDescriptors()
      */
     @Nonnull

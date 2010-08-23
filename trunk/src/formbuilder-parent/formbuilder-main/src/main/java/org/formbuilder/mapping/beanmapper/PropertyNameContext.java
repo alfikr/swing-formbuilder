@@ -34,6 +34,7 @@ public class PropertyNameContext<B>
     /**
      * @param propertyName a name of a property to be mapped
      * @return an editor component for a property, one instance per property
+     *
      * @throws PropertyNotFoundException   the bean class has no property with given name
      * @throws UnmappedTypeException       cannot find a type mapper for a given property name
      * @throws InvalidTypeMappingException found a type mapper that has a wrong type
@@ -63,6 +64,7 @@ public class PropertyNameContext<B>
     /**
      * @param propertyName a name of property to be mapped
      * @return a label for property, one instance per property
+     *
      * @throws PropertyNotFoundException the bean class has no property with given name
      * @see BeanMappingContext#getLabel(PropertyDescriptor)
      * @see MetaData#getTitle(PropertyDescriptor)

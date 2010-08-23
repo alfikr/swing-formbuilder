@@ -32,6 +32,8 @@ public class MethodRecorder
         return Reflection.emptyValue( method );
     }
 
+// -------------------------- OTHER METHODS --------------------------
+
     public void reset()
     {
         lastCalledMethod = null;

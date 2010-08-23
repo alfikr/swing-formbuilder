@@ -34,7 +34,12 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
 public class BackgroundMarker
         implements ValidationMarker
 {
+// ------------------------------ FIELDS ------------------------------
     public static final BackgroundMarker INSTANCE = new BackgroundMarker();
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface ValidationMarker ---------------------
 
     @Override
     public <B, C extends JComponent, V> void markViolations( @Nonnull final ValidationEvent<B, C, V> validationEvent )

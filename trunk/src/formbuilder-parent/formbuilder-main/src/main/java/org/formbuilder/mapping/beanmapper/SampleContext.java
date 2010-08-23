@@ -35,12 +35,31 @@ public class SampleContext<B>
         this.methodRecorder = methodRecorder;
     }
 
+// --------------------- GETTER / SETTER METHODS ---------------------
+
+    @Nonnull
+    private PropertyDescriptor getDescriptor()
+            throws
+            GetterNotFoundException,
+            NoGetterProvidedException
+    {
+        if ( methodRecorder.getLastCalledMethod() == null )
+        {
+            throw new NoGetterProvidedException();
+        }
+
+        final PropertyDescriptor descriptor = Reflection.getDescriptor( methodRecorder.getLastCalledMethod() );
+        methodRecorder.reset();
+        return descriptor;
+    }
+
 // -------------------------- OTHER METHODS --------------------------
 
     /**
      * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored. Instead the
      *                                getter call is recorded by a cglib proxy to determine the property.
      * @return an editor component for a property, one instance per property
+     *
      * @throws GetterNotFoundException     the method, which was called on a sample bean is not a read method for any
      *                                     property
      * @throws NoGetterProvidedException   no method was called on a sample bean before calling this injection method
@@ -61,25 +80,10 @@ public class SampleContext<B>
         return beanMappingContext.getEditor( getDescriptor() );
     }
 
-    @Nonnull
-    private PropertyDescriptor getDescriptor()
-            throws
-            GetterNotFoundException,
-            NoGetterProvidedException
-    {
-        if ( methodRecorder.getLastCalledMethod() == null )
-        {
-            throw new NoGetterProvidedException();
-        }
-
-        final PropertyDescriptor descriptor = Reflection.getDescriptor( methodRecorder.getLastCalledMethod() );
-        methodRecorder.reset();
-        return descriptor;
-    }
-
     /**
      * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored
      * @return a label for a property, one instance per property
+     *
      * @throws GetterNotFoundException   the method, which was called on a sample bean is not a read method for any
      *                                   property
      * @throws NoGetterProvidedException no method was called on a sample bean before calling this injection method

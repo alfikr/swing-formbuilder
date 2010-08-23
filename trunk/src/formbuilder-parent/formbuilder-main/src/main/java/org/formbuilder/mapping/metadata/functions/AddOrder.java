@@ -30,10 +30,16 @@ public class AddOrder
         extends MetaDataUser
         implements Function<PropertyDescriptor, OrderedPropertyDescriptor>
 {
+// --------------------------- CONSTRUCTORS ---------------------------
+
     public AddOrder( @Nonnull final MetaData metaData )
     {
         super( metaData );
     }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface Function ---------------------
 
     @Override
     public OrderedPropertyDescriptor apply( @Nonnull final PropertyDescriptor from )
@@ -41,6 +47,8 @@ public class AddOrder
         final int order = toInt( metaData.getOrder( from ) );
         return new OrderedPropertyDescriptor( from, order );
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     protected int toInt( @Nullable final Integer i )
     {

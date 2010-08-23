@@ -22,7 +22,10 @@ import java.awt.*;
 public class GridBagPanel
         extends JPanel
 {
+// ------------------------------ FIELDS ------------------------------
     protected final GridBagConstraints constraints = new GridBagConstraints();
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public GridBagPanel()
     {
@@ -33,6 +36,8 @@ public class GridBagPanel
         constraints.ipadx = 10;
         constraints.ipady = 0;
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     public GridBagConstraints add( final JComponent component,
                                    final int row,

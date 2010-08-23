@@ -25,10 +25,13 @@ import java.beans.PropertyDescriptor;
  */
 public class PropertyEditor<C extends JComponent, V>
 {
+// ------------------------------ FIELDS ------------------------------
     private final C editorComponent;
     private final TypeMapper<C, V> mapper;
     private final PropertyDescriptor descriptor;
     private final BeanMapping beanMapping;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public PropertyEditor( @Nonnull final C editorComponent,
                            @Nonnull final TypeMapper<C, V> mapper,
@@ -41,15 +44,12 @@ public class PropertyEditor<C extends JComponent, V>
         this.beanMapping = beanMapping;
     }
 
-    @Nullable
-    public V getValue()
-    {
-        return mapper.getValue( editorComponent );
-    }
+// --------------------- GETTER / SETTER METHODS ---------------------
 
-    public void setValue( @Nullable final V value )
+    @Nonnull
+    public PropertyDescriptor getDescriptor()
     {
-        mapper.setValue( editorComponent, value );
+        return descriptor;
     }
 
     @Nonnull
@@ -64,15 +64,22 @@ public class PropertyEditor<C extends JComponent, V>
         return mapper;
     }
 
-    @Nonnull
-    public PropertyDescriptor getDescriptor()
-    {
-        return descriptor;
-    }
+// -------------------------- OTHER METHODS --------------------------
 
     @Nonnull
     public JLabel getLabel()
     {
         return beanMapping.getLabel( descriptor );
+    }
+
+    @Nullable
+    public V getValue()
+    {
+        return mapper.getValue( editorComponent );
+    }
+
+    public void setValue( @Nullable final V value )
+    {
+        mapper.setValue( editorComponent, value );
     }
 }

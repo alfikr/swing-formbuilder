@@ -29,6 +29,10 @@ import java.beans.PropertyDescriptor;
 public class UIManagerMetaData
         implements MetaData
 {
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface MetaData ---------------------
+
     @Override
     @Nullable
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
@@ -72,6 +76,8 @@ public class UIManagerMetaData
     {
         return UIManager.getBoolean( getQName( descriptor ) + ".readonly" );
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @Nonnull
     protected String getQName( final PropertyDescriptor descriptor )

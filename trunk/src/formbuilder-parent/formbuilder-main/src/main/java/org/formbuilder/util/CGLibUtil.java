@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
  */
 public class CGLibUtil
 {
+// -------------------------- STATIC METHODS --------------------------
+
     @SuppressWarnings( {"unchecked"} )
     @Nonnull
     public static <T> T createCGLibProxy( final Class<T> beanClass,

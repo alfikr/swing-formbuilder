@@ -13,12 +13,17 @@ import javax.swing.*;
  */
 public class ChangeObservation
 {
+// ------------------------------ FIELDS ------------------------------
     private final boolean doValidation;
+
+// --------------------------- CONSTRUCTORS ---------------------------
 
     public ChangeObservation( final boolean doValidation )
     {
         this.doValidation = doValidation;
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @SuppressWarnings( {"unchecked"} )
     public void observe( final PropertyEditor propertyEditor )

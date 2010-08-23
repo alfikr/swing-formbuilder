@@ -27,6 +27,8 @@ import static com.google.common.collect.Iterables.transform;
  */
 public class TextUtil
 {
+// -------------------------- STATIC METHODS --------------------------
+
     /**
      * @param s any string
      * @return given string, started with capital letter
@@ -51,6 +53,7 @@ public class TextUtil
      * @param violations validation results
      * @param <B>        beanmapper typemapper
      * @return violation messages, separated with delimiter
+     *
      * @see ToMessage
      */
     @Nonnull
@@ -60,11 +63,17 @@ public class TextUtil
         return Joiner.on( delimiter ).join( transform( violations, ToMessage.F ) );
     }
 
+// -------------------------- ENUMERATIONS --------------------------
+
     /** Returns a {@link ConstraintViolation#getMessage()} or "" if argument is null */
     public static enum ToMessage
             implements Function<ConstraintViolation, String>
     {
         F;
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface Function ---------------------
 
         @Override
         public String apply( @Nullable final ConstraintViolation violation )

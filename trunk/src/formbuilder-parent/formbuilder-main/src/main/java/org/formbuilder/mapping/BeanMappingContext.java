@@ -61,6 +61,7 @@ public class BeanMappingContext<B>
 
     /**
      * @return property descriptors of a bean class, decorated with order property and sorted according to it
+     *
      * @see OrderedPropertyDescriptor
      * @see BeanInfo#getPropertyDescriptors()
      * @see MetaData#getOrder(PropertyDescriptor)
@@ -77,6 +78,7 @@ public class BeanMappingContext<B>
      *
      * @param descriptor a bean property
      * @return an editor component for a given property
+     *
      * @throws InvalidTypeMappingException the type mapper, assigned for a given property has wrong type
      * @throws UnmappedTypeException       cannot find a type mapper for a given property
      */
@@ -102,6 +104,7 @@ public class BeanMappingContext<B>
      *
      * @param descriptor a bean property
      * @return a label, that contains a title for a given property
+     *
      * @see MetaData#getTitle(PropertyDescriptor)
      */
     @Nonnull

@@ -25,8 +25,13 @@ import static org.formbuilder.util.TextUtil.capitalize;
 public class CombinedMetaData
         implements MetaData
 {
+// ------------------------------ FIELDS ------------------------------
     private final AnnotationMetaData annotationMetaData = new AnnotationMetaData();
     private final UIManagerMetaData uiManagerMetaData = new UIManagerMetaData();
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+// --------------------- Interface MetaData ---------------------
 
     @Nullable
     @Override
@@ -55,6 +60,8 @@ public class CombinedMetaData
     {
         return uiManagerMetaData.isReadOnly( descriptor ) || annotationMetaData.isReadOnly( descriptor );
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     @Nullable
     private <T> T nvl( final T... t )
