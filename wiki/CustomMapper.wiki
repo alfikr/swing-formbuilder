@@ -41,25 +41,17 @@ Transfer the value between component and bean property
 Propagate value change events from component to mapping. If you don't need validation, you may not implement a method body
 {{{
         @Override
-        public void bindChangeListener( final JDateChooser editorComponent,
-            final ValueChangeListener<Date> changeListener )
+        public void handleChanges( final JDateChooser editorComponent,
+                                   final ChangeHandler changeHandler )
         {
             editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
             {
                 @Override
                 public void propertyChange( final PropertyChangeEvent evt )
                 {
-                    changeListener.onChange();
+                    changeHandler.onChange( BackgroundMarker.INSTANCE );
                 }
             } );
         }
 }}}
-МalidationMarker marks the components, when constraint violations occur. You may implement your custom marker, or return a `DoNothingMarker` if the validation isn't needed
-{{{
-        @Override
-        public ValidationMarker getValidationMarker()
-        {
-            return BackgroundMarker.INSTANCE;
-        }
-    }
-}}}
+`BackgroundMarker.INSTANCE` is an instance of `ValidationMarker`. It marks the components, when constraint violations occur. You may implement your custom marker, or do not pass anything to `onChange()`, if the validation isn't needed.
