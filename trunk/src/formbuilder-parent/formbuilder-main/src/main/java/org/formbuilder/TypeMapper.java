@@ -27,6 +27,8 @@ import javax.swing.*;
  * Maps the values of a given typemapper to the given editors.
  *
  * @author aeremenok 2010
+ * @param <C> editor component type
+ * @param <V> value type
  */
 @NotThreadSafe
 public interface TypeMapper<C extends JComponent, V>

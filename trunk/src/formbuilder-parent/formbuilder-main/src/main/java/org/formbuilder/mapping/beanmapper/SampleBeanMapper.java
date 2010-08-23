@@ -29,6 +29,7 @@ import javax.swing.*;
  * getters of the sample bean instance
  *
  * @author aeremenok 2010
+ * @param <B> bean type
  */
 // todo is a middleman?
 @NotThreadSafe

@@ -7,24 +7,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/** @author eav Date: 22.08.2010 Time: 22:39:32 */
-public class ImmutableListModel<R>
+/**
+ * @author eav Date: 22.08.2010 Time: 22:39:32
+ * @param <T> item type
+ */
+public class ImmutableListModel<T>
         extends AbstractListModel
 {
 // ------------------------------ FIELDS ------------------------------
-    private final List<R> data;
+    private final List<T> data;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
-    public ImmutableListModel( @Nonnull final Collection<R> data )
+    public ImmutableListModel( @Nonnull final Collection<T> data )
     {
         if ( data instanceof List )
         {
-            this.data = (List<R>) data;
+            this.data = (List<T>) data;
         }
         else
         {
-            this.data = new ArrayList<R>( data );
+            this.data = new ArrayList<T>( data );
         }
     }
 
@@ -39,14 +42,14 @@ public class ImmutableListModel<R>
     }
 
     @Override
-    public R getElementAt( final int index )
+    public T getElementAt( final int index )
     {
         return data.get( index );
     }
 
 // -------------------------- OTHER METHODS --------------------------
 
-    public int indexOf( @Nullable final R o )
+    public int indexOf( @Nullable final T o )
     {
         return data.indexOf( o );
     }

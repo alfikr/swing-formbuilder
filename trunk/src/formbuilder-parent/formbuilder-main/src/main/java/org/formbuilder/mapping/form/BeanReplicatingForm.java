@@ -30,6 +30,7 @@ import static javax.swing.SwingUtilities.isEventDispatchThread;
  * A {@link Form} that allocates a new instance of beanmapper each time it is requested for a changed value.
  *
  * @author aeremenok 2010
+ * @param <B> bean type
  */
 public class BeanReplicatingForm<B>
         implements Form<B>

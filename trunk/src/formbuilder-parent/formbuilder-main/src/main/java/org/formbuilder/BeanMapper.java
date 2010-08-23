@@ -25,6 +25,7 @@ import javax.swing.*;
  * Creates the panel and perform the layout of editors on it.
  *
  * @author aeremenok 2010
+ * @param <B> bean type
  */
 @NotThreadSafe
 public interface BeanMapper<B>

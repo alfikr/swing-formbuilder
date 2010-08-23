@@ -15,6 +15,9 @@ import java.util.Set;
  * Contains validation results.
  *
  * @author aeremenok Date: 19.08.2010 Time: 18:10:47
+ * @param <B> bean type
+ * @param <C> editor component type
+ * @param <V> value type
  */
 public class ValidationEvent<B, C extends JComponent, V>
 {

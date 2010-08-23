@@ -26,6 +26,9 @@ public interface ValidationMarker
 {
     /**
      * Do the component decoration.
+     * @param <B> bean type
+     * @param <C> editor component type
+     * @param <V> value type
      *
      * @param validationEvent provides validation results and components that can be markes
      */

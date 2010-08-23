@@ -64,6 +64,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * </pre>
  *
  * @author aeremenok 2010
+ * @param <B> bean type
  */
 @NotThreadSafe
 public class FormBuilder<B>

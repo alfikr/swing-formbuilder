@@ -46,7 +46,7 @@ public class GetterConfig
      * @throws GetterNotFoundException   the method, which was called on a sample bean is not a read method for any
      *                                   property
      */
-    public <T> GetterConfig use( @Nullable final T whatProxyGetterReturned,
+    public <T> GetterConfig use( @SuppressWarnings( "unused" ) @Nullable final T whatProxyGetterReturned,
                                  @Nonnull final TypeMapper<?, ? extends T> mapper )
             throws
             NoGetterProvidedException,

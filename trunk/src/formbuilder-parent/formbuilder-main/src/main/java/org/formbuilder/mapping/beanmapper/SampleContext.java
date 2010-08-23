@@ -19,6 +19,7 @@ import java.beans.PropertyDescriptor;
  * Provides editor components and labels for called getters of bean sample
  *
  * @author aeremenok Date: Aug 18, 2010 Time: 4:24:58 PM
+ * @param <B> bean type
  */
 public class SampleContext<B>
 {

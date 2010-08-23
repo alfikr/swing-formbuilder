@@ -18,6 +18,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * Should be implemented to register type mappers by calling getters on a sample bean instance
  *
  * @author aeremenok Date: 30.07.2010 Time: 17:54:35
+ * @param <B> bean type
  */
 @NotThreadSafe
 public interface GetterMapper<B>

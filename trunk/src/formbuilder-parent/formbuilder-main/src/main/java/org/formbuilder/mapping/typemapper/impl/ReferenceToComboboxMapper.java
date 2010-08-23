@@ -27,6 +27,7 @@ import java.util.Vector;
  * Maps properties, which reference some object to {@link JComboBox}
  *
  * @author aeremenok Date: 30.07.2010 Time: 13:41:29
+ * @param <R> reference type
  */
 @NotThreadSafe
 public abstract class ReferenceToComboboxMapper<R>
