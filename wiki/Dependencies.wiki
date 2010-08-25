@@ -2,8 +2,8 @@
 You can include a following maven dependency:
 {{{
 <repository>
-    <id>taskmonitor.repo</id>
-    <name>Swing Task Monitor Repository</name>
+    <id>formbuilder.repo</id>
+    <name>Swing Form Builder Repository</name>
     <url>http://swing-formbuilder.googlecode.com/svn/maven-repository/releases/</url>
     <releases>
         <enabled>true</enabled>
