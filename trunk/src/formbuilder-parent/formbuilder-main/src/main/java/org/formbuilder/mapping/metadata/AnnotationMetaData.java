@@ -15,11 +15,11 @@ import org.formbuilder.annotations.UIHidden;
 import org.formbuilder.annotations.UIOrder;
 import org.formbuilder.annotations.UIReadOnly;
 import org.formbuilder.annotations.UITitle;
+import org.formbuilder.util.Reflection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.beans.PropertyDescriptor;
-import java.lang.annotation.Annotation;
 
 /**
  * Reads attributes of properties, which are specified using annotations
@@ -41,7 +41,7 @@ public class AnnotationMetaData
     @Nullable
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
-        final UIOrder uiOrder = getAnnotation( descriptor, UIOrder.class );
+        final UIOrder uiOrder = Reflection.getAnnotation( descriptor, UIOrder.class );
         if ( uiOrder != null )
         {
             return uiOrder.value();
@@ -57,7 +57,7 @@ public class AnnotationMetaData
     @Nullable
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
-        final UITitle uiTitle = getAnnotation( descriptor, UITitle.class );
+        final UITitle uiTitle = Reflection.getAnnotation( descriptor, UITitle.class );
         if ( uiTitle != null )
         {
             return uiTitle.value();
@@ -72,7 +72,7 @@ public class AnnotationMetaData
      */
     public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
-        return getAnnotation( descriptor, UIHidden.class ) != null;
+        return Reflection.getAnnotation( descriptor, UIHidden.class ) != null;
     }
 
     /**
@@ -82,15 +82,6 @@ public class AnnotationMetaData
      */
     public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
-        return getAnnotation( descriptor, UIReadOnly.class ) != null;
-    }
-
-// -------------------------- OTHER METHODS --------------------------
-
-    @Nullable
-    protected <T extends Annotation> T getAnnotation( @Nonnull final PropertyDescriptor descriptor,
-                                                      @Nonnull final Class<T> annotationClass )
-    {
-        return descriptor.getReadMethod().getAnnotation( annotationClass );
+        return Reflection.getAnnotation( descriptor, UIReadOnly.class ) != null;
     }
 }
