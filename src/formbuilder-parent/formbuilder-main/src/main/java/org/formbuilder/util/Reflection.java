@@ -25,6 +25,8 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -133,32 +135,6 @@ public class Reflection
         }
     }
 
-    /**
-     * Finds a {@link PropertyDescriptor} by a property name
-     *
-     * @param beanClass    where to search
-     * @param propertyName a name of property
-     * @return property descriptor
-     *
-     * @throws PropertyNotFoundException no property with such name
-     * @see PropertyDescriptor#getName()
-     */
-    @Nonnull
-    public static PropertyDescriptor getDescriptor( @Nonnull final Class beanClass,
-                                                    @Nonnull final String propertyName )
-            throws
-            PropertyNotFoundException
-    {
-        try
-        {
-            return getDescpriptor( beanClass, new HasName( propertyName ) );
-        }
-        catch ( final NoSuchElementException e )
-        {
-            throw new PropertyNotFoundException( beanClass, propertyName );
-        }
-    }
-
     protected static PropertyDescriptor getDescpriptor( final Class beanClass,
                                                         final Predicate<PropertyDescriptor> predicate )
             throws
@@ -188,6 +164,32 @@ public class Reflection
     }
 
     /**
+     * Finds a {@link PropertyDescriptor} by a property name
+     *
+     * @param beanClass    where to search
+     * @param propertyName a name of property
+     * @return property descriptor
+     *
+     * @throws PropertyNotFoundException no property with such name
+     * @see PropertyDescriptor#getName()
+     */
+    @Nonnull
+    public static PropertyDescriptor getDescriptor( @Nonnull final Class beanClass,
+                                                    @Nonnull final String propertyName )
+            throws
+            PropertyNotFoundException
+    {
+        try
+        {
+            return getDescpriptor( beanClass, new HasName( propertyName ) );
+        }
+        catch ( final NoSuchElementException e )
+        {
+            throw new PropertyNotFoundException( beanClass, propertyName );
+        }
+    }
+
+    /**
      * Get a value of a given property of a given beanmapper
      *
      * @param descriptor property descriptor
@@ -209,6 +211,8 @@ public class Reflection
         try
         {
             final Method readMethod = descriptor.getReadMethod();
+            // todo revert finally
+            readMethod.setAccessible( true );
             return readMethod.invoke( bean );
         }
         catch ( final Exception e )
@@ -283,6 +287,8 @@ public class Reflection
         try
         {
             final Method writeMethod = propertyDescriptor.getWriteMethod();
+            // todo revert finally
+            writeMethod.setAccessible( true );
             writeMethod.invoke( checkNotNull( bean ), propertyValue );
         }
         catch ( final Exception e )
@@ -291,51 +297,26 @@ public class Reflection
         }
     }
 
-// -------------------------- INNER CLASSES --------------------------
-
-    protected static class HasName
-            implements Predicate<PropertyDescriptor>
+    @Nullable
+    public static <T extends Annotation> T getAnnotation( @Nonnull final PropertyDescriptor descriptor,
+                                                          @Nonnull final Class<T> annotationClass )
     {
-// ------------------------------ FIELDS ------------------------------
-        private final String name;
-
-// --------------------------- CONSTRUCTORS ---------------------------
-
-        public HasName( @Nonnull final String name )
+        final Method getter = descriptor.getReadMethod();
+        final T getterAnnotation = getter.getAnnotation( annotationClass );
+        if ( getterAnnotation != null )
         {
-            this.name = name;
+            return getterAnnotation;
         }
 
-// ------------------------ INTERFACE METHODS ------------------------
-
-// --------------------- Interface Predicate ---------------------
-
-        public boolean apply( @Nonnull final PropertyDescriptor descriptor )
+        try
         {
-            return descriptor.getName().equals( name );
+            final Class<?> declaringClass = getter.getDeclaringClass();
+            final Field field = declaringClass.getDeclaredField( descriptor.getName() );
+            return field.getAnnotation( annotationClass );
         }
-    }
-
-    protected static class HasReadMethod
-            implements Predicate<PropertyDescriptor>
-    {
-// ------------------------------ FIELDS ------------------------------
-        private final Method readMethod;
-
-// --------------------------- CONSTRUCTORS ---------------------------
-
-        public HasReadMethod( @Nonnull final Method readMethod )
+        catch ( NoSuchFieldException e )
         {
-            this.readMethod = readMethod;
-        }
-
-// ------------------------ INTERFACE METHODS ------------------------
-
-// --------------------- Interface Predicate ---------------------
-
-        public boolean apply( @Nonnull final PropertyDescriptor input )
-        {
-            return input.getReadMethod().equals( readMethod );
+            return null;
         }
     }
 }

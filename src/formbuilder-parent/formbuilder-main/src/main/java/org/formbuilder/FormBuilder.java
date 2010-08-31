@@ -55,8 +55,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *                       protected JComponent mapBean( Person beanSample, SampleContext&lt;Person&gt; ctx )
  *                       {
  *                           Box box = Box.createHorizontalBox();
- *                           box.add( ctx.label( beanSample.getName() ) );
- *                           box.add( ctx.editor( beanSample.getName() ) );
+ *                           box.add( ctx.label( beanSample.getSecondName() ) );
+ *                           box.add( ctx.editor( beanSample.getSecondName() ) );
  *                           return box;
  *                       }
  *                   } ).buildForm();

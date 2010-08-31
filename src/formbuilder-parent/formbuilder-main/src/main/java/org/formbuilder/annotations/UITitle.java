@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * @see AnnotationMetaData#getTitle(PropertyDescriptor)
  */
 @Retention( RetentionPolicy.RUNTIME )
-@Target( ElementType.METHOD )
+@Target( {ElementType.METHOD, ElementType.FIELD} )
 public @interface UITitle
 {
     String value();
