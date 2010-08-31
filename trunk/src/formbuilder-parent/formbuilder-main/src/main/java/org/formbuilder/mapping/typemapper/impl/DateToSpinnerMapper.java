@@ -32,13 +32,11 @@ import java.util.Date;
 public class DateToSpinnerMapper
         implements TypeMapper<JSpinner, Date>
 {
-    @Override
     public void handleChanges( @Nonnull final JSpinner editorComponent,
                                @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
-            @Override
             public void stateChanged( final ChangeEvent e )
             {
                 changeHandler.onChange( BackgroundMarker.INSTANCE );
@@ -47,27 +45,23 @@ public class DateToSpinnerMapper
     }
 
     @Nonnull
-    @Override
     public JSpinner createEditorComponent()
     {
         return new JSpinner( new SpinnerDateModel() );
     }
 
     @Nullable
-    @Override
     public Date getValue( @Nonnull final JSpinner editorComponent )
     {
         return (Date) editorComponent.getValue();
     }
 
     @Nonnull
-    @Override
     public Class<Date> getValueClass()
     {
         return Date.class;
     }
 
-    @Override
     public void setValue( @Nonnull final JSpinner editorComponent,
                           @Nullable Date value )
     {

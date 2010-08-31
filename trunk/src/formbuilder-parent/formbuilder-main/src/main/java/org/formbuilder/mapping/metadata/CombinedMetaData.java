@@ -34,14 +34,12 @@ public class CombinedMetaData
 // --------------------- Interface MetaData ---------------------
 
     @Nullable
-    @Override
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
         return nvl( uiManagerMetaData.getOrder( descriptor ), annotationMetaData.getOrder( descriptor ) );
     }
 
     @Nonnull
-    @Override
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
         return nvl( uiManagerMetaData.getTitle( descriptor ),
@@ -49,13 +47,11 @@ public class CombinedMetaData
                 capitalize( descriptor.getDisplayName() ) );
     }
 
-    @Override
     public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
         return uiManagerMetaData.isHidden( descriptor ) || annotationMetaData.isHidden( descriptor );
     }
 
-    @Override
     public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
         return uiManagerMetaData.isReadOnly( descriptor ) || annotationMetaData.isReadOnly( descriptor );

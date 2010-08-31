@@ -75,7 +75,6 @@ public class TextUtil
 
 // --------------------- Interface Function ---------------------
 
-        @Override
         public String apply( @Nullable final ConstraintViolation violation )
         {
             return violation == null ? "" : violation.getMessage();

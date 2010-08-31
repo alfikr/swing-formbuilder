@@ -48,7 +48,6 @@ public class Environment
         log.debug( testName( test ) + "> env tear down" );
     }
 
-    @Override
     public void uncaughtException( final Thread t,
                                    final Throwable e )
     {

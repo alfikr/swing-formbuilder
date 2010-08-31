@@ -21,7 +21,6 @@ public class StringToTextFieldMapper
         extends StringMapper<JTextField>
 {
     @Nonnull
-    @Override
     public JTextField createEditorComponent()
     {
         return new JTextField();

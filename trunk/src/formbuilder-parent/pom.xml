@@ -16,13 +16,17 @@
     <groupId>org.formbuilder</groupId>
     <packaging>pom</packaging>
     <version>1.1-SNAPSHOT</version>
+    <name>formbuilder-parent</name>
     <!-- -->
     <modules>
         <module>formbuilder-main</module>
         <module>formbuilder-integration-test</module>
     </modules>
+    <!-- -->
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.5</maven.compiler.source>
+        <maven.compiler.target>1.5</maven.compiler.target>
+        <encoding>UTF-8</encoding>
     </properties>
     <!-- -->
     <build>
@@ -31,18 +35,6 @@
         -->
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <maxmem>300m</maxmem>
-                        <meminitial>150m</meminitial>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                        <excludes>
-                            <exclude>**/.svn</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>

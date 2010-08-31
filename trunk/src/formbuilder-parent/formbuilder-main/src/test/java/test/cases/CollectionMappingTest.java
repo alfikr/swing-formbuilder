@@ -52,7 +52,6 @@ public class CollectionMappingTest
     private static class AccountSetMapper
             extends CollectionToJListMapper<Account, Set>
     {
-        @Override
         public Class<Set> getValueClass()
         {
             return Set.class;

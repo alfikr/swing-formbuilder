@@ -23,7 +23,6 @@ public class DoNothingOnChange
 {
     public static final DoNothingOnChange INSTANCE = new DoNothingOnChange();
 
-    @Override
     public void onChange( final ValidationMarker... validationMarkers )
     {
     }

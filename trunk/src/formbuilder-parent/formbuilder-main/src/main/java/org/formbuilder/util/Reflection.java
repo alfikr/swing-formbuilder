@@ -310,7 +310,6 @@ public class Reflection
 
 // --------------------- Interface Predicate ---------------------
 
-        @Override
         public boolean apply( @Nonnull final PropertyDescriptor descriptor )
         {
             return descriptor.getName().equals( name );
@@ -334,7 +333,6 @@ public class Reflection
 
 // --------------------- Interface Predicate ---------------------
 
-        @Override
         public boolean apply( @Nonnull final PropertyDescriptor input )
         {
             return input.getReadMethod().equals( readMethod );

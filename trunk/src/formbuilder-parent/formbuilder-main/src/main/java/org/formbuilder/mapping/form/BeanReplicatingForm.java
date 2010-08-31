@@ -56,7 +56,6 @@ public class BeanReplicatingForm<B>
 // --------------------- Interface Form ---------------------
 
     @Nonnull
-    @Override
     public JComponent asComponent()
     {
         return panel;
@@ -64,7 +63,6 @@ public class BeanReplicatingForm<B>
 
     /** @return a new beanmapper instance with changed values */
     @Nonnull
-    @Override
     public B getValue()
     {
         final B newBean = Reflection.newInstance( beanClass );
@@ -77,7 +75,6 @@ public class BeanReplicatingForm<B>
      *
      * @param bean a value source
      */
-    @Override
     public void setValue( @Nullable final B bean )
     {
         checkState( isEventDispatchThread() );

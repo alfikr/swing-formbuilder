@@ -38,7 +38,6 @@ public class AnnotationMetaData
      *
      * @see UIOrder
      */
-    @Override
     @Nullable
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
@@ -55,7 +54,6 @@ public class AnnotationMetaData
      *
      * @see UITitle
      */
-    @Override
     @Nullable
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
@@ -72,7 +70,6 @@ public class AnnotationMetaData
      *
      * @see UIHidden
      */
-    @Override
     public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIHidden.class ) != null;
@@ -83,7 +80,6 @@ public class AnnotationMetaData
      *
      * @see UIReadOnly
      */
-    @Override
     public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
         return getAnnotation( descriptor, UIReadOnly.class ) != null;

@@ -31,13 +31,11 @@ import javax.swing.event.ChangeListener;
 public class NumberToSpinnerMapper
         implements TypeMapper<JSpinner, Number>
 {
-    @Override
     public void handleChanges( @Nonnull final JSpinner editorComponent,
                                @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
-            @Override
             public void stateChanged( final ChangeEvent e )
             {
                 changeHandler.onChange( BackgroundMarker.INSTANCE );
@@ -46,27 +44,23 @@ public class NumberToSpinnerMapper
     }
 
     @Nonnull
-    @Override
     public JSpinner createEditorComponent()
     {
         return new JSpinner( new SpinnerNumberModel() );
     }
 
     @Nullable
-    @Override
     public Number getValue( @Nonnull final JSpinner editorComponent )
     {
         return (Number) editorComponent.getValue();
     }
 
     @Nonnull
-    @Override
     public Class<Number> getValueClass()
     {
         return Number.class;
     }
 
-    @Override
     public void setValue( @Nonnull final JSpinner editorComponent,
                           @Nullable Number value )
     {

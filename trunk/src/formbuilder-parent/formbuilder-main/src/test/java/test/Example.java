@@ -54,11 +54,11 @@ public class Example
 
     public void ex2()
     {
-        Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
+        final Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<Person>()
         {
             @Override
-            protected JComponent mapBean( Person sample,
-                                          SampleContext<Person> ctx )
+            protected JComponent mapBean( final Person sample,
+                                          final SampleContext<Person> ctx )
             {
                 final Box box = Box.createHorizontalBox();
                 box.add( ctx.label( sample.getName() ) );
@@ -82,11 +82,10 @@ public class Example
 
     public void ex5()
     {
-        Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
+        final Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
-            @Override
-            public void mapGetters( Person beanSample,
-                                    GetterConfig config )
+            public void mapGetters( final Person beanSample,
+                                    final GetterConfig config )
             {
                 config.use( beanSample.getDescription(), new StringToTextAreaMapper() );
             }
@@ -101,13 +100,11 @@ public class Example
     class DateToDateChooserMapper
             implements TypeMapper<JDateChooser, Date>
     {
-        @Override
         public void handleChanges( final JDateChooser editorComponent,
                                    final ChangeHandler changeHandler )
         {
             editorComponent.getDateEditor().addPropertyChangeListener( "date", new PropertyChangeListener()
             {
-                @Override
                 public void propertyChange( final PropertyChangeEvent evt )
                 {
                     changeHandler.onChange( BackgroundMarker.INSTANCE );
@@ -115,25 +112,21 @@ public class Example
             } );
         }
 
-        @Override
         public JDateChooser createEditorComponent()
         {
             return new JDateChooser();
         }
 
-        @Override
         public Date getValue( final JDateChooser editorComponent )
         {
             return editorComponent.getDate();
         }
 
-        @Override
         public Class<Date> getValueClass()
         {
             return Date.class;
         }
 
-        @Override
         public void setValue( final JDateChooser editorComponent,
                               final Date value )
         {

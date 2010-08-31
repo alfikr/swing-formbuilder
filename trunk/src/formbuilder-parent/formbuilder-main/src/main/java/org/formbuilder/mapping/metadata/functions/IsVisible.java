@@ -32,7 +32,6 @@ public class IsVisible
         super( metaData );
     }
 
-    @Override
     public boolean apply( @Nonnull final PropertyDescriptor input )
     {
         return !metaData.isHidden( input );

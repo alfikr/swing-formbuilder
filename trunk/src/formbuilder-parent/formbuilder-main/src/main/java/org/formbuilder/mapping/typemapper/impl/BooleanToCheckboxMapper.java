@@ -31,13 +31,11 @@ import javax.swing.event.ChangeListener;
 public class BooleanToCheckboxMapper
         implements TypeMapper<JCheckBox, Boolean>
 {
-    @Override
     public void handleChanges( @Nonnull final JCheckBox editorComponent,
                                @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.addChangeListener( new ChangeListener()
         {
-            @Override
             public void stateChanged( final ChangeEvent e )
             {
                 changeHandler.onChange( BackgroundMarker.INSTANCE );
@@ -46,26 +44,22 @@ public class BooleanToCheckboxMapper
     }
 
     @Nonnull
-    @Override
     public JCheckBox createEditorComponent()
     {
         return new JCheckBox();
     }
 
-    @Override
     public Boolean getValue( @Nonnull final JCheckBox editorComponent )
     {
         return editorComponent.isSelected();
     }
 
     @Nonnull
-    @Override
     public Class<Boolean> getValueClass()
     {
         return Boolean.class;
     }
 
-    @Override
     public void setValue( @Nonnull final JCheckBox editorComponent,
                           @Nullable final Boolean value )
     {

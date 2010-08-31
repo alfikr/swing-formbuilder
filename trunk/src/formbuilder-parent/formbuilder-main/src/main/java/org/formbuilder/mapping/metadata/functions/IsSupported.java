@@ -26,7 +26,6 @@ public enum IsSupported
 {
     P;
 
-    @Override
     public boolean apply( @Nonnull final PropertyDescriptor descriptor )
     {
         return descriptor.getReadMethod() != null && !"class".equals( descriptor.getName() );
