@@ -32,25 +32,21 @@ import javax.swing.text.JTextComponent;
 public abstract class StringMapper<C extends JTextComponent>
         implements TypeMapper<C, String>
 {
-    @Override
     public void handleChanges( @Nonnull final C editorComponent,
                                @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.getDocument().addDocumentListener( new DocumentListener()
         {
-            @Override
             public void changedUpdate( final DocumentEvent e )
             {
                 changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
 
-            @Override
             public void insertUpdate( final DocumentEvent e )
             {
                 changeHandler.onChange( BackgroundMarker.INSTANCE );
             }
 
-            @Override
             public void removeUpdate( final DocumentEvent e )
             {
                 changeHandler.onChange( BackgroundMarker.INSTANCE );
@@ -58,19 +54,16 @@ public abstract class StringMapper<C extends JTextComponent>
         } );
     }
 
-    @Override
     public String getValue( @Nonnull final C editorComponent )
     {
         return editorComponent.getText();
     }
 
-    @Override
     public Class<String> getValueClass()
     {
         return String.class;
     }
 
-    @Override
     public void setValue( @Nonnull final C editorComponent,
                           @Nullable final String value )
     {

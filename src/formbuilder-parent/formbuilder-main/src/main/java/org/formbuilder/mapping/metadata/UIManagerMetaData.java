@@ -33,7 +33,6 @@ public class UIManagerMetaData
 
 // --------------------- Interface MetaData ---------------------
 
-    @Override
     @Nullable
     public Integer getOrder( @Nonnull final PropertyDescriptor descriptor )
     {
@@ -58,20 +57,17 @@ public class UIManagerMetaData
         }
     }
 
-    @Override
     @Nullable
     public String getTitle( @Nonnull final PropertyDescriptor descriptor )
     {
         return UIManager.getString( getQName( descriptor ) + ".title" );
     }
 
-    @Override
     public boolean isHidden( @Nonnull final PropertyDescriptor descriptor )
     {
         return UIManager.getBoolean( getQName( descriptor ) + ".hidden" );
     }
 
-    @Override
     public boolean isReadOnly( @Nonnull final PropertyDescriptor descriptor )
     {
         return UIManager.getBoolean( getQName( descriptor ) + ".readonly" );

@@ -51,7 +51,6 @@ public class GridBagMapper<B>
 // --------------------- Interface BeanMapper ---------------------
 
     @Nonnull
-    @Override
     public JComponent map( @Nonnull final BeanMappingContext<B> context )
     {
         checkState( isEventDispatchThread() );

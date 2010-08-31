@@ -52,7 +52,6 @@ public class ReferenceMappingTest
     private static class RoleMapper
             extends ReferenceToComboboxMapper<Role>
     {
-        @Override
         public Class<Role> getValueClass()
         {
             return Role.class;

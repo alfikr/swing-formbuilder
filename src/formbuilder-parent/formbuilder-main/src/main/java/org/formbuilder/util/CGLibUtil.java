@@ -35,7 +35,6 @@ public class CGLibUtil
         e.setUseFactory( false );
         e.setCallback( new net.sf.cglib.proxy.InvocationHandler()
         {
-            @Override
             public Object invoke( final Object proxy,
                                   final Method method,
                                   final Object[] args )

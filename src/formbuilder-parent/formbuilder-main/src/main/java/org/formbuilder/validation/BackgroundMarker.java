@@ -41,7 +41,6 @@ public class BackgroundMarker
 
 // --------------------- Interface ValidationMarker ---------------------
 
-    @Override
     public <B, C extends JComponent, V> void markViolations( @Nonnull final ValidationEvent<B, C, V> validationEvent )
     {
         checkState( isEventDispatchThread() );

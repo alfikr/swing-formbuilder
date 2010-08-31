@@ -33,7 +33,6 @@ public class PropertyMappingTest
         final FormBuilder<Person> formBuilder = FormBuilder.map( Person.class )
                 .useForGetters( new GetterMapper<Person>()
                 {
-                    @Override
                     public void mapGetters( final Person beanSample,
                                             final GetterConfig config )
                     {
@@ -76,7 +75,6 @@ public class PropertyMappingTest
     public static class StringToTextAreaMapper
             extends StringMapper<JTextArea>
     {
-        @Override
         public JTextArea createEditorComponent()
         {
             return new JTextArea();

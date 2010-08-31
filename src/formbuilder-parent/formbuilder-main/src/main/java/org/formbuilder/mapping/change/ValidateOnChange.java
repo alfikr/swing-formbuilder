@@ -54,7 +54,6 @@ public class ValidateOnChange<B, C extends JComponent, V>
 
 // --------------------- Interface ChangeHandler ---------------------
 
-    @Override
     public void onChange( final ValidationMarker... validationMarkers )
     {
         if ( validationMarkers == null || validationMarkers.length == 0 )

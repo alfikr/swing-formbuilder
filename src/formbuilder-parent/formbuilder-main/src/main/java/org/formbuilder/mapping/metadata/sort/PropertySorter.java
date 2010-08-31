@@ -51,7 +51,6 @@ public class PropertySorter
 
 // --------------------- Interface Comparator ---------------------
 
-    @Override
     public int compare( @Nonnull final OrderedPropertyDescriptor o1,
                         @Nonnull final OrderedPropertyDescriptor o2 )
     {

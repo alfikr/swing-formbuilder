@@ -37,13 +37,11 @@ import java.util.List;
 public abstract class CollectionToJListMapper<I, CT extends Collection>
         implements TypeMapper<JList, CT>
 {
-    @Override
     public void handleChanges( @Nonnull final JList editorComponent,
                                @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.getSelectionModel().addListSelectionListener( new ListSelectionListener()
         {
-            @Override
             public void valueChanged( final ListSelectionEvent e )
             {
                 if ( !e.getValueIsAdjusting() )
@@ -55,7 +53,6 @@ public abstract class CollectionToJListMapper<I, CT extends Collection>
     }
 
     @Nonnull
-    @Override
     public JList createEditorComponent()
     {
         return new JList( new ImmutableListModel<I>( getSuitableData() ) );
@@ -63,7 +60,6 @@ public abstract class CollectionToJListMapper<I, CT extends Collection>
 
     @Nullable
     @SuppressWarnings( {"unchecked"} )
-    @Override
     public CT getValue( @Nonnull final JList editorComponent )
     {
         final Object[] vs = editorComponent.getSelectedValues();
@@ -76,7 +72,6 @@ public abstract class CollectionToJListMapper<I, CT extends Collection>
     }
 
     @SuppressWarnings( {"unchecked"} )
-    @Override
     public void setValue( @Nonnull final JList editorComponent,
                           @Nullable final CT value )
     {

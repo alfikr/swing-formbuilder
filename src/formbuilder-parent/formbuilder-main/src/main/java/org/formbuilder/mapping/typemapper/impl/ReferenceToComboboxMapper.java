@@ -33,13 +33,11 @@ import java.util.Vector;
 public abstract class ReferenceToComboboxMapper<R>
         implements TypeMapper<JComboBox, R>
 {
-    @Override
     public void handleChanges( @Nonnull final JComboBox editorComponent,
                                @Nonnull final ChangeHandler changeHandler )
     {
         editorComponent.addItemListener( new ItemListener()
         {
-            @Override
             public void itemStateChanged( final ItemEvent e )
             {
                 if ( e.getStateChange() == ItemEvent.SELECTED )
@@ -51,7 +49,6 @@ public abstract class ReferenceToComboboxMapper<R>
     }
 
     @Nonnull
-    @Override
     public JComboBox createEditorComponent()
     {
         return new JComboBox( new Vector<R>( getSuitableData() ) );
@@ -59,13 +56,11 @@ public abstract class ReferenceToComboboxMapper<R>
 
     @Nullable
     @SuppressWarnings( {"unchecked"} )
-    @Override
     public R getValue( @Nonnull final JComboBox editorComponent )
     {
         return (R) editorComponent.getSelectedItem();
     }
 
-    @Override
     public void setValue( @Nonnull final JComboBox editorComponent,
                           @Nullable final R value )
     {

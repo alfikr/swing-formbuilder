@@ -34,7 +34,6 @@ public abstract class PropertyNameBeanMapper<B>
 
 // --------------------- Interface BeanMapper ---------------------
 
-    @Override
     public JComponent map( @Nonnull final BeanMappingContext<B> context )
     {
         return mapBean( new PropertyNameContext<B>( context ) );

@@ -41,7 +41,6 @@ public class AddOrder
 
 // --------------------- Interface Function ---------------------
 
-    @Override
     public OrderedPropertyDescriptor apply( @Nonnull final PropertyDescriptor from )
     {
         final int order = toInt( metaData.getOrder( from ) );

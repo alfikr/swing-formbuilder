@@ -47,13 +47,11 @@ public class ImmutableListModel<T>
 
 // --------------------- Interface ListModel ---------------------
 
-    @Override
     public int getSize()
     {
         return data == null ? 0 : data.size();
     }
 
-    @Override
     public T getElementAt( final int index )
     {
         return data.get( index );
