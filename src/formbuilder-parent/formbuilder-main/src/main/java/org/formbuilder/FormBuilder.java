@@ -23,7 +23,7 @@ import org.formbuilder.mapping.beanmapper.PropertyNameBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.change.ValidateOnChange;
 import org.formbuilder.mapping.exception.MappingException;
-import org.formbuilder.mapping.form.BeanReplicatingForm;
+import org.formbuilder.mapping.form.FormFactory;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.typemapper.GetterConfig;
@@ -64,7 +64,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * </pre>
  *
  * @author aeremenok 2010
- * @param <B> bean type
  */
 @NotThreadSafe
 public class FormBuilder<B>
@@ -76,6 +75,8 @@ public class FormBuilder<B>
     private BeanMapper<B> beanMapper = new GridBagMapper<B>();
     @Nonnull
     private MetaData metaData = new CombinedMetaData();
+    @Nonnull
+    private FormFactory formFactory = FormFactory.BEAN_REPLICATING;
     private boolean doValidation = true;
 
 // -------------------------- STATIC METHODS --------------------------
@@ -131,7 +132,7 @@ public class FormBuilder<B>
                 doValidation,
                 metaData );
         final JComponent panel = beanMapper.map( context );
-        return new BeanReplicatingForm<B>( panel, beanClass, beanMapping );
+        return formFactory.createForm( panel, beanClass, beanMapping );
     }
 
     /**
@@ -148,6 +149,13 @@ public class FormBuilder<B>
     public FormBuilder<B> doValidation( final boolean doValidation )
     {
         this.doValidation = doValidation;
+        return this;
+    }
+
+    @Nonnull
+    public FormBuilder<B> toForms( @Nonnull final FormFactory formFactory )
+    {
+        this.formFactory = checkNotNull( formFactory );
         return this;
     }
 
