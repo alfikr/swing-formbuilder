@@ -56,7 +56,8 @@ public abstract class StringMapper<C extends JTextComponent>
 
     public String getValue( @Nonnull final C editorComponent )
     {
-        return editorComponent.getText();
+        final String text = editorComponent.getText();
+        return "".equals( text ) ? null : text;
     }
 
     public Class<String> getValueClass()
