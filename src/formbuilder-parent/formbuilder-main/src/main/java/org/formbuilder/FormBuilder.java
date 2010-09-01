@@ -23,6 +23,7 @@ import org.formbuilder.mapping.beanmapper.PropertyNameBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.change.ValidateOnChange;
 import org.formbuilder.mapping.exception.MappingException;
+import org.formbuilder.mapping.form.FormFactories;
 import org.formbuilder.mapping.form.FormFactory;
 import org.formbuilder.mapping.metadata.CombinedMetaData;
 import org.formbuilder.mapping.metadata.MetaData;
@@ -76,7 +77,7 @@ public class FormBuilder<B>
     @Nonnull
     private MetaData metaData = new CombinedMetaData();
     @Nonnull
-    private FormFactory formFactory = FormFactory.BEAN_REPLICATING;
+    private FormFactory formFactory = FormFactories.REPLICATING;
     private boolean doValidation = true;
 
 // -------------------------- STATIC METHODS --------------------------
@@ -140,7 +141,6 @@ public class FormBuilder<B>
      *
      * @param doValidation true if the form should perform validation after changing the editor components
      * @return this builder
-     *
      * @see Validator
      * @see ValidationMarker
      * @see ValidateOnChange
@@ -152,8 +152,15 @@ public class FormBuilder<B>
         return this;
     }
 
+    /**
+     * Use a custom {@link FormFactory} to build forms.
+     *
+     * @param formFactory a factory to use
+     * @return this builder
+     * @see FormFactories
+     */
     @Nonnull
-    public FormBuilder<B> toForms( @Nonnull final FormFactory formFactory )
+    public FormBuilder<B> formsOf( @Nonnull final FormFactory formFactory )
     {
         this.formFactory = checkNotNull( formFactory );
         return this;
@@ -171,7 +178,6 @@ public class FormBuilder<B>
      *
      * @param typeMappers mappers for each custom type
      * @return this builder
-     *
      * @see MappingRules
      */
     @Nonnull
@@ -202,7 +208,6 @@ public class FormBuilder<B>
      *
      * @param getterMapper an implementation of {@link GetterMapper}, where the user can specify property bindings
      * @return this builder
-     *
      * @see MappingRules
      */
     @Nonnull
@@ -227,7 +232,6 @@ public class FormBuilder<B>
      * @param propertyName   the name of beanmapper property
      * @param propertyMapper the mapper to use for it
      * @return this builder
-     *
      * @see MappingRules
      */
     @Nonnull
@@ -243,7 +247,6 @@ public class FormBuilder<B>
      *
      * @param beanMapper the custom mapper to use
      * @return this builder
-     *
      * @see BeanMapper
      * @see GridBagMapper
      * @see SampleBeanMapper

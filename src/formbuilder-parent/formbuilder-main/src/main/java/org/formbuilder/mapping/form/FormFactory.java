@@ -17,31 +17,14 @@ import org.formbuilder.mapping.BeanMapping;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-/** @author aeremenok Date: Aug 31, 2010 Time: 12:44:03 PM */
+/**
+ * Creates forms of specific types, when mapping is complete.
+ *
+ * @author aeremenok Date: Aug 31, 2010 Time: 12:44:03 PM
+ * @see Form
+ */
 public interface FormFactory
 {
-// ------------------------------ FIELDS ------------------------------
-    FormFactory BEAN_REPLICATING = new FormFactory()
-    {
-        public <B> Form<B> createForm( @Nonnull final JComponent panel,
-                                       @Nonnull final Class<B> beanClass,
-                                       @Nonnull final BeanMapping beanMapping )
-        {
-            return new BeanReplicatingForm<B>( panel, beanClass, beanMapping );
-        }
-    };
-    FormFactory BEAN_MODIFYING = new FormFactory()
-    {
-        public <B> Form<B> createForm( @Nonnull final JComponent panel,
-                                       @Nonnull final Class<B> beanClass,
-                                       @Nonnull final BeanMapping beanMapping )
-        {
-            return new BeanModifyingForm<B>( panel, beanMapping );
-        }
-    };
-
-// -------------------------- OTHER METHODS --------------------------
-
     <B> Form<B> createForm( @Nonnull final JComponent panel,
                             @Nonnull final Class<B> beanClass,
                             @Nonnull final BeanMapping beanMapping );
