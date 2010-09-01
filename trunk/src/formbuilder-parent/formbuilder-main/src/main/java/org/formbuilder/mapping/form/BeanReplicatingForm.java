@@ -39,6 +39,8 @@ public class BeanReplicatingForm<B>
     private final JComponent panel;
     private final BeanMapping beanMapping;
     private final Class<B> beanClass;
+    @Nullable
+    private Class<? extends B> actualBeanClass;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -65,7 +67,8 @@ public class BeanReplicatingForm<B>
     @Nonnull
     public B getValue()
     {
-        final B newBean = Reflection.newInstance( beanClass );
+        final boolean interfaceMapped = actualBeanClass != null;
+        final B newBean = Reflection.newInstance( interfaceMapped ? actualBeanClass : beanClass );
         beanMapping.setBeanValues( newBean );
         return newBean;
     }
@@ -75,9 +78,14 @@ public class BeanReplicatingForm<B>
      *
      * @param bean a value source
      */
+    @SuppressWarnings( {"unchecked"} )
     public void setValue( @Nullable final B bean )
     {
         checkState( isEventDispatchThread() );
         beanMapping.setComponentValues( bean );
+        if ( bean != null && beanClass.isInterface() )
+        {
+            this.actualBeanClass = (Class<? extends B>) bean.getClass();
+        }
     }
 }

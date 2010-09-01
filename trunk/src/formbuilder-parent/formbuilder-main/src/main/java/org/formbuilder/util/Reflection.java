@@ -29,6 +29,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -116,7 +117,6 @@ public class Reflection
      *
      * @param readMethod a getter method
      * @return property descriptor
-     *
      * @throws GetterNotFoundException no property with such getter
      * @see PropertyDescriptor#getReadMethod()
      */
@@ -169,7 +169,6 @@ public class Reflection
      * @param beanClass    where to search
      * @param propertyName a name of property
      * @return property descriptor
-     *
      * @throws PropertyNotFoundException no property with such name
      * @see PropertyDescriptor#getName()
      */
@@ -195,7 +194,6 @@ public class Reflection
      * @param descriptor property descriptor
      * @param bean       value holder
      * @return a property value or an empty value for this property typemapper if beanmapper is null
-     *
      * @see Reflection#emptyValue(Method)
      * @see Reflection#setValue(Object, Object, PropertyDescriptor)
      */
@@ -221,13 +219,20 @@ public class Reflection
         }
     }
 
-//    @SuppressWarnings( {"unchecked"} )
-//    @Nonnull
-//    private static <T> T createNativeProxy( final Class<T> beanInterface,
-//                                            final InvocationHandler handler )
-//    {
-//        return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
-//    }
+    @Nonnull
+    private static <T> T createProxyBean( @Nonnull final Class<T> beanInterface )
+    { // todo
+        throw new UnsupportedOperationException();
+//        return createNativeProxy( beanInterface, )
+    }
+
+    @SuppressWarnings( {"unchecked"} )
+    @Nonnull
+    private static <T> T createNativeProxy( @Nonnull final Class<T> beanInterface,
+                                            @Nonnull final InvocationHandler handler )
+    {
+        return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
+    }
 
     /**
      * Pick a meaningless value to fake a getter call
@@ -252,16 +257,15 @@ public class Reflection
      * @param aClass beanmapper class
      * @param <T>    beanmapper typemapper
      * @return a newly allocated instance of given typemapper
-     *
      * @see Class#newInstance()
      */
     @Nonnull
     public static <T> T newInstance( @Nonnull final Class<T> aClass )
     {
-        // todo support interfaces
-//        if(aClass.isInterface()){
-//            createNativeProxy( aClass,  )
-//        }
+        if ( aClass.isInterface() )
+        {
+            return createProxyBean( aClass );
+        }
         try
         {
             return aClass.newInstance();
