@@ -7,25 +7,21 @@ public class AddressImpl
     private String street;
     private int house;
 
-    @Override
     public String getStreet()
     {
         return street;
     }
 
-    @Override
     public void setStreet( final String street )
     {
         this.street = street;
     }
 
-    @Override
     public int getHouse()
     {
         return house;
     }
 
-    @Override
     public void setHouse( final int house )
     {
         this.house = house;
