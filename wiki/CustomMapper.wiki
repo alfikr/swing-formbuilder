@@ -54,4 +54,4 @@ Propagate value change events from component to mapping. If you don't need valid
             } );
         }
 }}}
-`BackgroundMarker.INSTANCE` is an instance of `ValidationMarker`. It marks the components, when constraint violations occur. You may implement your custom marker, or do not pass anything to `onChange()`, if the validation isn't needed.
+`BackgroundMarker.INSTANCE` implements the `ValidationMarker` interface. It marks the components, when constraint violations occur. You may implement your custom marker, or do not pass anything to `onChange()`, if the validation isn't needed.
