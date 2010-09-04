@@ -16,13 +16,13 @@
     <parent>
         <artifactId>formbuilder-parent</artifactId>
         <groupId>org.formbuilder</groupId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <!-- -->
     <groupId>org.formbuilder</groupId>
     <artifactId>formbuilder-main</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>formbuilder-main</name>
     <!-- -->
     <dependencies>
