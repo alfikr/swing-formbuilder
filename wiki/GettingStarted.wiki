@@ -40,7 +40,7 @@ assert person != changed;
 But you can specify a custom strategy of instance modification
 {{{
 Form<Person> form = FormBuilder.map( Person.class ).formsOf( FormFactories.MODIFYING ).buildForm();
-// this will result in
+// this will result in:
 // ...
 assert person == changed;
 }}}
@@ -134,4 +134,9 @@ is equal to
         return birthDate;
     }
 }}}
-Note, that [http://code.google.com/p/swing-formbuilder/issues/detail?id=5 annotating bean fields isn't yet supported].
+or
+{{{
+    @UIReadOnly
+    @UITitle( "Date of birth" )
+    private Date birthDate;
+}}}
