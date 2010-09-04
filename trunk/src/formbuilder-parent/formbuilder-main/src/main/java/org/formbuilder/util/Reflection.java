@@ -16,8 +16,10 @@
 package org.formbuilder.util;
 
 import com.google.common.base.Predicate;
-import org.formbuilder.mapping.exception.GetterNotFoundException;
+import org.formbuilder.mapping.exception.AccessorNotFoundException;
 import org.formbuilder.mapping.exception.PropertyNotFoundException;
+import org.formbuilder.mapping.metadata.functions.HasAccessor;
+import org.formbuilder.mapping.metadata.functions.HasName;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -104,39 +106,40 @@ public class Reflection
     public static <T> T createProxy( @Nonnull final Class<T> beanClass,
                                      @Nonnull final InvocationHandler handler )
     {
-        // todo support interfaces
-//        if ( beanClass.isInterface() )
-//        {
-//            return createNativeProxy( beanClass, handler );
-//        }
+        if ( beanClass.isInterface() )
+        {
+            return createNativeProxy( beanClass, handler );
+        }
         return CGLibUtil.createCGLibProxy( beanClass, handler );
     }
 
     /**
      * Finds a {@link PropertyDescriptor} by a getter method
      *
-     * @param readMethod a getter method
+     * @param accessor     an accessor method
+     * @param isReadMethod true if an accessor is a getter method, false if setter
      * @return property descriptor
-     * @throws GetterNotFoundException no property with such getter
+     * @throws AccessorNotFoundException no property with such getter
      * @see PropertyDescriptor#getReadMethod()
      */
     @Nonnull
-    public static PropertyDescriptor getDescriptor( @Nonnull final Method readMethod )
+    public static PropertyDescriptor getDescriptor( @Nonnull final Method accessor,
+                                                    boolean isReadMethod )
             throws
-            GetterNotFoundException
+            AccessorNotFoundException
     {
         try
         {
-            return getDescpriptor( readMethod.getDeclaringClass(), new HasReadMethod( readMethod ) );
+            return getDescpriptor( accessor.getDeclaringClass(), new HasAccessor( accessor, isReadMethod ) );
         }
         catch ( final NoSuchElementException e )
         {
-            throw new GetterNotFoundException( readMethod );
+            throw new AccessorNotFoundException( accessor );
         }
     }
 
-    protected static PropertyDescriptor getDescpriptor( final Class beanClass,
-                                                        final Predicate<PropertyDescriptor> predicate )
+    protected static PropertyDescriptor getDescpriptor( @Nonnull final Class beanClass,
+                                                        @Nonnull final Predicate<PropertyDescriptor> predicate )
             throws
             NoSuchElementException
     {// todo use cache
@@ -221,15 +224,14 @@ public class Reflection
 
     @Nonnull
     private static <T> T createProxyBean( @Nonnull final Class<T> beanInterface )
-    { // todo
-        throw new UnsupportedOperationException();
-//        return createNativeProxy( beanInterface, )
+    {
+        return createNativeProxy( beanInterface, new BeanLikeHandler() );
     }
 
     @SuppressWarnings( {"unchecked"} )
     @Nonnull
     private static <T> T createNativeProxy( @Nonnull final Class<T> beanInterface,
-                                            @Nonnull final InvocationHandler handler )
+                                           @Nonnull final InvocationHandler handler )
     {
         return (T) Proxy.newProxyInstance( beanInterface.getClassLoader(), new Class[]{beanInterface}, handler );
     }
@@ -301,6 +303,14 @@ public class Reflection
         }
     }
 
+    /**
+     * Retrieves an annotation from a property getter or a property field
+     *
+     * @param descriptor a property
+     * @param annotationClass desired annotation class
+     * @param <T> annotation type
+     * @return annotation or null if it cannot be found
+     */
     @Nullable
     public static <T extends Annotation> T getAnnotation( @Nonnull final PropertyDescriptor descriptor,
                                                           @Nonnull final Class<T> annotationClass )

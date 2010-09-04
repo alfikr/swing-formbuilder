@@ -9,12 +9,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.beanmapper;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.BeanMappingContext;
-import org.formbuilder.mapping.exception.GetterNotFoundException;
+import org.formbuilder.mapping.exception.AccessorNotFoundException;
 import org.formbuilder.mapping.exception.InvalidTypeMappingException;
 import org.formbuilder.mapping.exception.NoGetterProvidedException;
 import org.formbuilder.mapping.exception.UnmappedTypeException;
@@ -53,7 +52,7 @@ public class SampleContext<B>
     @Nonnull
     private PropertyDescriptor getDescriptor()
             throws
-            GetterNotFoundException,
+            AccessorNotFoundException,
             NoGetterProvidedException
     {
         if ( methodRecorder.getLastCalledMethod() == null )
@@ -61,7 +60,7 @@ public class SampleContext<B>
             throw new NoGetterProvidedException();
         }
 
-        final PropertyDescriptor descriptor = Reflection.getDescriptor( methodRecorder.getLastCalledMethod() );
+        final PropertyDescriptor descriptor = Reflection.getDescriptor( methodRecorder.getLastCalledMethod(), true );
         methodRecorder.reset();
         return descriptor;
     }
@@ -72,8 +71,7 @@ public class SampleContext<B>
      * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored. Instead the
      *                                getter call is recorded by a cglib proxy to determine the property.
      * @return an editor component for a property, one instance per property
-     *
-     * @throws GetterNotFoundException     the method, which was called on a sample bean is not a read method for any
+     * @throws AccessorNotFoundException     the method, which was called on a sample bean is not a read method for any
      *                                     property
      * @throws NoGetterProvidedException   no method was called on a sample bean before calling this injection method
      * @throws UnmappedTypeException       cannot find a type mapper for a given property name
@@ -85,7 +83,7 @@ public class SampleContext<B>
     @Nonnull
     public JComponent editor( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
             throws
-            GetterNotFoundException,
+            AccessorNotFoundException,
             NoGetterProvidedException,
             InvalidTypeMappingException,
             UnmappedTypeException
@@ -96,8 +94,7 @@ public class SampleContext<B>
     /**
      * @param whatProxyGetterReturned the result of calling the proxy getter, which is actually ignored
      * @return a label for a property, one instance per property
-     *
-     * @throws GetterNotFoundException   the method, which was called on a sample bean is not a read method for any
+     * @throws AccessorNotFoundException   the method, which was called on a sample bean is not a read method for any
      *                                   property
      * @throws NoGetterProvidedException no method was called on a sample bean before calling this injection method
      * @see BeanMappingContext#getLabel(PropertyDescriptor)
@@ -106,7 +103,7 @@ public class SampleContext<B>
     @Nonnull
     public JLabel label( @SuppressWarnings( "unused" ) @Nullable final Object whatProxyGetterReturned )
             throws
-            GetterNotFoundException,
+            AccessorNotFoundException,
             NoGetterProvidedException
     {
         return beanMappingContext.getLabel( getDescriptor() );

@@ -15,14 +15,14 @@ import javax.annotation.Nonnull;
 import java.lang.reflect.Method;
 
 /** @author aeremenok Date: Aug 3, 2010 Time: 12:06:57 PM */
-public class GetterNotFoundException
+public class AccessorNotFoundException
         extends MappingException
 {
     private final Method readMethod;
 
-    public GetterNotFoundException( @Nonnull final Method readMethod )
+    public AccessorNotFoundException( @Nonnull final Method readMethod )
     {
-        super( readMethod + " is not a getter method of a beanmapper", null );
+        super( readMethod + " is not an accessor method of a bean", null );
         this.readMethod = readMethod;
     }
 
