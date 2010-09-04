@@ -9,12 +9,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-
 package org.formbuilder.mapping.typemapper;
 
 import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.MappingRules;
-import org.formbuilder.mapping.exception.GetterNotFoundException;
+import org.formbuilder.mapping.exception.AccessorNotFoundException;
 import org.formbuilder.mapping.exception.NoGetterProvidedException;
 import org.formbuilder.util.MethodRecorder;
 import org.formbuilder.util.Reflection;
@@ -53,23 +52,22 @@ public class GetterConfig
      * @param mapper                  will be used for a property, defined by a getter call
      * @param <T>                     property type
      * @return this config
-     *
      * @throws NoGetterProvidedException no method was called on a sample bean before calling this injection method
-     * @throws GetterNotFoundException   the method, which was called on a sample bean is not a read method for any
+     * @throws AccessorNotFoundException   the method, which was called on a sample bean is not a read method for any
      *                                   property
      */
     public <T> GetterConfig use( @SuppressWarnings( "unused" ) @Nullable final T whatProxyGetterReturned,
                                  @Nonnull final TypeMapper<?, ? extends T> mapper )
             throws
             NoGetterProvidedException,
-            GetterNotFoundException
+            AccessorNotFoundException
     {
         if ( methodRecorder.getLastCalledMethod() == null )
         {
             throw new NoGetterProvidedException();
         }
 
-        final PropertyDescriptor descriptor = Reflection.getDescriptor( methodRecorder.getLastCalledMethod() );
+        final PropertyDescriptor descriptor = Reflection.getDescriptor( methodRecorder.getLastCalledMethod(), true );
         mappingRules.addMapper( descriptor.getName(), checkNotNull( mapper ) );
         methodRecorder.reset();
 

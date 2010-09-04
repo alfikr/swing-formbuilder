@@ -9,7 +9,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package org.formbuilder.util;
+package org.formbuilder.mapping.metadata.functions;
 
 import com.google.common.base.Predicate;
 
@@ -18,25 +18,29 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 /** @author aeremenok Date: Aug 31, 2010 Time: 11:27:37 AM */
-class HasReadMethod
+public class HasAccessor
         implements Predicate<PropertyDescriptor>
 {
 // ------------------------------ FIELDS ------------------------------
-    private final Method readMethod;
+    private final Method accessor;
+    private final boolean isReadMethod;
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
-    public HasReadMethod( @Nonnull final Method readMethod )
+    public HasAccessor( @Nonnull final Method accessor,
+                        boolean isReadMethod )
     {
-        this.readMethod = readMethod;
+        this.accessor = accessor;
+        this.isReadMethod = isReadMethod;
     }
 
 // ------------------------ INTERFACE METHODS ------------------------
 
 // --------------------- Interface Predicate ---------------------
 
-    public boolean apply( @Nonnull final PropertyDescriptor input )
+    public boolean apply( @Nonnull final PropertyDescriptor descriptor )
     {
-        return input.getReadMethod().equals( readMethod );
+        final Method descriptorAccessor = isReadMethod ? descriptor.getReadMethod() : descriptor.getWriteMethod();
+        return accessor.equals( descriptorAccessor );
     }
 }
