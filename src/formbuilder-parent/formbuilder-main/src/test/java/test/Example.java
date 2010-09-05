@@ -23,6 +23,7 @@ import org.formbuilder.TypeMapper;
 import org.formbuilder.mapping.beanmapper.SampleBeanMapper;
 import org.formbuilder.mapping.beanmapper.SampleContext;
 import org.formbuilder.mapping.change.ChangeHandler;
+import org.formbuilder.mapping.form.FormFactories;
 import org.formbuilder.mapping.typemapper.GetterConfig;
 import org.formbuilder.mapping.typemapper.GetterMapper;
 import org.formbuilder.validation.BackgroundMarker;
@@ -95,6 +96,10 @@ public class Example
     public void ex6()
     {
         final Form<Person> form = FormBuilder.map( Person.class ).doValidation( false ).buildForm();
+    }
+
+    public void ex7(){
+        final Form<Person> form = FormBuilder.map( Person.class ).formsOf( FormFactories.MODIFYING ).buildForm();
     }
 
     class DateToDateChooserMapper
