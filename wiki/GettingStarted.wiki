@@ -93,7 +93,7 @@ Form<Person> form = FormBuilder.map( Person.class )
 }}}
 or in a more sophisticated, but type-safe way (CGLIB proxy-magic again):
 {{{
-        Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
+Form<Person> form = FormBuilder.map( Person.class ).useForGetters( new GetterMapper<Person>()
         {
             @Override
             public void mapGetters( Person beanSample,
