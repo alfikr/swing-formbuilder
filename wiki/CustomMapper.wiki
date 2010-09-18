@@ -38,7 +38,7 @@ Transfer the value between component and bean property
             editorComponent.setDate( value );
         }
 }}}
-Propagate value change events from component to mapping. If you don't need validation, you may not implement a method body
+Propagate value change events from component to mapping. If you don't need validation, you may leave this method empty
 {{{
         @Override
         public void handleChanges( final JDateChooser editorComponent,
