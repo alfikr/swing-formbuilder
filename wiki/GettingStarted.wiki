@@ -64,7 +64,7 @@ Form<Person> form = FormBuilder.map( Person.class ).with( new SampleBeanMapper<P
 }}}
 If you don't want to include CGLIB dependency, use `PropertyNameBeanMapper` instead. It founds suitable components by property names. This is less magical, but more error-prone, since property names can be changed or misspelled.
 {{{
-final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
+Form<Person> form = FormBuilder.map( Person.class ).with( new PropertyNameBeanMapper<Person>()
         {
             @Override
             public JComponent mapBean( PropertyNameContext<Person> ctx )
@@ -74,7 +74,7 @@ final Form<Person> form = env.buildFormInEDT( FormBuilder.map( Person.class ).wi
                 panel.add( ctx.editor( "name" ), BorderLayout.CENTER );
                 return panel;
             }
-        } ) );
+        } ).buildForm();
 }}}
 
 =Custom type mapping=
