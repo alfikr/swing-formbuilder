@@ -21,6 +21,7 @@ import org.formbuilder.mapping.exception.MappingException;
 import org.formbuilder.mapping.metadata.MetaData;
 import org.formbuilder.mapping.metadata.sort.OrderedPropertyDescriptor;
 import org.formbuilder.util.GridBagPanel;
+import org.formbuilder.util.SwingUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -28,9 +29,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyDescriptor;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * Creates a {@link JPanel} with {@link GridBagLayout}. Each property label and editor are located in separate row in
@@ -53,7 +51,7 @@ public class GridBagMapper<B>
     @Nonnull
     public JComponent map( @Nonnull final BeanMappingContext<B> context )
     {
-        checkState( isEventDispatchThread() );
+        SwingUtil.checkForEventDispatchThread();
 
         final GridBagPanel gridBagPanel = new GridBagPanel();
 

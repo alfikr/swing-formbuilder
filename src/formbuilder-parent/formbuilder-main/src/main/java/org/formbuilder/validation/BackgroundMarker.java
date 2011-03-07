@@ -11,6 +11,7 @@
  */
 package org.formbuilder.validation;
 
+import org.formbuilder.util.SwingUtil;
 import org.formbuilder.util.TextUtil;
 
 import javax.annotation.Nonnull;
@@ -19,9 +20,6 @@ import javax.swing.*;
 import javax.validation.ConstraintViolation;
 import java.awt.*;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * Changes the background of an editor to {@link Color#PINK} if there are some violations, or to {@link Color#WHITE} if
@@ -43,7 +41,7 @@ public class BackgroundMarker
 
     public <B, C extends JComponent, V> void markViolations( @Nonnull final ValidationEvent<B, C, V> validationEvent )
     {
-        checkState( isEventDispatchThread() );
+        SwingUtil.checkForEventDispatchThread();
 
         final Set<ConstraintViolation<B>> violations = validationEvent.getViolations();
         final C editor = validationEvent.getEditorComponent();

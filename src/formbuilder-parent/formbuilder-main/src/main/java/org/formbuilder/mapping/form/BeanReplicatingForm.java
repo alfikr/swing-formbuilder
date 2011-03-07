@@ -18,13 +18,11 @@ package org.formbuilder.mapping.form;
 import org.formbuilder.Form;
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.util.Reflection;
+import org.formbuilder.util.SwingUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
-
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * A {@link Form} that allocates a new instance of beanmapper each time it is requested for a changed value.
@@ -81,7 +79,7 @@ public class BeanReplicatingForm<B>
     @SuppressWarnings( {"unchecked"} )
     public void setValue( @Nullable final B bean )
     {
-        checkState( isEventDispatchThread() );
+        SwingUtil.checkForEventDispatchThread();
         beanMapping.setComponentValues( bean );
         if ( bean != null && beanClass.isInterface() )
         {

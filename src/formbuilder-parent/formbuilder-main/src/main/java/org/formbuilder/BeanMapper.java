@@ -31,6 +31,9 @@ import javax.swing.*;
 public interface BeanMapper<B>
 {
     /**
+     * Transforms a data from context to a swing form component <br>
+     * <u>This method should be called in Event Dispatch Thread</u>
+     *
      * @param context provides the data to assist editor creation
      * @return a panel with editor components
      */

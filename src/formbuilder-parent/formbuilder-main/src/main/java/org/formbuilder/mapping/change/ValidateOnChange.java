@@ -12,6 +12,7 @@
 package org.formbuilder.mapping.change;
 
 import org.formbuilder.mapping.PropertyEditor;
+import org.formbuilder.util.SwingUtil;
 import org.formbuilder.validation.ValidationEvent;
 import org.formbuilder.validation.ValidationMarker;
 
@@ -23,9 +24,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import java.beans.PropertyDescriptor;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * Performs jsr303 validation of a changed property
@@ -68,7 +66,7 @@ public class ValidateOnChange<B, C extends JComponent, V>
                 violations,
                 newValue );
 
-        checkState( isEventDispatchThread() );
+        SwingUtil.checkForEventDispatchThread();
         for ( final ValidationMarker validationMarker : validationMarkers )
         {
             if ( validationMarker != null )
