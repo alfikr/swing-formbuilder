@@ -18,9 +18,12 @@ This simple code will add a `JPanel` with `GridBagLayout` to a frame:
 {{{        
 JFrame myFrame = new JFrame();
 // ... further initialization
-Form<Person> form = FormBuilder.map( Person.class ).buildForm();
+Form<Person> form = FormBuilder.map( Person.class )
+                               // should be called in EDT (see "Threading")
+                               .buildForm();
 myFrame.add( form.asComponent() );
 }}}
+
 Each row represents a property and contains a JLabel and a specific editor component:
 
 [http://swing-formbuilder.googlecode.com/svn/trunk/doc/default.png]
@@ -140,3 +143,15 @@ or
     @UITitle( "Date of birth" )
     private Date birthDate;
 }}}
+
+=Threading=
+
+Note, that the following methods: 
+
+`FormBuilder#buildForm()`, 
+`Form#setValue()`, 
+`ChangeHandler#onChange()`, 
+`ValidationMarker#markViolations()`, 
+`BeanMapper#map()` 
+
+must be called in [http://java.sun.com/products/jfc/tsc/articles/threads/threads1.html Swing Event Dispatch Thread]. They cause creation and modification of UI components, so checking is being performed inside them in order to ensure thread correctness. If the thread, that called these methods is not Swing EDT, they will fail with `java.lang.IllegalStateException`.
