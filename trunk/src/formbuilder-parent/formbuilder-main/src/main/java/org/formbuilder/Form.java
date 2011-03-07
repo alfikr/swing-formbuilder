@@ -42,7 +42,8 @@ public interface Form<B>
     B getValue();
 
     /**
-     * Converts values from beanmapper properties to the editor components
+     * Converts values from beanmapper properties to the editor components<br>
+     * <u>This method should be called in Event Dispatch Thread</u>
      *
      * @param bean a value source
      */

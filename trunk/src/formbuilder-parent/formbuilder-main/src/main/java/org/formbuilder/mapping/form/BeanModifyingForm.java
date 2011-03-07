@@ -14,13 +14,11 @@ package org.formbuilder.mapping.form;
 import org.formbuilder.Form;
 import org.formbuilder.mapping.BeanMapping;
 import org.formbuilder.util.Reflection;
+import org.formbuilder.util.SwingUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
-
-import static com.google.common.base.Preconditions.checkState;
-import static javax.swing.SwingUtilities.isEventDispatchThread;
 
 /**
  * A {@link Form} that changes the given bean instance, or allocates a new one if a given instance is null
@@ -70,7 +68,7 @@ public class BeanModifyingForm<B>
 
     public void setValue( @Nullable final B bean )
     {
-        checkState( isEventDispatchThread() );
+        SwingUtil.checkForEventDispatchThread();
         this.bean = bean;
         beanMapping.setComponentValues( bean );
     }

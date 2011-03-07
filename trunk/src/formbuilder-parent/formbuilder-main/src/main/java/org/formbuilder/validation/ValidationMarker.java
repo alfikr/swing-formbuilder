@@ -25,7 +25,9 @@ import javax.validation.Validator;
 public interface ValidationMarker
 {
     /**
-     * Do the component decoration.
+     * Does the component decoration. <br>
+     * <u>This method should be called in Event Dispatch Thread</u>
+     *
      * @param <B> bean type
      * @param <C> editor component type
      * @param <V> value type

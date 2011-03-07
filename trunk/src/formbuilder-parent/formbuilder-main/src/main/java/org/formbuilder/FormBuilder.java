@@ -118,8 +118,8 @@ public class FormBuilder<B>
     }
 
     /**
-     * Does the building of editor components and their layout on the form component. <u>This method should be called in
-     * Event Dispatch Thread</u>
+     * Does the building of editor components and their layout on the form component. <br>
+     * <u>This method should be called in Event Dispatch Thread</u>
      *
      * @return an instance of the {@link Form}, ready to be added to swing {@link Container}s
      */

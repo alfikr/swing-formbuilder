@@ -27,7 +27,8 @@ import javax.swing.*;
 public interface ChangeHandler
 {
     /**
-     * Should be called when the editor component changed its value
+     * Should be called when the editor component changed its value. <br>
+     * <u>This method should be called in Event Dispatch Thread</u>
      *
      * @param validationMarkers callbacks, that process the validation results, after the value change is validated
      */
