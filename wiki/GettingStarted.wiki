@@ -148,10 +148,10 @@ or
 
 Note, that the following methods: 
 
-`FormBuilder#buildForm()`, 
-`Form#setValue()`, 
-`ChangeHandler#onChange()`, 
-`ValidationMarker#markViolations()`, 
-`BeanMapper#map()` 
+ * `FormBuilder#buildForm()`, 
+ * `Form#setValue()`, 
+ * `ChangeHandler#onChange()`, 
+ * `ValidationMarker#markViolations()`, 
+ * `BeanMapper#map()` 
 
 must be called in [http://java.sun.com/products/jfc/tsc/articles/threads/threads1.html Swing Event Dispatch Thread]. They cause creation and modification of UI components, so checking is being performed inside them in order to ensure thread correctness. If the thread, that called these methods is not Swing EDT, they will fail with `java.lang.IllegalStateException`.
